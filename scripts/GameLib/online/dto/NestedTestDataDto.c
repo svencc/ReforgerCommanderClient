@@ -3,12 +3,29 @@ class NestedTestDataDto : JsonApiStruct {
 	string stringValue;
 	float numberValue;
 	
-	override void OnSuccess( int errorCode )
-	{
+	string getStringValue()	{
+		return stringValue;
+	}
+	void setStringValue(string newValue) {
+		stringValue = newValue;
+	}
+	
+	float getNumberValue() {
+		return numberValue;
+	}
+	void setNumberValue(float newValue)	{
+		numberValue = newValue;
+	}
+
+
+
+	override void OnSuccess(int errorCode) {
 		Print("On Success NestedTestDataDto " + errorCode);
 	}
 	
-	void NestedTestDataDto() {
+	// You need to configure (de-)serializer here in constructor via RegV(...)
+	void NestedTestDataDto()
+	{
 		RegV("stringValue");
 		RegV("numberValue");
 	}

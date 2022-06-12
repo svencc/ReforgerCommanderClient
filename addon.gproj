@@ -1,8 +1,20 @@
 GameProject {
- ID "RESTApiTest"
+ ID "ReforgerCommander"
  GUID "5996C6C3FE08BDED"
- TITLE "RESTApiTest"
+ TITLE "ReforgerCommander"
  Dependencies {
   "58D0FB3206B6F859"
+ }
+ Configurations {
+  GameProjectConfig PC {
+  }
+  GameProjectConfig XBOX_ONE {
+  }
+  GameProjectConfig XBOX_SERIES {
+  }
+  GameProjectConfig PS4 {
+  }
+  GameProjectConfig HEADLESS {
+  }
  }
 }

@@ -9,10 +9,10 @@ class TestDataRestCallback : RestCallback {
 		json.ExpandFromRAW(data);
 		
 		Print("1 string-value");
-		Print(json.stringValue);
+		Print(json.getStringValue());
 		
 		Print("2.1 string-value");
-		Print(json.nestedDataList);
+		Print(json.getNestedDataList());
 	};
 	
 	override void OnError( int errorCode )
