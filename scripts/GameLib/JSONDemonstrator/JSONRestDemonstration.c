@@ -1,11 +1,11 @@
-class JSONRestDemonstrationClass {
+class JSONRestDemonstration {
 	
-	void JSONRestDemonstrationClass() {
-		PrintFormat("%1 Constructor called", "JSONRestDemonstrationClass");
+	void JSONRestDemonstration() {
+		PrintFormat("%1 Constructor called", "JSONRestDemonstration");
 	}
 	
-	void ~JSONRestDemonstrationClass() {
-		PrintFormat("%1 Destructor called", "JSONRestDemonstrationClass");
+	void ~JSONRestDemonstration() {
+		PrintFormat("%1 Destructor called", "JSONRestDemonstration");
 	}
 	
 	void demonstrate() {

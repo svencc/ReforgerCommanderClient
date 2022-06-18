@@ -1,20 +1,20 @@
 $grp GenericEntity {
- JsonDemonstrator {
+ JsonDemonstratorEntity {
   coords 6393.18 159.097 6423.981
   userScript "	// code here"\
-  "	ref JSONRestDemonstrationClass jsonDemonstrator;"
+  "	ref JSONRestDemonstration jsonRestDemonstration;"
   constructor ""\
-  "		Print(\"JsonDemonstrator_Class Constructor called\");"\
-  "		JSONRestDemonstrationClass jsonDemonstrator = new JSONRestDemonstrationClass;"\
-  "		jsonDemonstrator.demonstrate();"\
+  "		PrintFormat(\"%1 Constructor called\", ClassName());"\
+  "		jsonRestDemonstration = new JSONRestDemonstration;"\
+  "		jsonRestDemonstration.demonstrate();"\
   "	"
  }
- MapScanner {
+ MapScannerEntity {
   coords 6393.364 159.222 6431.311
   userScript "	// code here"\
   "	ref MapScanner mapScanner;"
   constructor ""\
-  "		Print(ClassName() + \" Constructor called\");"\
+  "		PrintFormat(\"%1 Constructor called\", ClassName());"\
   "		mapScanner = new MapScanner;"\
   "		mapScanner.scanMap();"\
   "	"
