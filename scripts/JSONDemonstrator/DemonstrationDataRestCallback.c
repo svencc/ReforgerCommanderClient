@@ -1,9 +1,9 @@
-class TestDataRestCallback : RestCallback {
+class DemonstrationDataRestCallback : RestCallback {
 	
 	override void OnSuccess( string data, int dataSize )
 	{
+		PrintFormat("%1 OnSuccess called ", "DemonstrationDataRestCallback");
 		// Print(data);
-		// --> SCR_CampaignStruct
 
 		TestDataDto json = new TestDataDto;
 		json.ExpandFromRAW(data);
@@ -17,7 +17,7 @@ class TestDataRestCallback : RestCallback {
 	
 	override void OnError( int errorCode )
 	{
-		Print(" !!! OnError() ");
+		PrintFormat(" ! ! ! %1 OnError called", "DemonstrationDataRestCallback");
 	};
 	
 }
