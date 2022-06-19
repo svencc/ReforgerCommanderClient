@@ -4,9 +4,10 @@ $grp GenericEntity {
   userScript "	// code here"\
   "	ref JSONRestDemonstration jsonRestDemonstration;"
   constructor ""\
+  "		GetGame();"\
   "		PrintFormat(\"%1 Constructor called\", ClassName());"\
   "		jsonRestDemonstration = new JSONRestDemonstration;"\
-  "		jsonRestDemonstration.demonstrate();"\
+  "		//jsonRestDemonstration.demonstrate();"\
   "	"
  }
  MapScannerEntity {
@@ -15,8 +16,9 @@ $grp GenericEntity {
   "	ref MapScanner mapScanner;"
   constructor ""\
   "		PrintFormat(\"%1 Constructor called\", ClassName());"\
+  ""\
   "		mapScanner = new MapScanner;"\
-  "		mapScanner.scanMap();"\
+  "		GetGame().GetCallqueue().CallLater(mapScanner.scanMap, 100, false);"\
   "	"
  }
 }

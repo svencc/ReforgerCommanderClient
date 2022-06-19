@@ -1,14 +1,21 @@
 class MapScanner {
 		
 	private int worldSize;
+	private ref MapScannerEntityRestAdapter adapter;
 	
 	void MapScanner() {
 		PrintFormat("%1 Constructor called", "MapScanner");
-		determineMapSize();
+		init();
+		
 	}
 	
 	void ~MapScanner() {
 		PrintFormat("%1 Destructor called", "MapScanner");
+	}
+	
+	private void init() {
+		determineMapSize();
+		adapter = new MapScannerEntityRestAdapter;
 	}
 	
 	int GetWorldSize() {
@@ -16,21 +23,15 @@ class MapScanner {
 	}
 	
 	void scanMap() {
+		Print("scanMap");
 		g_Game.GetWorld().QueryEntitiesBySphere(
-			GetOrigin(), // centre
-			10000, // radius
-			addEntity, // addEntity
-			filterEntity, // filterEntity
-			EQueryEntitiesFlags.ALL //queryFlags
+			mapCentre(),
+			//worldSize,
+			150,
+			null, // hit-callback
+			filterEntity, // filter callback
+			EQueryEntitiesFlags.STATIC
 		);
-			
-		/*
-		g_Game.GetWorld().QueryEntitiesBySphere(
-			(vector) {GetWorldSize()/2, 0, GetWorldSize()/2},
-			GetWorldSize(),
-			null,null,null
-		);
-		*/
 	}
 
 	private void determineMapSize() {
@@ -38,16 +39,63 @@ class MapScanner {
 		g_Game.GetWorldEntity().GetWorldBounds(min, max);
 		worldSize = Math.Max(max[0] - min[0], max[2] - min[2]);
 	}
+	
+	private vector mapCentre() {
+		return {worldSize/2, 0, worldSize/2};
+	}
 
-	bool filterEntity(IEntity ent) {
-		return true
+	/*! 
+		loops for every found entity
+	*/
+	/*
+	private bool queryHit(IEntity ent) {
+		if (ent != null) {
+			Print("ENT NAME " + ent.GetName());
+			vector position[4];
+			ent.GetTransform(position);
+			PrintFormat("COORDINATE %1", position);
+		}
+		
+		return true;
+	}
+	*/
+	
+	/*! 
+		loops for every found entity and decides if it is passed to hit-callback
+	*/
+	private bool filterEntity(IEntity ent) {
+		if (ent != null) {
+			VObject mesh = ent.GetVObject();
+			if (mesh) {
+				//Print("CLASS " + ent.ClassName());
+				//Print("RESOURCE " + mesh.GetResourceName());
+			
+				vector transformation[4];
+				ent.GetTransform(transformation);
+				PrintFormat("COORDINATE %1", transformation);
+				
+				MapEntityDto mapEntityDto = new MapEntityDto;
+				
+				mapEntityDto.className = ent.ClassName();
+				mapEntityDto.resourceName = mesh.GetResourceName();
+				
+				mapEntityDto.rotationX = transformation[0];
+				mapEntityDto.rotationY = transformation[1];
+				mapEntityDto.rotationZ = transformation[2];
+				mapEntityDto.coords = transformation[3];
+				
+				adapter.post(mapEntityDto);
+			}
+		}
+		
+		return false;
 	}
 	
 	
 	
 	
 	
-	
+	/*
 	override void OnActivate(IEntity ent) {
 		RplComponent rplComponent = RplComponent.Cast(FindComponent(RplComponent));
 		if (rplComponent) {
@@ -89,5 +137,6 @@ class MapScanner {
  		// Ends further queries as we will use the first match found
 		return false;
 	}
+	*/
 
 }
