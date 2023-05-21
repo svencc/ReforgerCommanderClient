@@ -17,7 +17,7 @@ class DemonstrationDataRestCallback : RestCallback {
 
 	override void OnError( int errorCode )
 	{
-		PrintFormat(" ! ! ! %1 OnError called", "DemonstrationDataRestCallback");
+		PrintFormat(" ! ! ! %1 OnError called with errorCode %2", "DemonstrationDataRestCallback", errorCode);
 	};
 
 }

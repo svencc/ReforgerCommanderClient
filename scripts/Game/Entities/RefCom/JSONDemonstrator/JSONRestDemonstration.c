@@ -14,8 +14,7 @@ class JSONRestDemonstration {
 		DemonstrationDataRestCallback getCallback = new DemonstrationDataRestCallback;
 
 		// Get REST Context
-		// RestContext getContext = g_Game.GetRestApi().GetContext("rcb:8080");
-		RestContext getContext = g_Game.GetRestApi().GetContext("127.0.0.1:8080");
+		RestContext getContext = GetGame().GetRestApi().GetContext("127.0.0.1:8080");
 		getContext.GET(getCallback,"/api/v1/test/json-test-data");
 
 		// #POST CALL:
@@ -36,12 +35,10 @@ class JSONRestDemonstration {
 		td.addNestedDataList(ntd1);
 		td.addNestedDataList(ntd2);
 
-		// consider using Pack(); you have to use GetCallqueue then ... this is example only
-		// td.InstantPack();
 		td.Pack();
 
 		// Get REST Context
-		RestContext postContext = g_Game.GetRestApi().GetContext("127.0.0.1:8080");
+		RestContext postContext = GetGame().GetRestApi().GetContext("127.0.0.1:8080");
 		postContext.POST(postCallback,"/api/v1/test/json-test-data", td.AsString());
 	}
 
