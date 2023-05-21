@@ -1,0 +1,8 @@
+GenericEntity RefComBootstrapper {
+ coords 4774.987 28.555 11739.178
+ userScript "	// code here"\
+ ""
+ EOnInit ""\
+ "		PrintFormat(\"%1 EOnInit called\", \"RefComBootstrapper_Class\");"\
+ "	"
+}
