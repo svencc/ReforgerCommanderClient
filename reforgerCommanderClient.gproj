@@ -1,7 +1,7 @@
 GameProject {
- ID "ReforgerCommander"
- GUID "5996C6C3FE08BDED"
- TITLE "ReforgerCommander"
+ ID "ReforgerCommanderClient"
+ GUID "5D68C6A8E8235705"
+ TITLE "ReforgerCommanderClient"
  Dependencies {
   "58D0FB3206B6F859"
  }
