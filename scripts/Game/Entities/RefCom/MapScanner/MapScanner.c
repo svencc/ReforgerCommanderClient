@@ -1,10 +1,12 @@
 class MapScanner {
 
-	private int worldSize;
-	private int scanRadius;
-	private float halfScanRadius;
-	private int predictedScanIterations;
-	private ref MapScannerEntityRestAdapter adapter;
+	protected int worldSize;
+	protected int scanRadius;
+	protected float halfScanRadius;
+	protected int predictedScanIterations;
+	protected ref MapScannerEntityRestAdapter adapter;
+	//protected ref TManagedArray entities = new TManagedArray();
+	protected ref array<ref EntityID> entities = new array<ref EntityID>;
 
 	void MapScanner() {
 		PrintFormat("%1 Constructor called", "MapScanner");
@@ -31,23 +33,27 @@ class MapScanner {
 		halfScanRadius = scanRadius/2;
 		predictedScanIterations = Math.Floor(worldSize/scanRadius);
 		
-		for (int iterationY = 0; iterationY < predictedScanIterations; iterationY++) 
-		{
-			for (int iterationX = 0; iterationX < predictedScanIterations; iterationX++)
-			{
-				PrintFormat("iterY %1 iterX %2 centre %3", iterationY, iterationX, scanCentreForThisIteration(iterationX, iterationY));
-				
-				GetGame().GetWorld().QueryEntitiesBySphere(
-					scanCentreForThisIteration(iterationX, iterationY),
-					scanRadius,
-					null, // hit-callback // we do not need that here
-					filterEntity, // filter callback
-					EQueryEntitiesFlags.STATIC
-				);
+		//scanPartition(mapCentre(), scanRadiusParameter);
+		
+		for (int iterationY = 0; iterationY < predictedScanIterations; iterationY++) {
+			for (int iterationX = 0; iterationX < predictedScanIterations; iterationX++) {
+				vector scanCenter = scanCentreForThisIteration(iterationX, iterationY);
+				PrintFormat("iterY %1 iterX %2 centre %3", iterationY, iterationX, scanCenter);
+				scanPartition(scanCenter, scanRadius);
 			}					
 		}				
-		
+
 		PrintFormat("%1: scanMap processed", "MapScanner");
+	}
+
+	private void scanPartition(vector scanCenterParam, int scanRadiusParam) {
+		GetGame().GetWorld().QueryEntitiesBySphere(
+			scanCenterParam,
+			scanRadiusParam,
+			queryHit,
+			null,
+			EQueryEntitiesFlags.ALL
+		);
 	}
 
 	private void determineMapSize() {
@@ -67,26 +73,20 @@ class MapScanner {
 	}
 
 
-	/*!
-		loops for every found entity
-	*/
-	/*
+
 	private bool queryHit(IEntity ent) {
 		if (ent != null) {
 			Print("ENT NAME " + ent.GetName());
 			vector position[4];
 			ent.GetTransform(position);
 			PrintFormat("COORDINATE %1", position);
+			entities.Insert(ent.GetID());
 		}
 
 		return true;
 	}
-	*/
 
-	/*!
-		loops for every found entity and decides if it is passed to hit-callback
-	*/
-	private bool filterEntity(IEntity ent) {
+	private bool queryHitREST(IEntity ent) {
 		if (ent != null) {
 			VObject mesh = ent.GetVObject();
 			if (mesh) {
@@ -95,7 +95,7 @@ class MapScanner {
 
 				vector transformation[4];
 				ent.GetTransform(transformation);
-				PrintFormat("COORDINATE %1", transformation);
+				//PrintFormat("COORDINATE %1", transformation);
 
 				MapEntityDto mapEntityDto = new MapEntityDto;
 
@@ -107,13 +107,33 @@ class MapScanner {
 				mapEntityDto.rotationZ = transformation[2];
 				mapEntityDto.coords = transformation[3];
 
-				adapter.post(mapEntityDto);
+				// adapter.post(mapEntityDto);
+				MapScannerEntityRestAdapter localAdapter = new MapScannerEntityRestAdapter;
+				localAdapter.post(mapEntityDto);
 			}
 		}
+
+		return true;
+	}
+	
+	
+	/*!
+		loops for every found entity and decides if it is passed to hit-callback
+	*/
+	private bool filterEntity(IEntity ent) {
+		return true;
+		if (ent != null) {
+			VObject mesh = ent.GetVObject();
+			if (mesh) {
+				return true;
+			}
+		} 
 
 		return false;
 	}
 
+// https://github.com/ArmaOverthrow/Overthrow.Arma4/blob/f7e86e3bac17498adde069ba9829cbe37293ccc8/Scripts/Game/GameMode/Components/OVT_TownManagerComponent.c#L67
+	//		return GetGame().GetWorld().FindEntityByID(m_Houses.GetRandomElement());
 
 
 
@@ -161,5 +181,24 @@ class MapScanner {
 		return false;
 	}
 	*/
+	
+	
+	
+	
+		void scanMapSimple() {
+		Print("scanMapSimple");
+		g_Game.GetWorld().QueryEntitiesBySphere(
+			mapCentre(),
+			//worldSize,
+			150,
+			queryHit, // hit-callback
+			null, // filter callback
+			EQueryEntitiesFlags.STATIC
+		);
+	}
+	
+	private vector mapCentre() {
+		return {worldSize/2, 0, worldSize/2};
+	}
 
 }
