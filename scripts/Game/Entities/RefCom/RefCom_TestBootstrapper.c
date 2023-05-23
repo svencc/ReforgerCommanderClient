@@ -10,6 +10,11 @@ class RefCom_TestBootstrapper: SCR_BaseTriggerEntity
 	private ref MapScanner mapScanner;
 	private ref MapScannerIterative mapScannerIterative;
 	
+	void ~RefCom_TestBootstrapper() {
+		GetGame().GetCallqueue().Clear();
+		PrintFormat("%1 Destructor called", "RefCom_TestBootstrapper");
+	}
+	
 	override void EOnInit(IEntity owner) {
 		super.EOnInit(owner);
 		PrintFormat("%1 EOnInit called", "RefCom_TestBootstrapper");
@@ -17,7 +22,7 @@ class RefCom_TestBootstrapper: SCR_BaseTriggerEntity
 			PrintFormat("%1 EOnInit called in GameMode", "RefCom_TestBootstrapper");
 			jsonRestDemonstration = new JSONRestDemonstration;
 			mapScanner = new MapScanner();
-			mapScannerIterative = new MapScannerIterative(10);
+			mapScannerIterative = new MapScannerIterative(150);
 			
 
 			//GetGame().GetCallqueue().CallLater(jsonRestDemonstration.demonstrate, 100, false);
@@ -25,7 +30,8 @@ class RefCom_TestBootstrapper: SCR_BaseTriggerEntity
 			// mapScanner.scanMap(150);
 			
 
-			GetGame().GetCallqueue().CallLater(mapScannerIterative.produce, 1, true);
+			GetGame().GetCallqueue().CallLater(mapScannerIterative.produce, 0, true);
+			GetGame().GetCallqueue().CallLater(mapScannerIterative.consume, 0, true);
 		}
 	}
 	

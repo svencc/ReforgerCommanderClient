@@ -1,12 +1,15 @@
 class MapScannerIterative {
 
-	protected bool finished = false;
+	protected bool finishedProduction = false;
+	protected bool finishedConsumption = false;
 	protected int worldSize;
 	protected int scanRadius;
 	protected float halfScanRadius;
 	protected int predictedScanIterations;
 	protected int iterationX;
 	protected int iterationY;
+
+	protected ref TManagedArray entities = new TManagedArray();
 	protected ref MapScannerEntityRestAdapter adapter;
 
 	void MapScannerIterative(int scanRadius) {
@@ -29,11 +32,8 @@ class MapScannerIterative {
 		adapter = new MapScannerEntityRestAdapter;
 	}
 
-	
 	void produce() {
-		PrintFormat("%1: produce called", "MapScannerProducerConsumer");
-		
-		if (finished) {
+		if (finishedProduction) {
 			return;
 		} else {
 			if (iterationY < predictedScanIterations) {
@@ -46,17 +46,35 @@ class MapScannerIterative {
 					iterationY++;
 					iterationX = 0;
 				}
+			} else {
+				finishedProduction = true;
 			}
 		}
 
-		PrintFormat("%1: produce processed", "MapScannerProducerConsumer");
+		// PrintFormat("%1: produce processed", "MapScannerProducerConsumer");
+	}
+	
+	void consume() {
+		if (finishedConsumption) {
+			return;
+		} else {
+			if (entities.IsEmpty() && finishedProduction) {
+				finishedConsumption = true;
+			} else if(entities.IsEmpty() == false) {
+				Managed managedEntity = entities.Get(0);
+				IEntity entity = IEntity.Cast(managedEntity);
+				transmit(entity);
+				entities.RemoveItem(managedEntity);
+				PrintFormat("%1: consumed", "MapScannerProducerConsumer");
+			}
+		}
 	}
 
 	private void scanPartition(vector scanCenterParam, int scanRadiusParam) {
 		GetGame().GetWorld().QueryEntitiesBySphere(
 			scanCenterParam,
 			scanRadiusParam,
-			queryHitREST,
+			queryHitAddEntity,
 			null,
 			EQueryEntitiesFlags.STATIC
 		);
@@ -75,31 +93,35 @@ class MapScannerIterative {
 			halfScanRadius+(iterationY * scanRadius)
 		};
 	}
+	
+	
 
-	private bool queryHitREST(IEntity ent) {
+	private bool queryHitAddEntity(IEntity ent) {
 		if (ent != null) {
-			VObject mesh = ent.GetVObject();
-			if (mesh) {
-				//Print("CLASS " + ent.ClassName());
-				//Print("RESOURCE " + mesh.GetResourceName());
-
-				vector transformation[4];
-				ent.GetTransform(transformation);
-				//PrintFormat("COORDINATE %1", transformation);
-
-				MapEntityDto mapEntityDto = new MapEntityDto;
-
-				mapEntityDto.className = ent.ClassName();
-				mapEntityDto.resourceName = mesh.GetResourceName();
-
-				mapEntityDto.rotationX = transformation[0];
-				mapEntityDto.rotationY = transformation[1];
-				mapEntityDto.rotationZ = transformation[2];
-				mapEntityDto.coords = transformation[3];
-
-				adapter.post(mapEntityDto);
-			}
+			entities.Insert(ent);
 		}
+
+		return true;
+	}
+	
+	private bool transmit(IEntity ent) {
+		vector transformation[4];
+		ent.GetTransform(transformation);
+
+		MapEntityDto mapEntityDto = new MapEntityDto;
+
+		mapEntityDto.className = ent.ClassName();
+		mapEntityDto.rotationX = transformation[0];
+		mapEntityDto.rotationY = transformation[1];
+		mapEntityDto.rotationZ = transformation[2];
+		mapEntityDto.coords = transformation[3];
+		
+		VObject mesh = ent.GetVObject();
+		if (mesh) {
+			mapEntityDto.resourceName = mesh.GetResourceName();
+		}
+
+		adapter.post(mapEntityDto);
 
 		return true;
 	}
