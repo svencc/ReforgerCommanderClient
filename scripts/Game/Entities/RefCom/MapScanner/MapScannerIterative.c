@@ -65,7 +65,7 @@ class MapScannerIterative {
 				IEntity entity = IEntity.Cast(managedEntity);
 				transmit(entity);
 				entities.RemoveItem(managedEntity);
-				PrintFormat("%1: consumed", "MapScannerProducerConsumer");
+				PrintFormat("%1: remaining", entities.Count());
 			}
 		}
 	}
