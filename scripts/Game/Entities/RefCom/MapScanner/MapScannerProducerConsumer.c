@@ -10,7 +10,8 @@ class MapScannerProducerConsumer {
 	protected int iterationY;
 	protected string worldFileName
 
-	protected ref TManagedArray entities = new TManagedArray();
+	//protected ref TManagedArray entities = new TManagedArray();
+	protected ref array<IEntity> entities = {};
 	protected ref MapScannerEntitiesShippingServiceProvider shippingService;
 	protected ref MapScannerEntitiesTransactionManager transactionManager
 
@@ -72,10 +73,10 @@ class MapScannerProducerConsumer {
 				finishedConsumption = true;
 				transactionManager.commitTransaction();
 			} else if(entities.IsEmpty() == false) {
-				Managed managedEntity = entities.Get(0);
-				transmit(IEntity.Cast(managedEntity));
-				entities.RemoveItem(managedEntity);
-				PrintFormat("... %1: remaining entities to cunsume.", entities.Count());
+				IEntity entity = entities.Get(0);
+				transmit(entity);
+				entities.RemoveItemOrdered(entity);
+				PrintFormat("... %1: remaining entities to consume.", entities.Count());
 			}
 		}
 		
@@ -119,26 +120,32 @@ class MapScannerProducerConsumer {
 		return true;
 	}
 	
-	private bool transmit(IEntity ent) {
-		vector transformation[4];
-		ent.GetTransform(transformation);
+	private void transmit(IEntity ent) {
+		if(ent == null) {
+			return;
+		} else {
+			vector transformation[4];
+			ent.GetTransform(transformation);
+	
+			MapScannerEntityDto entityDto = new MapScannerEntityDto;
+			
+			
 
-		MapScannerEntityDto entityDto = new MapScannerEntityDto;
-
-		entityDto.className = ent.ClassName();
-		entityDto.rotationX = transformation[0];
-		entityDto.rotationY = transformation[1];
-		entityDto.rotationZ = transformation[2];
-		entityDto.coords = transformation[3];
+			entityDto.className =  ent.ClassName();
 		
-		VObject mesh = ent.GetVObject();
-		if (mesh) {
-			entityDto.resourceName = mesh.GetResourceName();
+			entityDto.rotationX = transformation[0];
+			entityDto.rotationY = transformation[1];
+			entityDto.rotationZ = transformation[2];
+			entityDto.coords = transformation[3];
+			
+			VObject mesh = ent.GetVObject();
+			if (mesh) {
+				entityDto.resourceName = mesh.GetResourceName();
+			}
+	
+			shippingService.assemblePackage(entityDto);
 		}
 
-		shippingService.assemblePackage(entityDto);
-
-		return true;
 	}
 
 }

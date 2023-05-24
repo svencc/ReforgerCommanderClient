@@ -17,7 +17,7 @@ class MapScannerEntitiesShippingServiceProvider {
 
 	void assemblePackage(MapScannerEntityDto entity) {
 		entitiesPackage.entities.Insert(entity);
-		if (entitiesPackage.entities.Count() > 100) {
+		if (entitiesPackage.entities.Count() > maxPackageSizeBeforeTransmission) {
 			flush();
 			entitiesPackage.entities.Clear();
 		}
