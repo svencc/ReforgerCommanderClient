@@ -1,6 +1,6 @@
 class MapScannerEntitiesDto : JsonApiStruct {
 
-	ref array<MapScannerEntityDto> entities = {};
+	ref array<ref MapScannerEntityDto> entities = {};
 
 	void MapScannerEntitiesDto() {
 		RegV("entities");
