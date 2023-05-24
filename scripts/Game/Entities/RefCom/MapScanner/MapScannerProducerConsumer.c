@@ -1,4 +1,4 @@
-class MapScannerIterative {
+class MapScannerProducerConsumer {
 
 	protected bool finishedProduction = false;
 	protected bool finishedConsumption = false;
@@ -8,31 +8,39 @@ class MapScannerIterative {
 	protected int predictedScanIterations;
 	protected int iterationX;
 	protected int iterationY;
+	protected string worldFileName
 
 	protected ref TManagedArray entities = new TManagedArray();
-	protected ref MapScannerEntityRestAdapter adapter;
+	protected ref MapScannerEntitiesShippingServiceProvider shippingService;
+	protected ref MapScannerEntitiesTransactionManager transactionManager
 
-	void MapScannerIterative(int scanRadius) {
-		PrintFormat("%1 Constructor called", "MapScannerIterative");
+	void MapScannerProducerConsumer(
+		MapScannerEntitiesShippingServiceProvider shippingServiceParameter,
+		int scanRadius
+	) {
+		this.shippingService = shippingServiceParameter;
 		init(scanRadius);
-
 	}
 
-	void ~MapScannerIterative() {
-		PrintFormat("%1 Destructor called", "MapScannerIterative");
+	void ~MapScannerProducerConsumer() {
 	}
 
 	private void init(int scanRadius) {
 		this.scanRadius = scanRadius;
 		halfScanRadius = scanRadius/2;
 		determineMapSize();
+        worldFileName = GetGame().GetWorldFile();
 		predictedScanIterations = Math.Floor(worldSize/scanRadius);
 		iterationX = 0;
 		iterationY = 0;
-		adapter = new MapScannerEntityRestAdapter;
+
+        transactionManager = new MapScannerEntitiesTransactionManager(worldFileName);
+        transactionManager.openTransaction();
 	}
 
 	void produce() {
+		PrintFormat("%1: start production of %2 ...", "MapScannerProducerConsumer", worldFileName);
+
 		if (finishedProduction) {
 			return;
 		} else {
@@ -51,26 +59,34 @@ class MapScannerIterative {
 			}
 		}
 
-		// PrintFormat("%1: produce processed", "MapScannerProducerConsumer");
+		PrintFormat("... %1: production completed.", "MapScannerProducerConsumer");
 	}
 	
 	void consume() {
+		PrintFormat("%1: start consumtion ...", "MapScannerProducerConsumer");
+		
 		if (finishedConsumption) {
 			return;
 		} else {
 			if (entities.IsEmpty() && finishedProduction) {
 				finishedConsumption = true;
+				transactionManager.commitTransaction();
 			} else if(entities.IsEmpty() == false) {
 				Managed managedEntity = entities.Get(0);
-				IEntity entity = IEntity.Cast(managedEntity);
-				transmit(entity);
+				transmit(IEntity.Cast(managedEntity));
 				entities.RemoveItem(managedEntity);
-				PrintFormat("%1: remaining", entities.Count());
+				PrintFormat("... %1: remaining entities to cunsume.", entities.Count());
 			}
 		}
+		
+		shippingService.flush();
+		PrintFormat("... %1: consumption completed.", "MapScannerProducerConsumer");
 	}
 
-	private void scanPartition(vector scanCenterParam, int scanRadiusParam) {
+	private void scanPartition(
+		vector scanCenterParam, 
+		int scanRadiusParam
+	) {
 		GetGame().GetWorld().QueryEntitiesBySphere(
 			scanCenterParam,
 			scanRadiusParam,
@@ -94,7 +110,6 @@ class MapScannerIterative {
 		};
 	}
 	
-	
 
 	private bool queryHitAddEntity(IEntity ent) {
 		if (ent != null) {
@@ -108,20 +123,20 @@ class MapScannerIterative {
 		vector transformation[4];
 		ent.GetTransform(transformation);
 
-		MapEntityDto mapEntityDto = new MapEntityDto;
+		MapScannerEntityDto entityDto = new MapScannerEntityDto;
 
-		mapEntityDto.className = ent.ClassName();
-		mapEntityDto.rotationX = transformation[0];
-		mapEntityDto.rotationY = transformation[1];
-		mapEntityDto.rotationZ = transformation[2];
-		mapEntityDto.coords = transformation[3];
+		entityDto.className = ent.ClassName();
+		entityDto.rotationX = transformation[0];
+		entityDto.rotationY = transformation[1];
+		entityDto.rotationZ = transformation[2];
+		entityDto.coords = transformation[3];
 		
 		VObject mesh = ent.GetVObject();
 		if (mesh) {
-			mapEntityDto.resourceName = mesh.GetResourceName();
+			entityDto.resourceName = mesh.GetResourceName();
 		}
 
-		adapter.post(mapEntityDto);
+		shippingService.assemblePackage(entityDto);
 
 		return true;
 	}
