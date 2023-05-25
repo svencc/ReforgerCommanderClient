@@ -1,5 +1,6 @@
 class MapScannerEntityDto : JsonApiStruct {
 
+	string entityId;
 	string className;
 	string resourceName;
 	vector rotationX;
@@ -9,6 +10,7 @@ class MapScannerEntityDto : JsonApiStruct {
 
 
 	void MapScannerEntityDto() {
+		RegV("entityId");
 		RegV("className");
 		RegV("resourceName");
 		RegV("rotationX");

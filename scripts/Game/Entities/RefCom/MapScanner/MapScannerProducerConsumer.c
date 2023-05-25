@@ -121,31 +121,24 @@ class MapScannerProducerConsumer {
 	}
 	
 	private void transmit(IEntity ent) {
-		if(ent == null) {
-			return;
-		} else {
-			vector transformation[4];
-			ent.GetTransform(transformation);
-	
-			MapScannerEntityDto entityDto = new MapScannerEntityDto;
-			
-			
+		vector transformation[4];
+		ent.GetTransform(transformation);
 
-			entityDto.className =  ent.ClassName();
+		MapScannerEntityDto entityDto = new MapScannerEntityDto;
+
+		entityDto.entityId =  ent.GetID().ToString();
+		entityDto.className =  ent.ClassName();
+		entityDto.rotationX = transformation[0];
+		entityDto.rotationY = transformation[1];
+		entityDto.rotationZ = transformation[2];
+		entityDto.coords = transformation[3];
 		
-			entityDto.rotationX = transformation[0];
-			entityDto.rotationY = transformation[1];
-			entityDto.rotationZ = transformation[2];
-			entityDto.coords = transformation[3];
-			
-			VObject mesh = ent.GetVObject();
-			if (mesh) {
-				entityDto.resourceName = mesh.GetResourceName();
-			}
-	
-			shippingService.assemblePackage(entityDto);
+		VObject mesh = ent.GetVObject();
+		if (mesh) {
+			entityDto.resourceName = mesh.GetResourceName();
 		}
 
+		shippingService.assemblePackage(entityDto);
 	}
 
 }
