@@ -83,14 +83,16 @@ class MapScannerProducerConsumer {
 			finishedConsumption = true;
 			transactionManager.commitTransaction();
 		} else if(entities.IsEmpty() == false) {
-			
+			/*
 			int elementsToConsume = Math.Max(
 				entities.Count(), 
 				shippingService.getMaxPackageSizeBeforeTransmission()
 			);
+			*/
 			
 			//for (int i = 0; i < elementsToConsume; i++) {
 				IEntity entity = entities.Get(0);
+				// in trasmit ist der MEMORY LEAK
 				transmit(entity);
 				entities.RemoveOrdered(0);
 				//entities.RemoveItemOrdered(entity);
