@@ -14,6 +14,10 @@ class MapScannerEntitiesShippingServiceProvider {
 
 	void ~MapScannerEntitiesShippingServiceProvider() {
 	}
+	
+	int getMaxPackageSizeBeforeTransmission() {
+		return maxPackageSizeBeforeTransmission;
+	}
 
 	void assemblePackage(MapScannerEntityDto entity) {
 		entitiesPackage.entities.Insert(entity);

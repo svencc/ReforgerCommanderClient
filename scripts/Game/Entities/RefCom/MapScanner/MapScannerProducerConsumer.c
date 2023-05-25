@@ -1,6 +1,8 @@
 class MapScannerProducerConsumer {
 
+	protected bool startedProduction = false;
 	protected bool finishedProduction = false;
+	protected bool startedConsumption = false;
 	protected bool finishedConsumption = false;
 	protected int worldSize;
 	protected int scanRadius;
@@ -10,7 +12,6 @@ class MapScannerProducerConsumer {
 	protected int iterationY;
 	protected string worldFileName
 
-	//protected ref TManagedArray entities = new TManagedArray();
 	protected ref array<IEntity> entities = {};
 	protected ref MapScannerEntitiesShippingServiceProvider shippingService;
 	protected ref MapScannerEntitiesTransactionManager transactionManager
@@ -40,60 +41,78 @@ class MapScannerProducerConsumer {
 	}
 
 	void produce() {
-		PrintFormat("%1: start production of %2 ...", "MapScannerProducerConsumer", worldFileName);
-
 		if (finishedProduction) {
 			return;
-		} else {
-			if (iterationY < predictedScanIterations) {
-				if (iterationX < predictedScanIterations) {
-					vector scanCenter = scanCentreForThisIteration(iterationX, iterationY);
-					PrintFormat("y:%1 x:%2 center:%3", iterationY, iterationX, scanCenter);
-					scanPartition(scanCenter, scanRadius);
-					iterationX++;
-				} else {
-					iterationY++;
-					iterationX = 0;
-				}
+		}
+			
+		if (!startedProduction) {
+			startedProduction = true;
+			PrintFormat("%1: start production of %2 ...", "MapScannerProducerConsumer", worldFileName);
+		}
+	
+		if (iterationY < predictedScanIterations) {
+			if (iterationX < predictedScanIterations) {
+				PrintFormat("y:%1 x:%2", iterationY, iterationX);
+				scanPartitionBoxical(
+					scanBoxMinForThisIteration(iterationX, iterationY),
+					scanBoxMaxForThisIteration(iterationX, iterationY),
+				);
+				iterationX++;
 			} else {
-				finishedProduction = true;
+				iterationY++;
+				iterationX = 0;
 			}
+		} else {
+			finishedProduction = true;
+			PrintFormat("... %1: production completed.", "MapScannerProducerConsumer");
 		}
 
-		PrintFormat("... %1: production completed.", "MapScannerProducerConsumer");
 	}
 	
 	void consume() {
-		PrintFormat("%1: start consumtion ...", "MapScannerProducerConsumer");
-		
 		if (finishedConsumption) {
 			return;
-		} else {
-			if (entities.IsEmpty() && finishedProduction) {
-				finishedConsumption = true;
-				transactionManager.commitTransaction();
-			} else if(entities.IsEmpty() == false) {
-				IEntity entity = entities.Get(0);
-				transmit(entity);
-				entities.RemoveItemOrdered(entity);
-				PrintFormat("... %1: remaining entities to consume.", entities.Count());
-			}
 		}
 		
+		if (!startedConsumption) {
+			startedConsumption = true;
+			PrintFormat("%1: start consumtion ...", "MapScannerProducerConsumer");
+		}
+
+		if (entities.IsEmpty() && finishedProduction) {
+			finishedConsumption = true;
+			transactionManager.commitTransaction();
+		} else if(entities.IsEmpty() == false) {
+			
+			int elementsToConsume = Math.Max(
+				entities.Count(), 
+				shippingService.getMaxPackageSizeBeforeTransmission()
+			);
+			
+			//for (int i = 0; i < elementsToConsume; i++) {
+				IEntity entity = entities.Get(0);
+				transmit(entity);
+				entities.RemoveOrdered(0);
+				//entities.RemoveItemOrdered(entity);
+			//}
+			
+			PrintFormat("... %1: remaining entities to consume.", entities.Count());
+		}
+
 		shippingService.flush();
-		PrintFormat("... %1: consumption completed.", "MapScannerProducerConsumer");
 	}
 
-	private void scanPartition(
-		vector scanCenterParam, 
-		int scanRadiusParam
+	
+	private void scanPartitionBoxical(
+		vector mins, 
+		vector maxs
 	) {
-		GetGame().GetWorld().QueryEntitiesBySphere(
-			scanCenterParam,
-			scanRadiusParam,
+		GetGame().GetWorld().QueryEntitiesByAABB(
+			mins,
+			maxs,
 			queryHitAddEntity,
 			null,
-			EQueryEntitiesFlags.STATIC
+			EQueryEntitiesFlags.ALL
 		);
 	}
 
@@ -103,15 +122,23 @@ class MapScannerProducerConsumer {
 		worldSize = Math.Max(max[0] - min[0], max[2] - min[2]);
 	}
 	
-	private vector scanCentreForThisIteration(int iterationX, int iterationY ) {
+	
+	private vector scanBoxMaxForThisIteration(int iterationX, int iterationY ) {
 		return {
-			halfScanRadius+(iterationX * scanRadius),
+			scanRadius + (iterationX * scanRadius),
 			0,
-			halfScanRadius+(iterationY * scanRadius)
+			scanRadius + (iterationY * scanRadius)
+		};
+	}	
+	private vector scanBoxMinForThisIteration(int iterationX, int iterationY ) {
+		return {
+			(iterationX * scanRadius),
+			0,
+			(iterationY * scanRadius)
 		};
 	}
+		
 	
-
 	private bool queryHitAddEntity(IEntity ent) {
 		if (ent != null) {
 			entities.Insert(ent);
