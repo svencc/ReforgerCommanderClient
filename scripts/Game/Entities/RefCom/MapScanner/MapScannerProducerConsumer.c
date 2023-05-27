@@ -2,37 +2,40 @@ class MapScannerProducerConsumer {
 
 	protected bool startedProduction = false;
 	protected bool finishedProduction = false;
+	
 	protected bool startedConsumption = false;
 	protected bool finishedConsumption = false;
+	
 	protected int worldSize;
-	protected int scanRadius;
-	protected float halfScanRadius;
+	protected int boxScanSize;
+	
 	protected int predictedScanIterations;
 	protected int iterationX;
 	protected int iterationY;
+	
 	protected string worldFileName
 
-	protected ref array<IEntity> entities = {};
-	protected ref MapScannerEntitiesShippingServiceProvider shippingService;
+	protected ref array<IEntity> entitiesQueue = {};
+	protected ref MapScannerEntitiesShippingService shippingService;
 	protected ref MapScannerEntitiesTransactionManager transactionManager
 
 	void MapScannerProducerConsumer(
-		MapScannerEntitiesShippingServiceProvider shippingServiceParameter,
-		int scanRadius
+		MapScannerEntitiesShippingService shippingService,
+		int boxScanSize
 	) {
-		this.shippingService = shippingServiceParameter;
-		init(scanRadius);
+		this.shippingService = shippingService;
+		init(boxScanSize);
 	}
 
 	void ~MapScannerProducerConsumer() {
+		entitiesQueue.Clear()
 	}
 
-	private void init(int scanRadius) {
-		this.scanRadius = scanRadius;
-		halfScanRadius = scanRadius/2;
+	private void init(int boxScanSize) {
+		this.boxScanSize = boxScanSize;
 		determineMapSize();
         worldFileName = GetGame().GetWorldFile();
-		predictedScanIterations = Math.Floor(worldSize/scanRadius);
+		predictedScanIterations = Math.Floor(worldSize/boxScanSize);
 		iterationX = 0;
 		iterationY = 0;
 
@@ -79,26 +82,27 @@ class MapScannerProducerConsumer {
 			PrintFormat("%1: start consumtion ...", "MapScannerProducerConsumer");
 		}
 
-		if (entities.IsEmpty() && finishedProduction) {
+		if (entitiesQueue.IsEmpty() && finishedProduction) {
 			finishedConsumption = true;
+			// known issue; Commit Nachricht überholt das letzte EntityManager Paket
+			// Ansätze: Commit innerhalb des EntityPackages setzen? -> Nein
+			// Ansätze: EntityPackages alle mit Timestamp ausstatten -> dann auf Server darum kümmern und das commitete-Gesamtpaket danach zusammensetzen.
 			transactionManager.commitTransaction();
-		} else if(entities.IsEmpty() == false) {
-			/*
-			int elementsToConsume = Math.Max(
-				entities.Count(), 
+			PrintFormat("%1: consumtion completed.", "MapScannerProducerConsumer");
+		} else if(entitiesQueue.IsEmpty() == false) {
+			
+			int elementsToConsume = Math.Min(
+				entitiesQueue.Count(), 
 				shippingService.getMaxPackageSizeBeforeTransmission()
 			);
-			*/
 			
-			//for (int i = 0; i < elementsToConsume; i++) {
-				IEntity entity = entities.Get(0);
-				// in trasmit ist der MEMORY LEAK
+			for (int i = 0; i < elementsToConsume; i++) {
+				IEntity entity = entitiesQueue.Get(0);
 				transmit(entity);
-				entities.RemoveOrdered(0);
-				//entities.RemoveItemOrdered(entity);
-			//}
+				entitiesQueue.RemoveOrdered(0);
+			}
 			
-			PrintFormat("... %1: remaining entities to consume.", entities.Count());
+			PrintFormat("... %1: remaining entities to consume.", entitiesQueue.Count());
 		}
 
 		shippingService.flush();
@@ -112,7 +116,7 @@ class MapScannerProducerConsumer {
 		GetGame().GetWorld().QueryEntitiesByAABB(
 			mins,
 			maxs,
-			queryHitAddEntity,
+			queryHitAddEntityToQueue,
 			null,
 			EQueryEntitiesFlags.ALL
 		);
@@ -127,23 +131,23 @@ class MapScannerProducerConsumer {
 	
 	private vector scanBoxMaxForThisIteration(int iterationX, int iterationY ) {
 		return {
-			scanRadius + (iterationX * scanRadius),
+			boxScanSize + (iterationX * boxScanSize),
 			0,
-			scanRadius + (iterationY * scanRadius)
+			boxScanSize + (iterationY * boxScanSize)
 		};
 	}	
 	private vector scanBoxMinForThisIteration(int iterationX, int iterationY ) {
 		return {
-			(iterationX * scanRadius),
+			(iterationX * boxScanSize),
 			0,
-			(iterationY * scanRadius)
+			(iterationY * boxScanSize)
 		};
 	}
 		
 	
-	private bool queryHitAddEntity(IEntity ent) {
+	private bool queryHitAddEntityToQueue(IEntity ent) {
 		if (ent != null) {
-			entities.Insert(ent);
+			entitiesQueue.Insert(ent);
 		}
 
 		return true;
