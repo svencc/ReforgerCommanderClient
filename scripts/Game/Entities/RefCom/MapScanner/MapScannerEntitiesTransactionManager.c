@@ -17,11 +17,13 @@ class MapScannerEntitiesTransactionManager {
 	}
 
 	void openTransaction() {
+		transactionIdentifier.packageOrder = 0;
 		transactionIdentifier.Pack();
 		postContext.POST_now(urlOpenTransaction, transactionIdentifier.AsString());
 	}
 
-	void commitTransaction() {
+	void commitTransaction(int sendPackages) {
+		transactionIdentifier.packageOrder = (sendPackages + 1);
 		transactionIdentifier.Pack();
 		postContext.POST_now(urlCommitTransaction, transactionIdentifier.AsString());
 	}

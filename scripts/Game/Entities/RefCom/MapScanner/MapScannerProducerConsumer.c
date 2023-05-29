@@ -39,6 +39,9 @@ class MapScannerProducerConsumer {
 		iterationX = 0;
 		iterationY = 0;
 
+		//finishedProduction=true;
+		//finishedConsumption=true;
+		
         transactionManager = new MapScannerEntitiesTransactionManager(worldFileName);
         transactionManager.openTransaction();
 	}
@@ -84,10 +87,7 @@ class MapScannerProducerConsumer {
 
 		if (entitiesQueue.IsEmpty() && finishedProduction) {
 			finishedConsumption = true;
-			// known issue; Commit Nachricht überholt das letzte EntityManager Paket
-			// Ansätze: Commit innerhalb des EntityPackages setzen? -> Nein
-			// Ansätze: EntityPackages alle mit Timestamp ausstatten -> dann auf Server darum kümmern und das commitete-Gesamtpaket danach zusammensetzen.
-			transactionManager.commitTransaction();
+			transactionManager.commitTransaction(shippingService.getSendPackages());
 			PrintFormat("%1: consumtion completed.", "MapScannerProducerConsumer");
 		} else if(entitiesQueue.IsEmpty() == false) {
 			
