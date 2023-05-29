@@ -22,8 +22,8 @@ class MapScannerEntitiesTransactionManager {
 		postContext.POST_now(urlOpenTransaction, transactionIdentifier.AsString());
 	}
 
-	void commitTransaction(int sendPackages) {
-		transactionIdentifier.packageOrder = (sendPackages + 1);
+	void commitTransaction(int packagesSent) {
+		transactionIdentifier.packageOrder = (packagesSent + 1);
 		transactionIdentifier.Pack();
 		postContext.POST_now(urlCommitTransaction, transactionIdentifier.AsString());
 	}

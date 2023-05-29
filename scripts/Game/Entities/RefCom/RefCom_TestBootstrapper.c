@@ -5,7 +5,7 @@ class RefCom_TestBootstrapperClass: SCR_BaseTriggerEntityClass
 
 class RefCom_TestBootstrapper: SCR_BaseTriggerEntity
 {
-	private ref MapScannerProducerConsumer mapScannerProducerConsumer;
+	private ref MapScanner mapScanner;
 	
 	void ~RefCom_TestBootstrapper() {
 		GetGame().GetCallqueue().Clear();
@@ -15,10 +15,10 @@ class RefCom_TestBootstrapper: SCR_BaseTriggerEntity
 		super.EOnInit(owner);
 		PrintFormat("%1 initialized", "RefCom_TestBootstrapper");
 		if (GetGame().InPlayMode()) {
-			mapScannerProducerConsumer = new MapScannerProducerConsumer(new MapScannerEntitiesShippingService(1000), 150);		
-
-			GetGame().GetCallqueue().CallLater(mapScannerProducerConsumer.produce, 0, true);
-			GetGame().GetCallqueue().CallLater(mapScannerProducerConsumer.consume, 0, true);
+			mapScanner = new MapScanner(new MapScannerEntitiesShippingService(1000), 150);
+					
+			GetGame().GetCallqueue().CallLater(mapScanner.produce, 0, true);
+			GetGame().GetCallqueue().CallLater(mapScanner.consume, 0, true);
 		}
 	}
 	

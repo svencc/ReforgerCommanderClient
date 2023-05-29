@@ -2,15 +2,15 @@ class MapScannerEntitiesShippingService {
 
 	string url = "/api/v1/map-scanner/map-entities";
 
-	private int sendPackages;
+	private int packagesSent;
 	private int maxPackageSizeBeforeTransmission;
 	private ref RestContext postContext;
-	private ref MapScannerEntityPackageDto entitiesPackage;
+	private ref TransactionalMapScannerEntityPackageDto entitiesPackage;
 
 	void MapScannerEntitiesShippingService(int maxPackageSize) {
 		resetSendPackagesCounter();
 		maxPackageSizeBeforeTransmission = maxPackageSize;
-		entitiesPackage = new MapScannerEntityPackageDto();
+		entitiesPackage = new TransactionalMapScannerEntityPackageDto();
 		postContext = GetGame().GetRestApi().GetContext("localhost:8080");
 	}
 	
@@ -19,19 +19,25 @@ class MapScannerEntitiesShippingService {
 	}
 	
 	void resetSendPackagesCounter() {
-		sendPackages = 0;
+		packagesSent = 0;
 	}
 	
-	int getSendPackages() {
-		return sendPackages;
+	int getPackagesSent() {
+		return packagesSent;
 	}
 	
 	int provideIncreasedPackageCount() {
-		return (sendPackages + 1);
+		packagesSent++;
+		
+		return packagesSent;
 	}
 	
 	int getMaxPackageSizeBeforeTransmission() {
 		return maxPackageSizeBeforeTransmission;
+	}
+	
+	void preparePackage(string worldName) {
+		entitiesPackage.sessionIdentifier = worldName;
 	}
 
 	void assemblePackage(MapScannerEntityDto entity) {
@@ -40,7 +46,6 @@ class MapScannerEntitiesShippingService {
 			flush();
 			entitiesPackage.entities.Clear();
 		}
-
 	}
 
 	void flush() {
