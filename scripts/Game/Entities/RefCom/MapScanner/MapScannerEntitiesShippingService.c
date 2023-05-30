@@ -18,7 +18,7 @@ class MapScannerEntitiesShippingService {
 	void ~MapScannerEntitiesShippingService() {
 	}
 	
-	void resetSendPackagesCounter() {
+	private void resetSendPackagesCounter() {
 		packagesSent = 0;
 	}
 	
@@ -26,7 +26,7 @@ class MapScannerEntitiesShippingService {
 		return packagesSent;
 	}
 	
-	int provideIncreasedPackageCount() {
+	private int provideIncreasedPackageCount() {
 		packagesSent++;
 		
 		return packagesSent;
@@ -44,7 +44,6 @@ class MapScannerEntitiesShippingService {
 		entitiesPackage.entities.Insert(entity);
 		if (entitiesPackage.entities.Count() > maxPackageSizeBeforeTransmission) {
 			flush();
-			entitiesPackage.entities.Clear();
 		}
 	}
 
@@ -53,6 +52,7 @@ class MapScannerEntitiesShippingService {
 			entitiesPackage.packageOrder = provideIncreasedPackageCount();
 			entitiesPackage.Pack();
 			postContext.POST_now(url, entitiesPackage.AsString());	
+			entitiesPackage.entities.Clear();
 		}
 	}
 

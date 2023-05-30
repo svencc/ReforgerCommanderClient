@@ -86,6 +86,7 @@ class MapScanner {
 
 		if (entitiesQueue.IsEmpty() && finishedProduction) {
 			finishedConsumption = true;
+			shippingService.flush();
 			transactionManager.commitTransaction(shippingService.getPackagesSent());
 			PrintFormat("%1: consumtion completed.", "MapScannerProducerConsumer");
 		} else if(entitiesQueue.IsEmpty() == false) {
@@ -103,8 +104,6 @@ class MapScanner {
 			
 			PrintFormat("... %1: remaining entities to consume.", entitiesQueue.Count());
 		}
-
-		shippingService.flush();
 	}
 
 	
@@ -159,11 +158,12 @@ class MapScanner {
 		MapScannerEntityDto entityDto = new MapScannerEntityDto;
 
 		entityDto.entityId =  ent.GetID().ToString();
+		entityDto.name =  ent.GetName();
 		entityDto.className =  ent.ClassName();
 		entityDto.rotationX = transformation[0];
 		entityDto.rotationY = transformation[1];
 		entityDto.rotationZ = transformation[2];
-		entityDto.coords = transformation[3];
+		entityDto.coordinates = transformation[3];
 		
 		VObject mesh = ent.GetVObject();
 		if (mesh) {
