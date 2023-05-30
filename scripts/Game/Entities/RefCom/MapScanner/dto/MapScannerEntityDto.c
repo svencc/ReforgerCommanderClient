@@ -3,6 +3,7 @@ class MapScannerEntityDto : JsonApiStruct {
 	string entityId;
 	string name;
 	string className;
+	string prefabName;
 	string resourceName;
 	vector rotationX;
 	vector rotationY;
@@ -14,6 +15,7 @@ class MapScannerEntityDto : JsonApiStruct {
 		RegV("entityId");
 		RegV("name");
 		RegV("className");
+		RegV("prefabName");
 		RegV("resourceName");
 		RegV("rotationX");
 		RegV("rotationY");

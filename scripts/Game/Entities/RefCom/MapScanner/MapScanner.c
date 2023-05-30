@@ -159,6 +159,7 @@ class MapScanner {
 
 		entityDto.entityId =  ent.GetID().ToString();
 		entityDto.name =  ent.GetName();
+
 		entityDto.className =  ent.ClassName();
 		entityDto.rotationX = transformation[0];
 		entityDto.rotationY = transformation[1];
@@ -169,6 +170,15 @@ class MapScanner {
 		if (mesh) {
 			entityDto.resourceName = mesh.GetResourceName();
 		}
+		
+		EntityPrefabData prefab = ent.GetPrefabData();
+		if (prefab) {
+			ResourceName prefabName = prefab.GetPrefabName();
+			if (prefabName) {
+				entityDto.prefabName = prefabName.GetPath();
+			}
+		}
+		
 
 		shippingService.assemblePackage(entityDto);
 	}
