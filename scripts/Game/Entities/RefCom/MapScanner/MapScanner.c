@@ -105,7 +105,6 @@ class MapScanner {
 			PrintFormat("... %1: remaining entities to consume.", entitiesQueue.Count());
 		}
 	}
-
 	
 	private void scanPartitionBoxical(
 		vector mins, 
@@ -126,7 +125,6 @@ class MapScanner {
 		worldSize = Math.Max(max[0] - min[0], max[2] - min[2]);
 	}
 	
-	
 	private vector scanBoxMaxForThisIteration(int iterationX, int iterationY ) {
 		return {
 			boxScanSize + (iterationX * boxScanSize),
@@ -134,6 +132,7 @@ class MapScanner {
 			boxScanSize + (iterationY * boxScanSize)
 		};
 	}	
+	
 	private vector scanBoxMinForThisIteration(int iterationX, int iterationY ) {
 		return {
 			(iterationX * boxScanSize),
@@ -141,7 +140,6 @@ class MapScanner {
 			(iterationY * boxScanSize)
 		};
 	}
-		
 	
 	private bool queryHitAddEntityToQueue(IEntity ent) {
 		if (ent != null) {
@@ -177,6 +175,11 @@ class MapScanner {
 			if (prefabName) {
 				entityDto.prefabName = prefabName.GetPath();
 			}
+		}
+		
+		MapDescriptorComponent mapdesc = MapDescriptorComponent.Cast(ent.FindComponent(MapDescriptorComponent));
+		if (mapdesc) {	
+			entityDto.mapDescriptorType = typename.EnumToString(EMapDescriptorType, mapdesc.GetBaseType());;
 		}
 		
 
