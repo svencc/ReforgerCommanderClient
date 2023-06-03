@@ -1,17 +1,17 @@
-class JSONRestDemonstration {
+class RefCom_JSONRestDemonstration {
 
-	void JSONRestDemonstration() {
+	void RefCom_JSONRestDemonstration() {
 		PrintFormat("%1 Constructor called", "JSONRestDemonstration");
 	}
 
-	void ~JSONRestDemonstration() {
+	void ~RefCom_JSONRestDemonstration() {
 		PrintFormat("%1 Destructor called", "JSONRestDemonstration");
 	}
 
 	void demonstrate() {
 		// #GET CALL:
 		// create GET RESTCallback
-		DemonstrationDataRestCallback getCallback = new DemonstrationDataRestCallback;
+		RefCom_DemonstrationDataRestCallback getCallback = new RefCom_DemonstrationDataRestCallback;
 
 		// Get REST Context
 		RestContext getContext = GetGame().GetRestApi().GetContext("127.0.0.1:8080");
@@ -19,13 +19,13 @@ class JSONRestDemonstration {
 
 		// #POST CALL:
 		// create POST RESTCallback
-		DemonstrationDataRestCallback postCallback = new DemonstrationDataRestCallback;
+		RefCom_DemonstrationDataRestCallback postCallback = new RefCom_DemonstrationDataRestCallback;
 
-		TestDataDto td = new TestDataDto;
+		RefCom_TestDataDto td = new RefCom_TestDataDto;
 		td.setStringValue("new-string-value");
 
-		NestedTestDataDto ntd1 = new NestedTestDataDto;
-		NestedTestDataDto ntd2 = new NestedTestDataDto;
+		RefCom_NestedTestDataDto ntd1 = new RefCom_NestedTestDataDto;
+		RefCom_NestedTestDataDto ntd2 = new RefCom_NestedTestDataDto;
 		ntd1.setStringValue("first-string-value");
 		ntd1.setNumberValue(42);
 

@@ -1,4 +1,4 @@
-class NestedTestDataDto : JsonApiStruct {
+class RefCom_NestedTestDataDto : JsonApiStruct {
 
 	string stringValue;
 	float numberValue;
@@ -24,7 +24,7 @@ class NestedTestDataDto : JsonApiStruct {
 	}
 
 	// You need to configure (de-)serializer here in constructor via RegV(...)
-	void NestedTestDataDto()
+	void RefCom_NestedTestDataDto()
 	{
 		RegV("stringValue");
 		RegV("numberValue");

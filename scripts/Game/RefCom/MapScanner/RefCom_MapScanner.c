@@ -1,4 +1,4 @@
-class MapScanner {
+class RefCom_MapScanner {
 
 	protected bool startedProduction = false;
 	protected bool finishedProduction = false;
@@ -16,11 +16,11 @@ class MapScanner {
 	protected string worldFileName
 
 	protected ref array<IEntity> entitiesQueue = {};
-	protected ref MapScannerEntitiesShippingService shippingService;
-	protected ref MapScannerEntitiesTransactionManager transactionManager
+	protected ref RefCom_MapScannerEntitiesShippingService shippingService;
+	protected ref RefCom_MapScannerEntitiesTransactionManager transactionManager
 
-	void MapScanner(
-		MapScannerEntitiesShippingService shippingService,
+	void RefCom_MapScanner(
+		RefCom_MapScannerEntitiesShippingService shippingService,
 		int boxScanSize
 	) {
 		this.shippingService = shippingService;
@@ -29,7 +29,7 @@ class MapScanner {
 		init(boxScanSize);
 	}
 
-	void ~MapScanner() {
+	void ~RefCom_MapScanner() {
 		entitiesQueue.Clear()
 	}
 
@@ -40,7 +40,7 @@ class MapScanner {
 		iterationX = 0;
 		iterationY = 0;
 		
-        transactionManager = new MapScannerEntitiesTransactionManager(worldFileName);
+        transactionManager = new RefCom_MapScannerEntitiesTransactionManager(worldFileName);
         shippingService.preparePackage(worldFileName);
         transactionManager.openTransaction();
 	}
@@ -153,7 +153,7 @@ class MapScanner {
 		vector transformation[4];
 		ent.GetTransform(transformation);
 
-		MapScannerEntityDto entityDto = new MapScannerEntityDto;
+		RefCom_MapScannerEntityDto entityDto = new RefCom_MapScannerEntityDto;
 
 		entityDto.entityId =  ent.GetID().ToString();
 		entityDto.name =  ent.GetName();

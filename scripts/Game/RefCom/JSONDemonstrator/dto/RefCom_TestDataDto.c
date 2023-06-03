@@ -1,7 +1,7 @@
-class TestDataDto : JsonApiStruct {
+class RefCom_TestDataDto : JsonApiStruct {
 
 	string stringValue;
-	ref array<ref NestedTestDataDto> nestedDataList = {};
+	ref array<ref RefCom_NestedTestDataDto> nestedDataList = {};
 
 	string getStringValue() {
 		return stringValue;
@@ -10,13 +10,13 @@ class TestDataDto : JsonApiStruct {
 		stringValue = newValue;
 	}
 
-	array<ref NestedTestDataDto> getNestedDataList() {
+	array<ref RefCom_NestedTestDataDto> getNestedDataList() {
 		return nestedDataList;
 	}
-	void setNestedDataList(array<ref NestedTestDataDto> newValue) {
+	void setNestedDataList(array<ref RefCom_NestedTestDataDto> newValue) {
 		nestedDataList = newValue;
 	}
-	void addNestedDataList(NestedTestDataDto newValue) {
+	void addNestedDataList(RefCom_NestedTestDataDto newValue) {
 		nestedDataList.Insert(newValue);
 	}
 
@@ -28,7 +28,7 @@ class TestDataDto : JsonApiStruct {
 	}
 
 	// You need to configure (de-)serializer here in constructor via RegV(...)
-	void TestDataDto() {
+	void RefCom_TestDataDto() {
 		RegV("stringValue");
 		RegV("nestedDataList");
 	}

@@ -1,11 +1,11 @@
-class DemonstrationDataRestCallback : RestCallback {
+class RefCom_DemonstrationDataRestCallback : RestCallback {
 
 	override void OnSuccess( string data, int dataSize )
 	{
 		PrintFormat("%1 OnSuccess called ", "DemonstrationDataRestCallback");
 		// Print(data);
 
-		TestDataDto json = new TestDataDto;
+		RefCom_TestDataDto json = new RefCom_TestDataDto;
 		json.ExpandFromRAW(data);
 
 		Print("1 string-value");

@@ -1,19 +1,19 @@
-class MapScannerEntitiesTransactionManager {
+class RefCom_MapScannerEntitiesTransactionManager {
 
 	string urlOpenTransaction = "/api/v1/map-scanner/transaction/open";
 	string urlCommitTransaction = "/api/v1/map-scanner/transaction/commit";
 
 	private ref RestContext postContext;;
-	private ref TransactionIdentifierDto transactionIdentifier;
+	private ref RefCom_TransactionIdentifierDto transactionIdentifier;
 
-	void MapScannerEntitiesTransactionManager(string sessionIdentifier) {
-		transactionIdentifier = new TransactionIdentifierDto();
+	void RefCom_MapScannerEntitiesTransactionManager(string sessionIdentifier) {
+		transactionIdentifier = new RefCom_TransactionIdentifierDto();
 		transactionIdentifier.sessionIdentifier = sessionIdentifier;
 		
 		postContext = GetGame().GetRestApi().GetContext("localhost:8080");
 	}
 
-	void ~MapScannerEntitiesTransactionManager() {
+	void ~RefCom_MapScannerEntitiesTransactionManager() {
 	}
 
 	void openTransaction() {
