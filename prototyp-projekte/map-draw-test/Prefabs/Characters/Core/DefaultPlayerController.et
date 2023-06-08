@@ -1,0 +1,15 @@
+SCR_PlayerController {
+ ID "1A9BA6BEFA06E3B1"
+ components {
+  SCR_HUDManagerComponent "{2FDC275D9EBCDB8B}" {
+   InfoDisplays {
+    Menu "{5D8858307DB5790A}" {
+     m_LayoutPath "{6C5AD87BD412F5BB}UI/layouts/Boy.layout"
+    }
+   }
+  }
+  SCR_PlayerControllerCommandingComponent "{5A7CC0F22BDDB868}" {
+   Enabled 1
+  }
+ }
+}
