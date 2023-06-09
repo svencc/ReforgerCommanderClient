@@ -1,0 +1,15 @@
+MetaFileClass {
+ Name "{B32EB02C5303B6C7}worlds/Everon_CTI/RefCom_CTI_Campaign_Eden.ent"
+ Configurations {
+  ENTResourceClass PC {
+  }
+  ENTResourceClass XBOX_ONE : PC {
+  }
+  ENTResourceClass XBOX_SERIES : PC {
+  }
+  ENTResourceClass PS4 : PC {
+  }
+  ENTResourceClass HEADLESS : PC {
+  }
+ }
+}
