@@ -1,16 +1,16 @@
 [BaseContainerProps()]
-class RefCom_MapModuleRenderer  : SCR_MapModuleBase {
+class RefCom_MapModule  : SCR_MapModuleBase {
 	
 	protected Widget layoutWidget;
 	protected CanvasWidget canvas;
 	protected ref array<ref CanvasWidgetCommand> renderCommands;
 	protected ResourceName layout = "{5D8727C1F109D98D}UI/Layouts/Map/CanvasLayer.layout";
 	
-	void RefCom_MapModuleRenderer() {
+	void RefCom_MapModule() {
 		Print("I am being constructed!");
 	}
 	
-	void ~RefCom_MapModuleRenderer()	{
+	void ~RefCom_MapModule()	{
 		Print("I am being destroyed!");
 	}
 	
