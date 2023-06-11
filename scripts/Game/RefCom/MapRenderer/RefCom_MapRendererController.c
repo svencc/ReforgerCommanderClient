@@ -5,7 +5,9 @@ class RefCom_MapRendererController {
 	protected ref RefCom_ClusterListDto clusterList
 	
 	void RefCom_MapRendererController() {
-		init();
+		mapModule = RefCom_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RefCom_MapModule));
+		restAdapter = new RefCom_ClusteringRestAdapter();
+		clusterList = restAdapter.provideClusterData(GetGame().GetWorldFile());
 	}
 	
 	void ~RefCom_MapRendererController()	{
@@ -14,15 +16,14 @@ class RefCom_MapRendererController {
 		delete clusterList;
 	}
 	
-	private void init() {
-		Print("init");
-		mapModule = RefCom_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RefCom_MapModule));
-		restAdapter = new RefCom_ClusteringRestAdapter();
-		clusterList = restAdapter.provideClusterData(GetGame().GetWorldFile());
-	}
-	
 	void renderClusterList() {
-		Print("render");
+		if(mapModule) {
+			Print("renderClusterList to mapModule ...");
+		} else {
+			// Establish controller connection to mapModule as soon it is available!
+			mapModule = RefCom_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RefCom_MapModule));
+		}
+
 	}
 	
 	

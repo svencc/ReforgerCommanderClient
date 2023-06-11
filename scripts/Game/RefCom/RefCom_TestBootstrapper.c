@@ -31,7 +31,7 @@ class RefCom_TestBootstrapper: SCR_BaseTriggerEntity
 			PrintFormat("%1 run %2", "RefCom_TestBootstrapper", "RefCom_MapRendererController");
 			mapRendererController = new RefCom_MapRendererController();
 			
-			GetGame().GetCallqueue().CallLater(mapRendererController.renderClusterList, 1000, false);
+			GetGame().GetCallqueue().CallLater(mapRendererController.renderClusterList, 1000, true);
 		}
 
 	}
