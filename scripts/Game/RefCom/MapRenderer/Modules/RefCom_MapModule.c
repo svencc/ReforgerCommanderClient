@@ -4,6 +4,7 @@ class RefCom_MapModule  : SCR_MapModuleBase {
 	protected Widget layoutWidget;
 	protected CanvasWidget canvas;
 	protected ref array<ref CanvasWidgetCommand> renderCommands;
+	protected ref array<ref RefCom_MapDrawCommandBase> drawCommands;
 	protected ResourceName layout = "{5D8727C1F109D98D}UI/Layouts/Map/CanvasLayer.layout";
 	
 	void RefCom_MapModule() {
@@ -14,6 +15,15 @@ class RefCom_MapModule  : SCR_MapModuleBase {
 	
 	override void Init() {
 		renderCommands = new array<ref CanvasWidgetCommand>();
+		drawCommands = new array<ref RefCom_MapDrawCommandBase>();
+	}
+	
+	void addDrawCommand(RefCom_MapDrawCommandBase drawCommand) {
+		drawCommands.Insert(drawCommand);
+	}
+	
+	void clearDrawCommands() {
+		drawCommands.Clear();
 	}
 	
 	override void OnMapOpen(MapConfiguration config) {
@@ -30,6 +40,11 @@ class RefCom_MapModule  : SCR_MapModuleBase {
 	void Render()	{		
 		renderCommands.Clear();
 
+		foreach(RefCom_MapDrawCommandBase drawCommand : drawCommands) {
+			drawCommand.drawTo(this);
+		};
+		
+		/*
 		renderCircle("1000 0 1000", 50.0, ARGB(255, 255, 0, 0) );
 		renderCircle("1100 0 1100", 100.0, ARGB(255, 0, 255, 0) );
 		renderCircle("1200 0 1200", 75.0, ARGB(255, 0, 0, 255) );
@@ -44,6 +59,9 @@ class RefCom_MapModule  : SCR_MapModuleBase {
 		
 		renderRectangle("2000 0 1000", "3000 0 2000", ARGB(255, 0, 0, 255));
 		renderRectangleOutlined("3150 0 1150", "3850 0 1850", ARGB(255, 0, 0, 255), 2.0, ARGB(255, 255, 0, 0));
+		*/
+		
+		
 		
 		//renderLineRectangled("450 0 450", "650 0 650", 2.0, ARGB(255, 0, 0, 255));
 		//renderLineRectangledOutlined("150 0 1150", "850 0 850", 10.0, ARGB(255, 0, 0, 255), 2.0, ARGB(255, 255, 0, 0));		
