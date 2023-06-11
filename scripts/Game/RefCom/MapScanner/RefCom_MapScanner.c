@@ -33,7 +33,7 @@ class RefCom_MapScanner {
 		entitiesQueue.Clear()
 	}
 
-	private void init(int boxScanSize) {
+	protected void init(int boxScanSize) {
 		determineMapSize();
         worldFileName = GetGame().GetWorldFile();
 		predictedScanIterations = Math.Floor(worldSize/boxScanSize);
@@ -88,7 +88,7 @@ class RefCom_MapScanner {
 			finishedConsumption = true;
 			shippingService.flush();
 			transactionManager.commitTransaction(shippingService.getPackagesSent());
-			PrintFormat("%1: consumtion completed.", "MapScannerProducerConsumer");
+			PrintFormat("%1: consumption completed.", "MapScannerProducerConsumer");
 		} else if(entitiesQueue.IsEmpty() == false) {
 			
 			int elementsToConsume = Math.Min(
@@ -106,7 +106,7 @@ class RefCom_MapScanner {
 		}
 	}
 	
-	private void scanPartitionBoxical(
+	protected void scanPartitionBoxical(
 		vector mins, 
 		vector maxs
 	) {
@@ -119,13 +119,13 @@ class RefCom_MapScanner {
 		);
 	}
 
-	private void determineMapSize() {
+	protected void determineMapSize() {
 		vector min, max;
 		GetGame().GetWorldEntity().GetWorldBounds(min, max);
 		worldSize = Math.Max(max[0] - min[0], max[2] - min[2]);
 	}
 	
-	private vector scanBoxMaxForThisIteration(int iterationX, int iterationY ) {
+	protected vector scanBoxMaxForThisIteration(int iterationX, int iterationY ) {
 		return {
 			boxScanSize + (iterationX * boxScanSize),
 			0,
@@ -133,7 +133,7 @@ class RefCom_MapScanner {
 		};
 	}	
 	
-	private vector scanBoxMinForThisIteration(int iterationX, int iterationY ) {
+	protected vector scanBoxMinForThisIteration(int iterationX, int iterationY ) {
 		return {
 			(iterationX * boxScanSize),
 			0,
@@ -141,7 +141,7 @@ class RefCom_MapScanner {
 		};
 	}
 	
-	private bool queryHitAddEntityToQueue(IEntity ent) {
+	protected bool queryHitAddEntityToQueue(IEntity ent) {
 		if (ent != null) {
 			entitiesQueue.Insert(ent);
 		}
@@ -149,7 +149,7 @@ class RefCom_MapScanner {
 		return true;
 	}
 	
-	private void transmit(IEntity ent) {
+	protected void transmit(IEntity ent) {
 		vector transformation[4];
 		ent.GetTransform(transformation);
 

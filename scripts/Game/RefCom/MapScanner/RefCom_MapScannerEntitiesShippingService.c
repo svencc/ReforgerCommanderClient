@@ -1,24 +1,20 @@
 class RefCom_MapScannerEntitiesShippingService {
 
-	string url = "/api/v1/map-scanner/map-entities";
-
-	private int packagesSent;
-	private int maxPackageSizeBeforeTransmission;
-	private ref RestContext postContext;
-	private ref RefCom_TransactionalMapScannerEntityPackageDto entitiesPackage;
+	protected int packagesSent;
+	protected int maxPackageSizeBeforeTransmission;
+	protected ref RefCom_TransactionalMapScannerEntityPackageDto entitiesPackage;
 
 	void RefCom_MapScannerEntitiesShippingService(int maxPackageSize) {
 		resetSendPackagesCounter();
 		maxPackageSizeBeforeTransmission = maxPackageSize;
 		entitiesPackage = new RefCom_TransactionalMapScannerEntityPackageDto();
-		postContext = GetGame().GetRestApi().GetContext("localhost:8080");
 	}
 	
 
 	void ~RefCom_MapScannerEntitiesShippingService() {
 	}
 	
-	private void resetSendPackagesCounter() {
+	protected void resetSendPackagesCounter() {
 		packagesSent = 0;
 	}
 	
@@ -26,7 +22,7 @@ class RefCom_MapScannerEntitiesShippingService {
 		return packagesSent;
 	}
 	
-	private int provideIncreasedPackageCount() {
+	protected int provideIncreasedPackageCount() {
 		packagesSent++;
 		
 		return packagesSent;
@@ -51,7 +47,7 @@ class RefCom_MapScannerEntitiesShippingService {
 		if (entitiesPackage.entities.IsEmpty() == false) {
 			entitiesPackage.packageOrder = provideIncreasedPackageCount();
 			entitiesPackage.Pack();
-			postContext.POST_now(url, entitiesPackage.AsString());	
+			GetGame().GetRestApi().GetContext(APIs.host).POST_now(APIs.POST_MAP_SCANNER_TRANSACTION_ENTITIES, entitiesPackage.AsString());	
 			entitiesPackage.entities.Clear();
 		}
 	}

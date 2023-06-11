@@ -5,18 +5,22 @@ class RefCom_TestBootstrapperClass: SCR_BaseTriggerEntityClass
 
 class RefCom_TestBootstrapper: SCR_BaseTriggerEntity
 {
-	private ref RefCom_MapScanner mapScanner;
-	private ref RefCom_MapRendererController mapRenderer;
+	protected ref RefCom_MapScanner mapScanner;
+	protected ref RefCom_MapRendererController mapRendererController;
 
 	void ~RefCom_TestBootstrapper() {
 		GetGame().GetCallqueue().Clear();
+		delete mapScanner;
+		delete mapRendererController;
 	}
 	
 	override void EOnInit(IEntity owner) {
 		super.EOnInit(owner);
 		PrintFormat("%1 initialized", "RefCom_TestBootstrapper");
+		
+		//if (GetGame().InPlayMode()) {
 		if (false) {
-			PrintFormat("%1 run %2", "RefCom_TestBootstrapper", "MapScanner");
+			PrintFormat("%1 run %2", "RefCom_TestBootstrapper", "RefCom_MapScanner");
 			mapScanner = new RefCom_MapScanner(new RefCom_MapScannerEntitiesShippingService(500), 150);
 					
 			GetGame().GetCallqueue().CallLater(mapScanner.produce, 0, true);
@@ -24,8 +28,10 @@ class RefCom_TestBootstrapper: SCR_BaseTriggerEntity
 		}
 		
 		if (GetGame().InPlayMode()) {
-			mapRenderer = new RefCom_MapRendererController();
-			GetGame().GetCallqueue().CallLater(mapRenderer.render, 1000, true);
+			PrintFormat("%1 run %2", "RefCom_TestBootstrapper", "RefCom_MapRendererController");
+			mapRendererController = new RefCom_MapRendererController();
+			
+			GetGame().GetCallqueue().CallLater(mapRendererController.renderClusterList, 1000, false);
 		}
 
 	}

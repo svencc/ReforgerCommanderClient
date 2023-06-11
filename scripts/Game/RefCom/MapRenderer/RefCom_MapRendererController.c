@@ -1,21 +1,27 @@
 class RefCom_MapRendererController {
 	
-	protected RefCom_MapModule mapModule;
-	protected SCR_MapEntity mapEntity;
+	protected ref RefCom_ClusteringRestAdapter restAdapter;
+	protected ref RefCom_MapModule mapModule;
+	protected ref RefCom_ClusterListDto clusterList
 	
 	void RefCom_MapRendererController() {
 		init();
 	}
 	
 	void ~RefCom_MapRendererController()	{
+		delete restAdapter;
+		delete mapModule;
+		delete clusterList;
 	}
 	
 	private void init() {
-		mapEntity = SCR_MapEntity.GetMapInstance();
+		Print("init");
 		mapModule = RefCom_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RefCom_MapModule));
+		restAdapter = new RefCom_ClusteringRestAdapter();
+		clusterList = restAdapter.provideClusterData(GetGame().GetWorldFile());
 	}
 	
-	void render() {
+	void renderClusterList() {
 		Print("render");
 	}
 	

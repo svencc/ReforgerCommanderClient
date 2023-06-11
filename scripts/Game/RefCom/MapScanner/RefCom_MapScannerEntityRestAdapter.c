@@ -1,11 +1,9 @@
 class RefCom_MapScannerEntityRestAdapter {
 
-	string url = "/api/v1/map-scanner/map-entity";
-	
-	private ref RestContext postContext;
+	protected ref RestContext postContext;
 
 	void RefCom_MapScannerEntityRestAdapter() {
-		postContext = GetGame().GetRestApi().GetContext("localhost:8080");
+		postContext = GetGame().GetRestApi().GetContext(APIs.host);
 	}
 
 	void ~RefCom_MapScannerEntityRestAdapter() {
@@ -14,7 +12,7 @@ class RefCom_MapScannerEntityRestAdapter {
 	
 	void post(RefCom_MapScannerEntityDto entity) {
 		entity.Pack();
-		postContext.POST_now(url, entity.AsString());
+		postContext.POST_now(APIs.POST_MAP_SCANNER_TRANSACTION_ENTITIES, entity.AsString());
 	}
 
 }
