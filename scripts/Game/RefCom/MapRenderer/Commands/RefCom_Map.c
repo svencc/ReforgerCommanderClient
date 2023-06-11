@@ -5,18 +5,25 @@ class RefCom_Map {
 	
 	
 	// POLYGON
-	/*
-	static RefCom_MapDrawPolygonCommand drawPolygon() {
+	static RefCom_MapDrawPolygonCommand drawPolygon(array<vector> points, int color) {
 		RefCom_MapDrawPolygonCommand rectangleCommand = new RefCom_MapDrawPolygonCommand();
+		rectangleCommand.points = points;
+		rectangleCommand.color = color;
 		
 		return rectangleCommand;
 
 	}
-	static RefCom_MapDrawPolygonOutlinedCommand drawPolygonOutlined() {
+	static RefCom_MapDrawPolygonOutlinedCommand drawPolygonOutlined(array<vector> points, int color, float outlineWidth, int outlineColor) {
 		RefCom_MapDrawPolygonOutlinedCommand rectangleCommand = new RefCom_MapDrawPolygonOutlinedCommand();
+		rectangleCommand.points = points;
+		rectangleCommand.color = color;
+		rectangleCommand.outlineWidth = outlineWidth;
+		rectangleCommand.outlineColor = outlineColor;
+		
+		return rectangleCommand;
 
 	}
-	*/
+
 	
 	
 
