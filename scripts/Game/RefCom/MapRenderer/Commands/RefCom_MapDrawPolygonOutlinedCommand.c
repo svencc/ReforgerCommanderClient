@@ -1,6 +1,6 @@
 class RefCom_MapDrawPolygonOutlinedCommand : RefCom_MapDrawCommandBase {
 	
-	array<vector> points;
+	ref array<vector> points;
 	int color; 
 	float outlineWidth; 
 	int outlineColor;

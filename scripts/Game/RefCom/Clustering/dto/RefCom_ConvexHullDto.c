@@ -1,13 +1,13 @@
 class RefCom_ConvexHullDto : JsonApiStruct {
 
-    ref array<ref RefCom_Point2DDto> lines = {};
+    ref array<ref RefCom_Point2DDto> points = {};
 
 	void RefCom_ConvexHullDto() {
-		RegV("lines");
+		RegV("points");
 	}
 
 	void ~RefCom_ConvexHullDto() {
-		lines.Clear();
+		points.Clear();
 	}
 
 }

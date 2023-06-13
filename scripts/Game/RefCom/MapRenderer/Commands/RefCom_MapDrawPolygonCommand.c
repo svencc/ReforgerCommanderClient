@@ -1,6 +1,6 @@
 class RefCom_MapDrawPolygonCommand : RefCom_MapDrawCommandBase {
 	
-	array<vector> points; 
+	ref array<vector> points; 
 	int color;
 	
 	override void drawTo(RefCom_MapModule mapModule) {

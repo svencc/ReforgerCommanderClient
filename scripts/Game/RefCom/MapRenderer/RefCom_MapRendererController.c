@@ -2,26 +2,59 @@ class RefCom_MapRendererController {
 	
 	protected ref RefCom_ClusteringRestAdapter restAdapter;
 	protected ref RefCom_MapModule mapModule;
-	protected ref RefCom_ClusterListDto clusterList
+	protected ref RefCom_ClusterBuffer clusterBuffer
 	
 	void RefCom_MapRendererController() {
 		mapModule = RefCom_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RefCom_MapModule));
-		restAdapter = new RefCom_ClusteringRestAdapter();
-		clusterList = restAdapter.provideClusterData(GetGame().GetWorldFile());
+		clusterBuffer = new RefCom_ClusterBuffer();
+		restAdapter = new RefCom_ClusteringRestAdapter(clusterBuffer);
 	}
 	
 	void ~RefCom_MapRendererController()	{
 		delete restAdapter;
 		delete mapModule;
-		delete clusterList;
+		delete clusterBuffer;
 	}
 	
 	void renderClusterList() {
 		if(mapModule) {
 			Print("renderClusterList to mapModule ...");
-			
 			mapModule.clearDrawCommands();
 			
+			restAdapter.provideClusterData(GetGame().GetWorldFile());
+			
+			
+			if (clusterBuffer.hasData()) {
+				RefCom_ClusterListDto listDto = clusterBuffer.read();
+				foreach(RefCom_ClusterDto cluster : listDto.clusterList) {
+					
+					if (cluster.convexHull) {
+						array<vector> polygon = {};
+						foreach(RefCom_Point2DDto edge : cluster.convexHull.points) {
+							vector point = {edge.x, 0, edge.y};
+							polygon.Insert(point);
+						}
+						
+						mapModule.addDrawCommand(
+							RefCom_Map.drawPolygon(polygon, ARGB(127, 255, 255, 0) )
+						);
+					}
+					
+					if (cluster.points) {
+						foreach( RefCom_Point2DDto point : cluster.points) {					
+							vector center = {point.x, 0, point.y};
+							mapModule.addDrawCommand(
+								RefCom_Map.drawCircle(center, 2.0, ARGB(255, 255, 0, 0), 3)
+							);
+						}
+					}
+					
+
+				}					
+			}
+			
+
+			/*
 			auto c1 = RefCom_Map.drawCircle("1000 0 1000", 50.0, ARGB(255, 255, 0, 0) );
 			auto c2 = RefCom_Map.drawCircle("1100 0 1100", 100.0, ARGB(255, 0, 255, 0) );
 			auto c3 = RefCom_Map.drawCircle("1200 0 1200", 75.0, ARGB(255, 0, 0, 255) );
@@ -49,6 +82,7 @@ class RefCom_MapRendererController {
 			mapModule.addDrawCommand(c7);
 			mapModule.addDrawCommand(r1);
 			mapModule.addDrawCommand(r2);
+			*/
 
 		} else {
 			// Establish controller connection to mapModule as soon it is available!

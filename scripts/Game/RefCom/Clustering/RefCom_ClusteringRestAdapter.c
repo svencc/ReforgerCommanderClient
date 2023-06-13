@@ -1,24 +1,23 @@
 class RefCom_ClusteringRestAdapter {
+	
+	ref RefCom_ClusteringDataRestCallback clustersCallback;
 
-	void RefCom_ClusteringRestAdapter() {
+	void RefCom_ClusteringRestAdapter(RefCom_ClusterBuffer clusterBuffer) {
+		clustersCallback = new RefCom_ClusteringDataRestCallback(clusterBuffer);
 	}
 
 	void ~RefCom_ClusteringRestAdapter() {
+		delete clustersCallback;
 	}
 	
-	RefCom_ClusterListDto provideClusterData(string mapName) {
+	void provideClusterData(string mapName) {
 		RefCom_MapClusterRequestDto requestDto = new RefCom_MapClusterRequestDto();
 		requestDto.mapName = mapName;
-		requestDto.maximumRadiusOfTheNeighborhoodEpsilon = 50.0;
+		requestDto.maximumRadiusOfTheNeighborhoodEpsilon = 100.0;
 		requestDto.minimumNumberOfPointsNeededForCluster = 6;
-		
 		requestDto.Pack();
-		string response =  GetGame().GetRestApi().GetContext(APIs.host).POST_now(APIs.POST_MAP_CLUSTERS, requestDto.AsString());
 		
-		RefCom_ClusterListDto clusterList = new RefCom_ClusterListDto();
-		clusterList.ExpandFromRAW(response);
-		
-		return clusterList;
+		GetGame().GetRestApi().GetContext(APIs.host).POST(clustersCallback, APIs.POST_MAP_CLUSTERS, requestDto.AsString());
 	}
 
 }

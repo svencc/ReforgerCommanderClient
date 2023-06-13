@@ -13,5 +13,5 @@ class APIs {
 	static string POST_MAP_SCANNER_TRANSACTION_COMMIT = "/api/v1/map/scanner/transaction/commit";
 	
 	static string POST_MAP_CLUSTERS = "/api/v1/map/clusters";
-	
+		
 }
