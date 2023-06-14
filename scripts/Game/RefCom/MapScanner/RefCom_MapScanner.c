@@ -15,7 +15,7 @@ class RefCom_MapScanner {
 	
 	protected string worldFileName
 
-	protected ref array<IEntity> entitiesQueue = {};
+	protected ref array<IEntity> producedEntitiesQueue = {};
 	protected ref RefCom_MapScannerEntitiesShippingService shippingService;
 	protected ref RefCom_MapScannerEntitiesTransactionManager transactionManager
 
@@ -25,23 +25,22 @@ class RefCom_MapScanner {
 	) {
 		this.shippingService = shippingService;
 		this.boxScanSize = boxScanSize;
-		
 		init(boxScanSize);
 	}
 
 	void ~RefCom_MapScanner() {
-		entitiesQueue.Clear()
+		producedEntitiesQueue.Clear()
 	}
 
 	protected void init(int boxScanSize) {
-		determineMapSize();
+		worldSize = determineMapSize();
         worldFileName = GetGame().GetWorldFile();
 		predictedScanIterations = Math.Floor(worldSize/boxScanSize);
 		iterationX = 0;
 		iterationY = 0;
 		
         transactionManager = new RefCom_MapScannerEntitiesTransactionManager(worldFileName);
-        shippingService.preparePackage(worldFileName);
+        shippingService.setSessionIdentifier(worldFileName);
         transactionManager.openTransaction();
 	}
 
@@ -84,25 +83,25 @@ class RefCom_MapScanner {
 			PrintFormat("%1: start consumtion ...", "MapScannerProducerConsumer");
 		}
 
-		if (entitiesQueue.IsEmpty() && finishedProduction) {
+		if (producedEntitiesQueue.IsEmpty() && finishedProduction) {
 			finishedConsumption = true;
 			shippingService.flush();
 			transactionManager.commitTransaction(shippingService.getPackagesSent());
 			PrintFormat("%1: consumption completed.", "MapScannerProducerConsumer");
-		} else if(entitiesQueue.IsEmpty() == false) {
+		} else if(producedEntitiesQueue.IsEmpty() == false) {
 			
 			int elementsToConsume = Math.Min(
-				entitiesQueue.Count(), 
-				shippingService.getMaxPackageSizeBeforeTransmission()
+				producedEntitiesQueue.Count(), 
+				shippingService.getMaxPackageSizeBeforeFlush()
 			);
 			
 			for (int i = 0; i < elementsToConsume; i++) {
-				IEntity entity = entitiesQueue.Get(0);
-				transmit(entity);
-				entitiesQueue.RemoveOrdered(0);
+				IEntity entityToSend = producedEntitiesQueue.Get(0);
+				package(entityToSend);
+				producedEntitiesQueue.RemoveOrdered(0);
 			}
 			
-			PrintFormat("... %1: remaining entities to consume.", entitiesQueue.Count());
+			PrintFormat("... %1: remaining entities to consume.", producedEntitiesQueue.Count());
 		}
 	}
 	
@@ -119,10 +118,10 @@ class RefCom_MapScanner {
 		);
 	}
 
-	protected void determineMapSize() {
+	protected int determineMapSize() {
 		vector min, max;
 		GetGame().GetWorldEntity().GetWorldBounds(min, max);
-		worldSize = Math.Max(max[0] - min[0], max[2] - min[2]);
+		return Math.Max(max[0] - min[0], max[2] - min[2]);
 	}
 	
 	protected vector scanBoxMaxForThisIteration(int iterationX, int iterationY ) {
@@ -143,13 +142,13 @@ class RefCom_MapScanner {
 	
 	protected bool queryHitAddEntityToQueue(IEntity ent) {
 		if (ent != null) {
-			entitiesQueue.Insert(ent);
+			producedEntitiesQueue.Insert(ent);
 		}
 
 		return true;
 	}
 	
-	protected void transmit(IEntity ent) {
+	protected void package(IEntity ent) {
 		vector transformation[4];
 		ent.GetTransform(transformation);
 

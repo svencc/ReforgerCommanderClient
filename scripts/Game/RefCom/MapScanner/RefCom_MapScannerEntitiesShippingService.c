@@ -1,12 +1,12 @@
 class RefCom_MapScannerEntitiesShippingService {
 
 	protected int packagesSent;
-	protected int maxPackageSizeBeforeTransmission;
+	protected int maxPackageSizeBeforeFlush;
 	protected ref RefCom_TransactionalMapScannerEntityPackageDto entitiesPackage;
 
 	void RefCom_MapScannerEntitiesShippingService(int maxPackageSize) {
 		resetSendPackagesCounter();
-		maxPackageSizeBeforeTransmission = maxPackageSize;
+		maxPackageSizeBeforeFlush = maxPackageSize;
 		entitiesPackage = new RefCom_TransactionalMapScannerEntityPackageDto();
 	}
 	
@@ -28,17 +28,17 @@ class RefCom_MapScannerEntitiesShippingService {
 		return packagesSent;
 	}
 	
-	int getMaxPackageSizeBeforeTransmission() {
-		return maxPackageSizeBeforeTransmission;
+	int getMaxPackageSizeBeforeFlush() {
+		return maxPackageSizeBeforeFlush;
 	}
 	
-	void preparePackage(string worldName) {
+	void setSessionIdentifier(string worldName) {
 		entitiesPackage.sessionIdentifier = worldName;
 	}
 
 	void assemblePackage(RefCom_MapScannerEntityDto entity) {
 		entitiesPackage.entities.Insert(entity);
-		if (entitiesPackage.entities.Count() > maxPackageSizeBeforeTransmission) {
+		if (entitiesPackage.entities.Count() > maxPackageSizeBeforeFlush) {
 			flush();
 		}
 	}

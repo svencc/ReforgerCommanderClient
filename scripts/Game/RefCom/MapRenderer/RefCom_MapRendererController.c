@@ -30,7 +30,7 @@ class RefCom_MapRendererController {
 					
 					if (cluster.convexHull) {
 						array<vector> polygon = {};
-						foreach(RefCom_Point2DDto edge : cluster.convexHull.points) {
+						foreach(RefCom_Point2DDto edge : cluster.convexHull.vertices) {
 							vector point = {edge.x, 0, edge.y};
 							polygon.Insert(point);
 						}
@@ -40,6 +40,7 @@ class RefCom_MapRendererController {
 						);
 					}
 					
+					/*
 					if (cluster.points) {
 						foreach( RefCom_Point2DDto point : cluster.points) {					
 							vector center = {point.x, 0, point.y};
@@ -48,6 +49,7 @@ class RefCom_MapRendererController {
 							);
 						}
 					}
+					*/
 					
 
 				}					
