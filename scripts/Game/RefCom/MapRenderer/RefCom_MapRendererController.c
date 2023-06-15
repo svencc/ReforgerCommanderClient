@@ -36,7 +36,19 @@ class RefCom_MapRendererController {
 						}
 						
 						mapModule.addDrawCommand(
-							RefCom_Map.drawPolygon(polygon, ARGB(127, 255, 255, 0) )
+							RefCom_Map.drawPolygon(polygon, ARGB(127, 255, 0 , 0) )
+						);
+					}
+					
+					if (cluster.concaveHull) {
+						array<vector> polygon = {};
+						foreach(RefCom_Point2DDto edge : cluster.concaveHull.vertices) {
+							vector point = {edge.x, 0, edge.y};
+							polygon.Insert(point);
+						}
+						
+						mapModule.addDrawCommand(
+							RefCom_Map.drawPolygon(polygon, ARGB(127, 0, 255, 0) )
 						);
 					}
 					
