@@ -28,6 +28,20 @@ class RECOM_MapRendererController {
 				RECOM_ClusterListDto listDto = clusterBuffer.read();
 				foreach(RECOM_ClusterDto cluster : listDto.clusterList) {
 					
+					//if (cluster.concaveHull) {
+					if (false) {
+						array<vector> polygon = {};
+						foreach(RECOM_Point2DDto edge : cluster.concaveHull.vertices) {
+							vector point = {edge.x, 0, edge.y};
+							polygon.Insert(point);
+						}
+						
+						mapModule.addDrawCommand(
+							RECOM_MapCommands.drawPolygon(polygon, ARGB(10, 0, 255, 0) )
+						);
+					}
+					
+					
 					if (cluster.convexHull) {
 						array<vector> polygon = {};
 						foreach(RECOM_Point2DDto edge : cluster.convexHull.vertices) {
@@ -36,19 +50,7 @@ class RECOM_MapRendererController {
 						}
 						
 						mapModule.addDrawCommand(
-							RECOM_MapCommands.drawPolygon(polygon, ARGB(127, 255, 0 , 0) )
-						);
-					}
-					
-					if (cluster.concaveHull) {
-						array<vector> polygon = {};
-						foreach(RECOM_Point2DDto edge : cluster.concaveHull.vertices) {
-							vector point = {edge.x, 0, edge.y};
-							polygon.Insert(point);
-						}
-						
-						mapModule.addDrawCommand(
-							RECOM_MapCommands.drawPolygon(polygon, ARGB(127, 0, 255, 0) )
+							RECOM_MapCommands.drawPolygon(polygon, ARGB(127, 255, 0 , 255) )
 						);
 					}
 					

@@ -27,7 +27,8 @@ class RECOM_TestBootstrapper: SCR_BaseTriggerEntity
 			GetGame().GetCallqueue().CallLater(mapScanner.consume, 0, true);
 		}
 		
-		if (GetGame().InPlayMode()) {
+		if (false) {
+		//if (GetGame().InPlayMode()) {
 			PrintFormat("%1 run %2", "RECOM_TestBootstrapper", "RECOM_MapRendererController");
 			mapRendererController = new RECOM_MapRendererController();
 			

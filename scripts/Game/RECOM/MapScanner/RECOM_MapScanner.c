@@ -56,11 +56,10 @@ class RECOM_MapScanner {
 	
 		if (iterationY < predictedScanIterations) {
 			if (iterationX < predictedScanIterations) {
-				PrintFormat("y:%1 x:%2", iterationY, iterationX);
-				scanPartitionBoxical(
-					scanBoxMinForThisIteration(iterationX, iterationY),
-					scanBoxMaxForThisIteration(iterationX, iterationY),
-				);
+				PrintFormat("... x:%1 y:%2", iterationX, iterationY);
+				vector min = scanBoxMinForThisIteration(iterationX, iterationY);
+				vector max = scanBoxMaxForThisIteration(iterationX, iterationY);		
+				scanPartitionBoxical(min, max);
 				iterationX++;
 			} else {
 				iterationY++;
@@ -86,8 +85,9 @@ class RECOM_MapScanner {
 		if (producedEntitiesQueue.IsEmpty() && finishedProduction) {
 			finishedConsumption = true;
 			shippingService.flush();
+			PrintFormat("... %1: consumption completed.", "MapScannerProducerConsumer");
 			transactionManager.commitTransaction(shippingService.getPackagesSent());
-			PrintFormat("%1: consumption completed.", "MapScannerProducerConsumer");
+			PrintFormat("%1: committed transaction.", "MapScannerProducerConsumer");
 		} else if(producedEntitiesQueue.IsEmpty() == false) {
 			
 			int elementsToConsume = Math.Min(
@@ -98,7 +98,8 @@ class RECOM_MapScanner {
 			for (int i = 0; i < elementsToConsume; i++) {
 				IEntity entityToSend = producedEntitiesQueue.Get(0);
 				package(entityToSend);
-				producedEntitiesQueue.RemoveOrdered(0);
+				producedEntitiesQueue.RemoveItemOrdered(entityToSend);
+				//producedEntitiesQueue.RemoveOrdered(0);
 			}
 			
 			PrintFormat("... %1: remaining entities to consume.", producedEntitiesQueue.Count());
@@ -163,11 +164,11 @@ class RECOM_MapScanner {
 		entityDto.rotationZ = transformation[2];
 		entityDto.coordinates = transformation[3];
 		
-		VObject mesh = ent.GetVObject();
+		BaseResourceObject mesh = ent.GetVObject();
 		if (mesh) {
 			entityDto.resourceName = mesh.GetResourceName();
 		}
-		
+				
 		EntityPrefabData prefab = ent.GetPrefabData();
 		if (prefab) {
 			ResourceName prefabName = prefab.GetPrefabName();
@@ -181,7 +182,6 @@ class RECOM_MapScanner {
 			entityDto.mapDescriptorType = typename.EnumToString(EMapDescriptorType, mapdesc.GetBaseType());;
 		}
 		
-
 		shippingService.assemblePackage(entityDto);
 	}
 
