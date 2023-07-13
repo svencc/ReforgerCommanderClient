@@ -11,7 +11,7 @@ class RECOM_MapScanner {
 	
 	protected int predictedScanIterations;
 	protected int iterationX;
-	protected int iterationY;
+	protected int iterationZ;
 	
 	protected string worldFileName
 
@@ -37,7 +37,7 @@ class RECOM_MapScanner {
         worldFileName = GetGame().GetWorldFile();
 		predictedScanIterations = Math.Floor(worldSize/boxScanSize);
 		iterationX = 0;
-		iterationY = 0;
+		iterationZ = 0;
 		
         transactionManager = new RECOM_MapScannerEntitiesTransactionManager(worldFileName);
         shippingService.setSessionIdentifier(worldFileName);
@@ -54,15 +54,14 @@ class RECOM_MapScanner {
 			PrintFormat("%1: start production of %2 ...", "MapScannerProducerConsumer", worldFileName);
 		}
 	
-		if (iterationY < predictedScanIterations) {
+		if (iterationZ < predictedScanIterations) {
 			if (iterationX < predictedScanIterations) {
-				PrintFormat("... x:%1 y:%2", iterationX, iterationY);
-				vector min = scanBoxMinForThisIteration(iterationX, iterationY);
-				vector max = scanBoxMaxForThisIteration(iterationX, iterationY);		
-				scanPartitionBoxical(min, max);
+				PrintFormat("... x:%1 y:%2", iterationX, iterationZ);		
+				// scanPartitionBoxical(iterationX, iterationZ);
+				scanPartitionSpherical(iterationX, iterationZ);
 				iterationX++;
 			} else {
-				iterationY++;
+				iterationZ++;
 				iterationX = 0;
 			}
 		} else {
@@ -95,6 +94,8 @@ class RECOM_MapScanner {
 				shippingService.getMaxPackageSizeBeforeFlush()
 			);
 			
+			PrintFormat("... %1: entities to consume.", elementsToConsume);
+			
 			for (int i = 0; i < elementsToConsume; i++) {
 				IEntity entityToSend = producedEntitiesQueue.Get(0);
 				package(entityToSend);
@@ -106,10 +107,38 @@ class RECOM_MapScanner {
 		}
 	}
 	
-	protected void scanPartitionBoxical(
-		vector mins, 
-		vector maxs
+	protected void scanPartitionSpherical(
+		int iterationX, 
+		int iterationZ
 	) {
+		float radius = (boxScanSize * Math.Sqrt(2)) / 2;
+		
+		float centerX = (iterationX * boxScanSize) + (boxScanSize / 2);
+		float centerZ = (iterationZ * boxScanSize) + (boxScanSize / 2);
+		float centerY = GetGame().GetWorld().GetSurfaceY(centerX, centerZ);
+		
+		vector center = {
+			centerX,
+			centerY,
+			centerZ
+		};
+		
+		GetGame().GetWorld().QueryEntitiesBySphere(
+			center,
+			radius,
+			queryHitAddEntityToQueue,
+			null,
+			EQueryEntitiesFlags.ALL
+		);
+	}
+	
+	protected void scanPartitionBoxical(
+		int iterationX, 
+		int iterationZ
+	) {
+		vector mins = scanBoxMinForThisIteration(iterationX, iterationZ);
+		vector maxs = scanBoxMaxForThisIteration(iterationX, iterationZ);
+		
 		GetGame().GetWorld().QueryEntitiesByAABB(
 			mins,
 			maxs,
@@ -125,19 +154,19 @@ class RECOM_MapScanner {
 		return Math.Max(max[0] - min[0], max[2] - min[2]);
 	}
 	
-	protected vector scanBoxMaxForThisIteration(int iterationX, int iterationY ) {
+	protected vector scanBoxMaxForThisIteration(int iterationX, int iterationZ ) {
 		return {
 			boxScanSize + (iterationX * boxScanSize),
 			0,
-			boxScanSize + (iterationY * boxScanSize)
+			boxScanSize + (iterationZ * boxScanSize)
 		};
 	}	
 	
-	protected vector scanBoxMinForThisIteration(int iterationX, int iterationY ) {
+	protected vector scanBoxMinForThisIteration(int iterationX, int iterationZ ) {
 		return {
 			(iterationX * boxScanSize),
 			0,
-			(iterationY * boxScanSize)
+			(iterationZ * boxScanSize)
 		};
 	}
 	
@@ -173,7 +202,10 @@ class RECOM_MapScanner {
 		if (prefab) {
 			ResourceName prefabName = prefab.GetPrefabName();
 			if (prefabName) {
-				entityDto.prefabName = prefabName.GetPath();
+				string path = prefabName.GetPath();
+				if (path) {
+					entityDto.prefabName = path;
+				}
 			}
 		}
 		
