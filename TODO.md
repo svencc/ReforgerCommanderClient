@@ -5,3 +5,5 @@
 * 
 * Implement MapRenderController
   * translate data to drawInstructions
+* 
+* Add Authentication to MapScanner 
