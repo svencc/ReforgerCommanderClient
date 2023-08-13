@@ -15,7 +15,7 @@ class RECOM_MapRendererRESTGateway {
 		requestDto.mapName = mapName;
 		requestDto.Pack();
 		
-		GetGame().GetRestApi().GetContext(REAPIs.host).POST(mapRendererResponseRESTCallback, REAPIs.POST_MAP_RENDERER, requestDto.AsString());
+		GetGame().GetRestApi().GetContext(RECOMAPIs.host).POST(mapRendererResponseRESTCallback, RECOMAPIs.POST_MAP_RENDERER, requestDto.AsString());
 	}
 
 }

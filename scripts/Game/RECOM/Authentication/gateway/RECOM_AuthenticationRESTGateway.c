@@ -18,7 +18,7 @@ class RECOM_AuthenticationRESTGateway {
 	        requestDto.accessKey = properties.accessKey;
 			requestDto.Pack();
 			
-			GetGame().GetRestApi().GetContext(REAPIs.host).POST(authenticationResponseRESTCallback, REAPIs.POST_AUTHENTICATE, requestDto.AsString());
+			GetGame().GetRestApi().GetContext(RECOMAPIs.host).POST(authenticationResponseRESTCallback, RECOMAPIs.POST_AUTHENTICATE, requestDto.AsString());
 		}
 	}
 

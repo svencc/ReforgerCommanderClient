@@ -1,4 +1,4 @@
-class REAPIs {
+class RECOMAPIs {
 
 	static string host = "localhost:8080";
 	

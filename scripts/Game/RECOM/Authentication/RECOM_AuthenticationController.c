@@ -31,19 +31,19 @@ class RECOM_AuthenticationController {
 
 	void loadProperties() {
         RECOM_AuthenticationProperties properties = new RECOM_AuthenticationProperties();
-    	properties.LoadFromFile(REPaths.RECOM_AUTHENTICATION_PROPERTY);
+    	properties.LoadFromFile(RECOMPaths.RECOM_AUTHENTICATION_PROPERTY);
     	this.properties = properties;
     }
 
 	protected void init() {
-		REPaths.ensureBaseDirectoryExists();
-		if (!REPaths.fileExists(REPaths.RECOM_AUTHENTICATION_PROPERTY)) {
+		RECOMPaths.ensureBaseDirectoryExists();
+		if (!RECOMPaths.fileExists(RECOMPaths.RECOM_AUTHENTICATION_PROPERTY)) {
 			RECOM_AuthenticationProperties properties = new RECOM_AuthenticationProperties();
         	properties.enableAuthentication = false;
         	properties.accountUUID = "uuid";
         	properties.accessKey = "access-key";
 			
-	    	properties.PackToFile(REPaths.RECOM_AUTHENTICATION_PROPERTY);
+	    	properties.PackToFile(RECOMPaths.RECOM_AUTHENTICATION_PROPERTY);
 		}
     }
 	

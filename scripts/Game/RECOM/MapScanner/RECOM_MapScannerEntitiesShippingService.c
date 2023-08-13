@@ -47,7 +47,7 @@ class RECOM_MapScannerEntitiesShippingService {
 		if (entitiesPackage.entities.IsEmpty() == false) {
 			entitiesPackage.packageOrder = provideIncreasedPackageCount();
 			entitiesPackage.Pack();
-			GetGame().GetRestApi().GetContext(REAPIs.host).POST_now(REAPIs.POST_MAP_SCANNER_TRANSACTION_ENTITIES, entitiesPackage.AsString());
+			GetGame().GetRestApi().GetContext(RECOMAPIs.host).POST_now(RECOMAPIs.POST_MAP_SCANNER_TRANSACTION_ENTITIES, entitiesPackage.AsString());
 			entitiesPackage.entities.Clear();
 		}
 	}

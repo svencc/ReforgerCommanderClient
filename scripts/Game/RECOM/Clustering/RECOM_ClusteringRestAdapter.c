@@ -3,7 +3,10 @@ class RECOM_ClusteringRestAdapter {
 	ref RECOM_ClusteringDataRestCallback clustersCallback;
 	ref RECOM_AuthenticationResponseBuffer authenticationBuffer;
 	
-	void RECOM_ClusteringRestAdapter(RECOM_ClusterBuffer clusterBuffer, RECOM_AuthenticationResponseBuffer authenticationBuffer) {
+	void RECOM_ClusteringRestAdapter(
+		RECOM_ClusterBuffer clusterBuffer, 
+		RECOM_AuthenticationResponseBuffer authenticationBuffer
+	) {
 		clustersCallback = new RECOM_ClusteringDataRestCallback(clusterBuffer);
 		this.authenticationBuffer = authenticationBuffer;
 	}
@@ -20,7 +23,7 @@ class RECOM_ClusteringRestAdapter {
 			requestDto.mapName = mapName;
 			requestDto.Pack();
 		
-			GetGame().GetRestApi().GetContext(REAPIs.host).POST(clustersCallback, REAPIs.POST_MAP_CLUSTERS, requestDto.AsString());
+			GetGame().GetRestApi().GetContext(RECOMAPIs.host).POST(clustersCallback, RECOMAPIs.POST_MAP_CLUSTERS, requestDto.AsString());
 		}
 	}
 

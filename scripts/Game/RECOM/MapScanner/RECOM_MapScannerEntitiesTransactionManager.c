@@ -13,13 +13,13 @@ class RECOM_MapScannerEntitiesTransactionManager {
 	void openTransaction() {
 		transactionIdentifier.packageOrder = 0;
 		transactionIdentifier.Pack();
-		GetGame().GetRestApi().GetContext(REAPIs.host).POST_now(REAPIs.POST_MAP_SCANNER_TRANSACTION_OPEN, transactionIdentifier.AsString());
+		GetGame().GetRestApi().GetContext(RECOMAPIs.host).POST_now(RECOMAPIs.POST_MAP_SCANNER_TRANSACTION_OPEN, transactionIdentifier.AsString());
 	}
 
 	void commitTransaction(int packagesSent) {
 		transactionIdentifier.packageOrder = (packagesSent + 1);
 		transactionIdentifier.Pack();
-		GetGame().GetRestApi().GetContext(REAPIs.host).POST_now(REAPIs.POST_MAP_SCANNER_TRANSACTION_COMMIT, transactionIdentifier.AsString());
+		GetGame().GetRestApi().GetContext(RECOMAPIs.host).POST_now(RECOMAPIs.POST_MAP_SCANNER_TRANSACTION_COMMIT, transactionIdentifier.AsString());
 	}
 
 }
