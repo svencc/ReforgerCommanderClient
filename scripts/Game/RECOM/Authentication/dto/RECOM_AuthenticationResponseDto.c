@@ -1,12 +1,12 @@
 class RECOM_AuthenticationResponseDto : JsonApiStruct {
 
-    string bearerToken;
+    string token;
     string issuedAt;
-    string expiresAt;
+    int expiresAt;
     int expiresInSeconds;
 
 	void RECOM_AuthenticationResponseDto() {
-		RegV("bearerToken");
+		RegV("token");
 		RegV("issuedAt");
 		RegV("expiresAt");
 		RegV("expiresInSeconds");
@@ -16,7 +16,7 @@ class RECOM_AuthenticationResponseDto : JsonApiStruct {
 	}
 	
 	string getBearerToken() {
-		return "Bearer " + bearerToken;
+		return "Bearer " + token;
 	}
 
 }

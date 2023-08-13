@@ -1,16 +1,19 @@
 class RECOM_AuthenticationResponseRESTCallback : RestCallback {
 
-	ref RECOM_AuthenticationResponseBuffer authenticationResponseBuffer;
+	ref RECOM_AuthenticationResponseBuffer buffer;
 	
-	void RECOM_AuthenticationResponseRESTCallback(RECOM_AuthenticationResponseBuffer authenticationResponseBuffer) {
-		this.authenticationResponseBuffer = authenticationResponseBuffer
+	void RECOM_AuthenticationResponseRESTCallback(RECOM_AuthenticationResponseBuffer buffer) {
+		this.buffer = buffer
 	}
 	
 	
 	override void OnSuccess( string data, int dataSize ) {
-		RECOM_AuthenticationResponseDto authenticationResponseDto = new RECOM_AuthenticationResponseDto;
-		authenticationResponseDto.ExpandFromRAW(data);
-		authenticationResponseBuffer.update(authenticationResponseDto);
+		PrintFormat("%1 OnSuccess called ", "RECOM_AuthenticationResponseRESTCallback");
+		PrintFormat("Re-Authenticate");
+
+		RECOM_AuthenticationResponseDto response = new RECOM_AuthenticationResponseDto;
+		response.ExpandFromRAW(data);
+		buffer.update(response);
 	};
 
 	override void OnError( int errorCode ) {

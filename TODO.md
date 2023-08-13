@@ -1,7 +1,7 @@
 # TODO LIST
 * BearerTokenInjector:
-  * delivers BearerToken
-  * if token is expired, refresh it blocking
+  * Make it global! remove buffer injection!
+  * if token is expired, refresh it blocking?
 *
 * Add Authentication to MapScanner
 *

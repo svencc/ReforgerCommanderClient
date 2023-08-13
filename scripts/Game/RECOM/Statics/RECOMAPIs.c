@@ -5,6 +5,9 @@ class RECOMAPIs {
 	// /health
 	static string GET_HEALTH = "/health";
 
+	// /time
+	static string GET_TIME = "/api/v1/time";
+
 	// /authenticate
 	static string POST_AUTHENTICATE = "/api/v1/authenticate/form";
 

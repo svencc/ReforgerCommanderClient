@@ -1,19 +1,19 @@
 class RECOM_MapRendererResponseRESTCallback : RestCallback {
 
-	ref RECOM_MapRendererResponseBuffer mapRendererResponseBuffer;
+	ref RECOM_MapRendererResponseBuffer buffer;
 	
-	void RECOM_MapRendererResponseRESTCallback(RECOM_MapRendererResponseBuffer mapRendererResponseBuffer) {
-		this.mapRendererResponseBuffer = mapRendererResponseBuffer
+	void RECOM_MapRendererResponseRESTCallback(RECOM_MapRendererResponseBuffer buffer) {
+		this.buffer = buffer
 	}
 	
 	
 	override void OnSuccess( string data, int dataSize ) {
 		PrintFormat("%1 OnSuccess called ", "RECOM_MapRendererRestCallback");
 
-		RECOM_MapRendererResponseDto mapRendererResponseDto = new RECOM_MapRendererResponseDto;
-		mapRendererResponseDto.ExpandFromRAW(data);
+		RECOM_MapRendererResponseDto response = new RECOM_MapRendererResponseDto;
+		response.ExpandFromRAW(data);
 
-		mapRendererResponseBuffer.write(mapRendererResponseDto);
+		buffer.write(response);
 	};
 
 	override void OnError( int errorCode ) {

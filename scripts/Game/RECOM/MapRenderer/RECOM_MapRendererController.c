@@ -1,26 +1,23 @@
 class RECOM_MapRendererController {
 	
-	protected ref RECOM_AuthenticationResponseBuffer authenticationBuffer;
 	protected ref RECOM_ClusteringRestAdapter restAdapter;
 	protected ref RECOM_MapModule mapModule;
 	protected ref RECOM_ClusterBuffer clusterBuffer
 	
-	void RECOM_MapRendererController(RECOM_AuthenticationResponseBuffer authenticationBuffer) {
-		this.authenticationBuffer = authenticationBuffer;
+	void RECOM_MapRendererController() {
 		this.clusterBuffer = new RECOM_ClusterBuffer();
 		this.mapModule = RECOM_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RECOM_MapModule));
-		this.restAdapter = new RECOM_ClusteringRestAdapter(clusterBuffer, authenticationBuffer);
+		this.restAdapter = new RECOM_ClusteringRestAdapter(clusterBuffer);
 	}
 	
 	void ~RECOM_MapRendererController()	{
-		delete authenticationBuffer;
 		delete clusterBuffer;
 		delete mapModule;
 		delete restAdapter;
 	}
 	
 	void renderClusterList() {
-		if(mapModule) {
+		if (mapModule) {
 			Print("renderClusterList to mapModule ...");
 			mapModule.clearDrawCommands();
 			

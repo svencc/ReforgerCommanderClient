@@ -1,6 +1,6 @@
 class RECOM_AuthenticationResponseBuffer {
 
-	ref RECOM_AuthenticationResponseDto buffer;;
+	ref RECOM_AuthenticationResponseDto bufferedValue;
 
 
 	void RECOM_AuthenticationResponseBuffer() {
@@ -10,16 +10,16 @@ class RECOM_AuthenticationResponseBuffer {
 	}
 
 
-	bool isAuthenticated() {
-		return !(buffer == null);
+	bool hasData() {
+		return !(bufferedValue == null);
 	}
 	
 	RECOM_AuthenticationResponseDto read() {
-		return buffer;
+		return bufferedValue;
 	}
 	
 	void update(RECOM_AuthenticationResponseDto authentication) {
-		buffer = authentication;
+		bufferedValue = authentication;
 	}
 
 }

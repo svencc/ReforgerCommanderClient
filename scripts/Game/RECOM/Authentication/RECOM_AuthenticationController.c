@@ -24,7 +24,11 @@ class RECOM_AuthenticationController {
 			Print("AUTHENTICATION is disabled", LogLevel.ERROR);
 		}
 	}
-	
+
+	//RECOM_AuthenticationInjector getAuthenticationInjector() {
+	//	return this.authenticationInjector;
+	//}
+
 	RECOM_AuthenticationResponseBuffer getAuthenticationBuffer() {
 		return this.buffer;
 	}
@@ -47,5 +51,8 @@ class RECOM_AuthenticationController {
 		}
     }
 	
-	
+	RECOM_AuthenticationProperties getProperties() {
+		return properties;
+	}
+
 }
