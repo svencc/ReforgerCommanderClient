@@ -1,19 +1,22 @@
 class RECOM_MapRendererController {
 	
+	protected ref RECOM_AuthenticationResponseBuffer authenticationBuffer;
 	protected ref RECOM_ClusteringRestAdapter restAdapter;
 	protected ref RECOM_MapModule mapModule;
 	protected ref RECOM_ClusterBuffer clusterBuffer
 	
-	void RECOM_MapRendererController() {
-		mapModule = RECOM_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RECOM_MapModule));
-		clusterBuffer = new RECOM_ClusterBuffer();
-		restAdapter = new RECOM_ClusteringRestAdapter(clusterBuffer);
+	void RECOM_MapRendererController(RECOM_AuthenticationResponseBuffer authenticationBuffer) {
+		this.authenticationBuffer = authenticationBuffer;
+		this.clusterBuffer = new RECOM_ClusterBuffer();
+		this.mapModule = RECOM_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RECOM_MapModule));
+		this.restAdapter = new RECOM_ClusteringRestAdapter(clusterBuffer, authenticationBuffer);
 	}
 	
 	void ~RECOM_MapRendererController()	{
-		delete restAdapter;
-		delete mapModule;
+		delete authenticationBuffer;
 		delete clusterBuffer;
+		delete mapModule;
+		delete restAdapter;
 	}
 	
 	void renderClusterList() {
@@ -25,7 +28,7 @@ class RECOM_MapRendererController {
 			
 			
 			if (clusterBuffer.hasData()) {
-				RECOM_ClusterListDto listDto = clusterBuffer.read();
+				RECOM_ClusterResponseDto listDto = clusterBuffer.read();
 				foreach(RECOM_ClusterDto cluster : listDto.clusterList) {
 					
 					//if (cluster.concaveHull) {

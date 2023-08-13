@@ -11,7 +11,7 @@ class RECOM_ClusteringDataRestCallback : RestCallback {
 	{
 		PrintFormat("%1 OnSuccess called ", "RECOM_ClusteringDataRestCallback");
 
-		RECOM_ClusterListDto clusterListDto = new RECOM_ClusterListDto;
+		RECOM_ClusterResponseDto clusterListDto = new RECOM_ClusterResponseDto;
 		clusterListDto.ExpandFromRAW(data);
 
 		clusterBuffer.write(clusterListDto);

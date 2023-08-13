@@ -1,12 +1,12 @@
-class RECOM_ClusterListDto : JsonApiStruct {
+class RECOM_ClusterResponseDto : JsonApiStruct {
 
 	ref array<ref RECOM_ClusterDto> clusterList = {};
 
-	void RECOM_ClusterListDto() {
+	void RECOM_ClusterResponseDto() {
 		RegV("clusterList");
 	}
 
-	void ~RECOM_ClusterListDto() {
+	void ~RECOM_ClusterResponseDto() {
 		clusterList.Clear();
 	}
 
@@ -23,12 +23,6 @@ class RECOM_ClusterListDto : JsonApiStruct {
 		// if you want to handle something before process starts (init/clear variables for example)
 	}
 
-	override void OnBufferReady()
-	{
-		Print("OnBufferReady");
-		// this is called after successfull JSON pakc process
-		// if you want the buffer's finalised string for any purpose
-	}
 	
 	override void OnSuccess(int errorCode)
 	{
