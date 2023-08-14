@@ -44,6 +44,7 @@ class RECOM_AuthenticationController {
 		if (!RECOMPaths.fileExists(RECOMPaths.RECOM_AUTHENTICATION_PROPERTY)) {
 			RECOM_AuthenticationProperties properties = new RECOM_AuthenticationProperties();
         	properties.enableAuthentication = false;
+        	properties.preExpirationTimeInSeconds = 10;
         	properties.accountUUID = "uuid";
         	properties.accessKey = "access-key";
 			

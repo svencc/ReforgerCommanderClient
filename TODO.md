@@ -1,9 +1,8 @@
 # TODO LIST
 * Add Authentication to MapScanner
 *
-* add token refresh time (seconds before it is expired) to properties! 
-*
 * Implement MapRenderController
   * translate data to drawInstructions
 * 
 
+* can we realize default values per code/constructer in properties?
