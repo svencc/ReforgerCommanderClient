@@ -34,6 +34,10 @@ class RECOM_AuthenticationInjector {
     }
 	
     string getBearerToken() {
+		
+//		int epochTime = System.GetUnixTime();
+
+		
 		RECOM_AuthenticationResponseDto authetication = authenticationController.getAuthenticationBuffer().read();
 		if(RECOM_Clock.getInstance().time().epochSeconds > (authetication.expiresAtEpoch - authenticationController.getProperties().preExpirationTimeInSeconds)) {
 			PrintFormat("Trigger Re-Authentication");	
