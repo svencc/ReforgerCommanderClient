@@ -5,4 +5,5 @@
   * translate data to drawInstructions
 * 
 
-* can we realize default values per code/constructer in properties?
+-----
+* can we realize default values per code/constructor in properties?
