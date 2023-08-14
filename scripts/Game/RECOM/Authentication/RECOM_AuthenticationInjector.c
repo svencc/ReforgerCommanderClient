@@ -35,7 +35,7 @@ class RECOM_AuthenticationInjector {
 	
     string getBearerToken() {
 		RECOM_AuthenticationResponseDto authetication = authenticationController.getAuthenticationBuffer().read();
-		if(RECOM_Clock.getInstance().time().epochSeconds > (authetication.expiresAt - 10)) {
+		if(RECOM_Clock.getInstance().time().epochSeconds > (authetication.expiresAtEpoch - 10)) {
 			PrintFormat("Trigger Re-Authentication");	
 			authenticationController.authenticate();
 		}

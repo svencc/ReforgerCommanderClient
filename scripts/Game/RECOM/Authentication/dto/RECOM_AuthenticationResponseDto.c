@@ -2,7 +2,8 @@ class RECOM_AuthenticationResponseDto : JsonApiStruct {
 
     string token;
     string issuedAt;
-    int expiresAt;
+    string expiresAt;
+    int expiresAtEpoch;
     int expiresInSeconds;
 
 	void RECOM_AuthenticationResponseDto() {
