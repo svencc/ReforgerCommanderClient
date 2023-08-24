@@ -35,8 +35,7 @@ class RECOM_AuthenticationInjector {
 					authenticationController.authenticate();
 				}
 					
-				bool isExpired = isExpired(authentication);
-				return !isExpired;
+				return !isExpired(authentication);
 			}
 			
 			return false;
