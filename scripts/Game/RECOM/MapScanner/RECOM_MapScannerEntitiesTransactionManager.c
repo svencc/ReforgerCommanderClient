@@ -11,12 +11,14 @@ class RECOM_MapScannerEntitiesTransactionManager {
 	}
 
 	void openTransaction() {
+	    transactionIdentifier.Authorization = RECOM_AuthenticationInjector.getInstance().getBearerToken();
 		transactionIdentifier.packageOrder = 0;
 		transactionIdentifier.Pack();
 		GetGame().GetRestApi().GetContext(RECOMAPIs.host).POST_now(RECOMAPIs.POST_MAP_SCANNER_TRANSACTION_OPEN, transactionIdentifier.AsString());
 	}
 
 	void commitTransaction(int packagesSent) {
+		transactionIdentifier.Authorization = RECOM_AuthenticationInjector.getInstance().getBearerToken();
 		transactionIdentifier.packageOrder = (packagesSent + 1);
 		transactionIdentifier.Pack();
 		GetGame().GetRestApi().GetContext(RECOMAPIs.host).POST_now(RECOMAPIs.POST_MAP_SCANNER_TRANSACTION_COMMIT, transactionIdentifier.AsString());

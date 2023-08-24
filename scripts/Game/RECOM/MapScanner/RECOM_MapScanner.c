@@ -41,7 +41,6 @@ class RECOM_MapScanner {
 		
         transactionManager = new RECOM_MapScannerEntitiesTransactionManager(worldFileName);
         shippingService.setSessionIdentifier(worldFileName);
-        transactionManager.openTransaction();
 	}
 
 	void produce() {
@@ -76,18 +75,19 @@ class RECOM_MapScanner {
 			return;
 		}
 		
-		if (!startedConsumption) {
+		if (!startedConsumption && RECOM_AuthenticationInjector.getInstance().isAuthenticated()) {
 			startedConsumption = true;
+			transactionManager.openTransaction();
 			PrintFormat("%1: start consumtion ...", "MapScannerProducerConsumer");
 		}
 
-		if (producedEntitiesQueue.IsEmpty() && finishedProduction) {
+		if (producedEntitiesQueue.IsEmpty() && finishedProduction && RECOM_AuthenticationInjector.getInstance().isAuthenticated()) {
 			finishedConsumption = true;
 			shippingService.flush();
 			PrintFormat("... %1: consumption completed.", "MapScannerProducerConsumer");
 			transactionManager.commitTransaction(shippingService.getPackagesSent());
 			PrintFormat("%1: committed transaction.", "MapScannerProducerConsumer");
-		} else if(producedEntitiesQueue.IsEmpty() == false) {
+		} else if(producedEntitiesQueue.IsEmpty() == false && RECOM_AuthenticationInjector.getInstance().isAuthenticated()) {
 			
 			int elementsToConsume = Math.Min(
 				producedEntitiesQueue.Count(), 

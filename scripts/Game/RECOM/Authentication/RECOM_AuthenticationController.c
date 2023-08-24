@@ -25,10 +25,6 @@ class RECOM_AuthenticationController {
 		}
 	}
 
-	//RECOM_AuthenticationInjector getAuthenticationInjector() {
-	//	return this.authenticationInjector;
-	//}
-
 	RECOM_AuthenticationResponseBuffer getAuthenticationBuffer() {
 		return this.buffer;
 	}

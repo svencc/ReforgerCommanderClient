@@ -9,7 +9,7 @@ class RECOM_AuthenticationInjector {
 
 	void ~RECOM_AuthenticationInjector() {
 		delete authenticationController;
-		delete RECOM_AuthenticationInjector.instance;
+		// delete RECOM_AuthenticationInjector.instance;
 	}	
 	
 	static RECOM_AuthenticationInjector getInstance() {
@@ -29,25 +29,45 @@ class RECOM_AuthenticationInjector {
 		if(!authenticationController.getProperties().enableAuthentication) {
 			return false;
 		} else {
-        	return authenticationController.getAuthenticationBuffer().hasData();
+			if (authenticationController.getAuthenticationBuffer().hasData()) {
+				RECOM_AuthenticationResponseDto authentication = authenticationController.getAuthenticationBuffer().read();
+				if (willExpireSoon(authentication)) {
+					authenticationController.authenticate();
+				}
+					
+				bool isExpired = isExpired(authentication);
+				return !isExpired;
+			}
+			
+			return false;
 		}
     }
 	
     string getBearerToken() {
-		
 //		int epochTime = System.GetUnixTime();
-
-		
-		RECOM_AuthenticationResponseDto authetication = authenticationController.getAuthenticationBuffer().read();
-		if(RECOM_Clock.getInstance().time().epochSeconds > (authetication.expiresAtEpoch - authenticationController.getProperties().preExpirationTimeInSeconds)) {
-			PrintFormat("Trigger Re-Authentication");	
-			authenticationController.authenticate();
-		}
+		reauthenticate();
         return authenticationController.getAuthenticationBuffer().read().getBearerToken();
     }
 	
+	
 	void authenticate() {
 		this.authenticationController.authenticate();
+	}
+	
+	void reauthenticate() {
+		RECOM_AuthenticationResponseDto authentication = authenticationController.getAuthenticationBuffer().read();
+		if (willExpireSoon(authentication)) {
+			PrintFormat(" ----- Trigger Re-Authentication ----- ");
+			authenticationController.authenticate();
+		}
+	}
+	
+	private bool willExpireSoon(RECOM_AuthenticationResponseDto authentication) {
+		return RECOM_Clock.getInstance().time().epochSeconds > (authentication.expiresAtEpoch - authenticationController.getProperties().preExpirationTimeInSeconds);
+	}
+	
+	private bool isExpired(RECOM_AuthenticationResponseDto authentication) {
+		return RECOM_Clock.getInstance().time().epochSeconds > authentication.expiresAtEpoch;
 	}
 
 }

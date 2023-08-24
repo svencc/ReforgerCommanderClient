@@ -46,6 +46,7 @@ class RECOM_MapScannerEntitiesShippingService {
 	void flush() {
 		if (entitiesPackage.entities.IsEmpty() == false) {
 			entitiesPackage.packageOrder = provideIncreasedPackageCount();
+			entitiesPackage.Authorization = RECOM_AuthenticationInjector.getInstance().getBearerToken();
 			entitiesPackage.Pack();
 			GetGame().GetRestApi().GetContext(RECOMAPIs.host).POST_now(RECOMAPIs.POST_MAP_SCANNER_TRANSACTION_ENTITIES, entitiesPackage.AsString());
 			entitiesPackage.entities.Clear();
