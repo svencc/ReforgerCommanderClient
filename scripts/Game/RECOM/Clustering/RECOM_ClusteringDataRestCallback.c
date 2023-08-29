@@ -14,7 +14,7 @@ class RECOM_ClusteringDataRestCallback : RestCallback {
 		RECOM_ClusterResponseDto clusterListDto = new RECOM_ClusterResponseDto;
 		clusterListDto.ExpandFromRAW(data);
 
-		clusterBuffer.write(clusterListDto);
+		clusterBuffer.update(clusterListDto);
 	};
 
 	override void OnError( int errorCode )

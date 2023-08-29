@@ -1,7 +1,13 @@
 # TODO LIST
 * Implement MapRenderController
   * translate data to drawInstructions
-* 
+    * mapRenderCommandType:     POLYGON, POINT, LINE, TEXT, IMAGE, CIRCLE
+
+* Implement MapHeightMapScanner
+  * scan map for height data
+  * scan map for water data (terrain height under water level ?)
+
+* move configurable reauthentication timer to properties
 
 -----
 * can we realize default values per code/constructor in properties?

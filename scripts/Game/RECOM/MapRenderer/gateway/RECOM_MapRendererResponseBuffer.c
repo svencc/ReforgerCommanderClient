@@ -1,6 +1,6 @@
 class RECOM_MapRendererResponseBuffer {
 
-	ref RECOM_MapRendererResponseDto buffer;;
+	ref RECOM_MapRendererResponseDto bufferedValue;
 
 
 	void RECOM_MapRendererResponseBuffer() {
@@ -11,15 +11,15 @@ class RECOM_MapRendererResponseBuffer {
 
 
 	bool hasData() {
-		return !(buffer == null);
+		return !(bufferedValue == null);
 	}
 	
 	RECOM_MapRendererResponseDto read() {
-		return buffer;
+		return bufferedValue;
 	}
 	
-	void write(RECOM_MapRendererResponseDto mapRendererResponse) {
-		buffer = mapRendererResponse;
+	void update(RECOM_MapRendererResponseDto response) {
+		bufferedValue = response;
 	}
 
 }

@@ -21,7 +21,7 @@ class RECOM_TimeResponseBuffer {
 		return bufferedValue;
 	}
 	
-	void write(RECOM_EpochTimeDto value) {
+	void update(RECOM_EpochTimeDto value) {
 		bufferedValue = value;
 	}
 

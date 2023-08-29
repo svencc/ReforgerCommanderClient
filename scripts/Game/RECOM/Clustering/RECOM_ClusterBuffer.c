@@ -1,7 +1,6 @@
 class RECOM_ClusterBuffer {
 
-	ref RECOM_ClusterResponseDto buffer;;
-	
+	ref RECOM_ClusterResponseDto bufferedValue;
 	
 	
 	void RECOM_ClusterBuffer() {
@@ -12,15 +11,15 @@ class RECOM_ClusterBuffer {
 	
 	
 	bool hasData() {
-		return !(buffer == null);
+		return !(bufferedValue == null);
 	}
 	
 	RECOM_ClusterResponseDto read() {
-		return buffer;
+		return bufferedValue;
 	}
 	
-	void write(RECOM_ClusterResponseDto cluster) {
-		buffer = cluster;
+	void update(RECOM_ClusterResponseDto cluster) {
+		bufferedValue = cluster;
 	}
 
 }

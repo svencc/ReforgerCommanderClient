@@ -19,6 +19,7 @@ class RECOMAPIs {
 	static string POST_MAP_SCANNER_TRANSACTION_COMMIT = "/api/v1/map/scanner/transaction/commit";
 	
 	static string POST_MAP_CLUSTERS = "/api/v1/map/clusters/form";
+	
 	static string POST_MAP_RENDERER = "/api/v1/map/renderer/form";
 		
 }

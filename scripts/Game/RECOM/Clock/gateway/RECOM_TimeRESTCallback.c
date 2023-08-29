@@ -13,7 +13,7 @@ class RECOM_TimeRESTCallback : RestCallback {
 		RECOM_EpochTimeDto response = new RECOM_EpochTimeDto();
 		response.ExpandFromRAW(data);
 
-		buffer.write(response);
+		buffer.update(response);
 	};
 
 	override void OnError( int errorCode ) {

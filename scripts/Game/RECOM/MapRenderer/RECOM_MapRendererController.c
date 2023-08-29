@@ -1,13 +1,23 @@
 class RECOM_MapRendererController {
 	
+	protected ref RECOM_MapRendererRESTGateway rendererGateway
+	protected ref RECOM_MapRendererResponseBuffer rendererBuffer;
+
 	protected ref RECOM_ClusteringRestAdapter restAdapter;
-	protected ref RECOM_MapModule mapModule;
 	protected ref RECOM_ClusterBuffer clusterBuffer
 	
+	protected ref RECOM_MapModule mapModule;
+	
 	void RECOM_MapRendererController() {
+		this.rendererBuffer = new RECOM_MapRendererResponseBuffer();
+		this.rendererGateway = new RECOM_MapRendererRESTGateway(rendererBuffer);
+		
+		
+		
 		this.clusterBuffer = new RECOM_ClusterBuffer();
-		this.mapModule = RECOM_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RECOM_MapModule));
 		this.restAdapter = new RECOM_ClusteringRestAdapter(clusterBuffer);
+		
+		this.mapModule = RECOM_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RECOM_MapModule));
 	}
 	
 	void ~RECOM_MapRendererController()	{
@@ -18,11 +28,42 @@ class RECOM_MapRendererController {
 	
 	void renderClusterList() {
 		if (mapModule) {
-			Print("renderClusterList to mapModule ...");
+
 			mapModule.clearDrawCommands();
 			
-			restAdapter.provideClusterData(GetGame().GetWorldFile());
+			rendererGateway.provideRenderData(GetGame().GetWorldFile());
+			if (rendererBuffer.hasData()) {
+				RECOM_MapRendererResponseDto response = rendererBuffer.read();
+				foreach(RECOM_MapRenderCommandDto command : response.renderCommands) {
+					switch(command.mapRenderCommandType) {
+						case RECOM_Enum_MapRenderCommandType.POLYGON: { 
+							Print("draw a polygon ...");	
+							//mapModule.addDrawCommand(
+								//RECOM_MapCommands.drawPolygon(polygon, ARGB(10, 0, 255, 0) )
+							//);
+							break; 
+						}
+						default: {}
+					}
+				}
+			}
 			
+			
+			
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			Print("renderClusterList to mapModule ...");	
+			
+			// restAdapter.provideClusterData(GetGame().GetWorldFile());
 			
 			if (clusterBuffer.hasData()) {
 				RECOM_ClusterResponseDto listDto = clusterBuffer.read();

@@ -22,11 +22,11 @@ class RECOM_TestBootstrapper: SCR_BaseTriggerEntity {
 			clock = RECOM_Clock.getInstance();
 			RECOM_AuthenticationInjector injector = RECOM_AuthenticationInjector.getInstance();
 			RECOM_AuthenticationInjector.getInstance().authenticate();
-			GetGame().GetCallqueue().CallLater(injector.reauthenticate, 1000, true); // <<<< define value && hide behind injector facade
+			GetGame().GetCallqueue().CallLater(injector.reauthenticate, 1000, true); // <<<< TODO define value && hide behind injector facade
 		}
 		
-		if (GetGame().InPlayMode()) {
-		// if (false) {					
+		//if (GetGame().InPlayMode()) {
+		if (false) {					
 			mapScanner = new RECOM_MapScanner(new RECOM_MapScannerEntitiesShippingService(500), 150);
 			GetGame().GetCallqueue().CallLater(mapScanner.produce, 0, true);
 			GetGame().GetCallqueue().CallLater(mapScanner.consume, 0, true);

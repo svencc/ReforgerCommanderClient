@@ -13,7 +13,7 @@ class RECOM_MapRendererResponseRESTCallback : RestCallback {
 		RECOM_MapRendererResponseDto response = new RECOM_MapRendererResponseDto;
 		response.ExpandFromRAW(data);
 
-		buffer.write(response);
+		buffer.update(response);
 	};
 
 	override void OnError( int errorCode ) {
