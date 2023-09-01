@@ -1,8 +1,7 @@
 # TODO LIST
-* Implement MapRenderController
-  * translate data to drawInstructions
-    * mapRenderCommandType:     POLYGON, POINT, LINE, TEXT, IMAGE, CIRCLE
-
+*
+* Command Framework
+*
 * Implement MapHeightMapScanner
   * scan map for height data
   * scan map for water data (terrain height under water level ?)
