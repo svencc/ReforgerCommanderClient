@@ -1,5 +1,6 @@
 # TODO LIST
-*
+* Optimize Timer + Diff
+* scan map if not scanned
 * Command Framework
 *
 * Implement MapHeightMapScanner
