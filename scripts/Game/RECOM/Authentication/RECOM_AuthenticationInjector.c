@@ -43,7 +43,9 @@ class RECOM_AuthenticationInjector {
     }
 	
     string getBearerToken() {
-//		int epochTime = System.GetUnixTime();
+        // @TODO:   implement timer on basis of System.GetUnixTime(),
+        //          fetch servertime only once, calculate diff and then use timer (+diff) to check if token is expired
+        //	int epochTime = System.GetUnixTime();
 		reauthenticate();
         return authenticationController.getAuthenticationBuffer().read().getBearerToken();
     }
@@ -62,11 +64,19 @@ class RECOM_AuthenticationInjector {
 	}
 	
 	private bool willExpireSoon(RECOM_AuthenticationResponseDto authentication) {
-		return RECOM_Clock.getInstance().time().epochSeconds > (authentication.expiresAtEpoch - authenticationController.getProperties().preExpirationTimeInSeconds);
+		if (authentication == null) {
+			return true;
+		} else {
+			return RECOM_Clock.getInstance().time().epochSeconds > (authentication.expiresAtEpoch - authenticationController.getProperties().preExpirationTimeInSeconds);
+		}
 	}
 	
 	private bool isExpired(RECOM_AuthenticationResponseDto authentication) {
-		return RECOM_Clock.getInstance().time().epochSeconds > authentication.expiresAtEpoch;
+	    if (authentication == null) {
+            return true;
+        } else {
+		    return RECOM_Clock.getInstance().time().epochSeconds > authentication.expiresAtEpoch;
+        }
 	}
 
 }
