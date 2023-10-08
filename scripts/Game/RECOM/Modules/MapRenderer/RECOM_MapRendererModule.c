@@ -1,20 +1,29 @@
-class RECOM_MapRendererController {
+class RECOM_MapRendererModule {
+	
+	private static ref RECOM_MapRendererModule instance;
 	
 	protected ref RECOM_MapRendererRESTGateway rendererGateway
-	protected ref RECOM_MapRendererResponseBuffer rendererBuffer;
-	
+	protected ref RECOM_BaseBuffer<RECOM_MapRendererResponseDto> buffer;
 	protected ref RECOM_MapModule mapModule;
 	
-	void RECOM_MapRendererController() {
-		this.rendererBuffer = new RECOM_MapRendererResponseBuffer();
-		this.rendererGateway = new RECOM_MapRendererRESTGateway(rendererBuffer);
+	static RECOM_MapRendererModule getModule() {
+        if (!RECOM_MapRendererModule.instance) {
+            RECOM_MapRendererModule.instance = new RECOM_MapRendererModule();
+        }
+        return RECOM_MapRendererModule.instance;
+    }
+	
+	
+	void RECOM_MapRendererModule() {
+		this.buffer = new RECOM_BaseBuffer<RECOM_MapRendererResponseDto>();
+		this.rendererGateway = new RECOM_MapRendererRESTGateway(buffer);
 
 		this.mapModule = RECOM_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RECOM_MapModule));
 	}
 	
-	void ~RECOM_MapRendererController()	{
+	void ~RECOM_MapRendererModule()	{
 		delete rendererGateway;
-		delete rendererBuffer;
+		delete buffer;
 		delete mapModule;
 	}
 	
@@ -23,8 +32,8 @@ class RECOM_MapRendererController {
 			mapModule.clearDrawCommands();
 			rendererGateway.provideRenderData(GetGame().GetWorldFile());
 
-			if (rendererBuffer.hasData()) {
-				RECOM_MapRendererResponseDto response = rendererBuffer.read();
+			if (buffer.hasData()) {
+				RECOM_MapRendererResponseDto response = buffer.read();
 				foreach(RECOM_MapRenderCommandDto command : response.renderCommands) {
 					switch(command.mapRenderCommandType) {
 						case RECOM_Enum_MapRenderCommandType.POLYGON: { 						

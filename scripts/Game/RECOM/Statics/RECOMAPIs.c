@@ -1,6 +1,6 @@
 class RECOMAPIs {
 
-	static string host = "localhost:8080";
+	// static string host = "localhost:8080";
 	
 	// /health
 	static string GET_HEALTH = "/health";
@@ -21,5 +21,10 @@ class RECOMAPIs {
 	static string POST_MAP_CLUSTERS = "/api/v1/map/clusters/form";
 	
 	static string POST_MAP_RENDERER = "/api/v1/map/renderer/form";
+	
+	// /message-bus
+	static string POST_MESSAGE_BUS = "/api/v1/message-bus/form";
+
+
 		
 }

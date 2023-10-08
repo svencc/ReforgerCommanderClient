@@ -1,8 +1,8 @@
 class RECOM_MapRendererResponseRESTCallback : RestCallback {
 
-	ref RECOM_MapRendererResponseBuffer buffer;
+	ref RECOM_BaseBuffer<RECOM_MapRendererResponseDto> buffer;
 	
-	void RECOM_MapRendererResponseRESTCallback(RECOM_MapRendererResponseBuffer buffer) {
+	void RECOM_MapRendererResponseRESTCallback(RECOM_BaseBuffer<RECOM_MapRendererResponseDto> buffer) {
 		this.buffer = buffer
 	}
 	

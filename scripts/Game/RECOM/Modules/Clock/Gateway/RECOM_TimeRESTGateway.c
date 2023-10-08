@@ -11,7 +11,7 @@ class RECOM_TimeRESTGateway {
 	}
 	
 	void requestTime() {
-		GetGame().GetRestApi().GetContext(RECOMAPIs.host).GET(callback, RECOMAPIs.GET_TIME);
+		GetGame().GetRestApi().GetContext(RECOM.getContext().properties().getProperties().host).GET(callback, RECOMAPIs.GET_TIME);
 	}
 
 }

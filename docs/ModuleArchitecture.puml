@@ -1,0 +1,36 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+header Module Architecture
+title RECOM Module Architecture
+
+class Context
+
+class Module<? extends Module> {
+    # gateway : Gateway
+    # buffer : Buffer
+    + getInstance() : <? extends Module>
+}
+
+class Gateway {
+    # callback : BufferAwareCallback
+    # buffer : Buffer
+    + provide() : void
+}
+
+class Buffer <? extends JsonApiStruct>{
+    + bufferedValue : <? extends JsonApiStruct>
+    + hasData() : boolean
+}
+
+class BufferAwareCallback
+
+Context "1" --- "*" Module
+Module "1" --> "1" Gateway
+Module "1" --> "1" Buffer
+Gateway "1" --> "1" Buffer
+Gateway "1" --> "1" BufferAwareCallback
+BufferAwareCallback "1" --> "1" Buffer
+'Value -- Buffer
+
+@enduml

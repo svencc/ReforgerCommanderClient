@@ -11,14 +11,14 @@ class RECOM_AuthenticationRESTGateway {
 	}
 	
 	
-	void authenticateWith(RECOM_AuthenticationProperties properties) {
+	void authenticateWith(RECOM_PropertiesDto properties) {
 		if (properties.enableAuthentication) {
 			RECOM_AuthenticationRequestDto requestDto = new RECOM_AuthenticationRequestDto();
 			requestDto.accountUUID = properties.accountUUID;
 	        requestDto.accessKey = properties.accessKey;
 			requestDto.Pack();
 			
-			GetGame().GetRestApi().GetContext(RECOMAPIs.host).POST(authenticationResponseRESTCallback, RECOMAPIs.POST_AUTHENTICATE, requestDto.AsString());
+			GetGame().GetRestApi().GetContext(RECOM.getContext().properties().getProperties().host).POST(authenticationResponseRESTCallback, RECOMAPIs.POST_AUTHENTICATE, requestDto.AsString());
 		}
 	}
 
