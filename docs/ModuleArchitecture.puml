@@ -10,8 +10,8 @@ class Module<? extends Module> {
     # gateway : Gateway
     # buffer : Buffer
     + getInstance() : <? extends Module>
-    + start() : <? extends Module>
-    + stop() : <? extends Module>
+    + start() : void
+    + stop() : void
 }
 
 class Gateway {
