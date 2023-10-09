@@ -6,6 +6,9 @@ class RECOM_AuthenticationResponseRESTCallback : RestCallback {
 		this.buffer = buffer
 	}
 	
+	void ~RECOM_AuthenticationResponseRESTCallback() {
+		delete buffer;
+	}
 	
 	override void OnSuccess( string data, int dataSize ) {
 		PrintFormat("%1 OnSuccess called ", "RECOM_AuthenticationResponseRESTCallback");

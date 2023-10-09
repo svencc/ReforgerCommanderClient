@@ -8,6 +8,7 @@ class RECOM_TimeResponseBuffer {
 	}
 
 	void ~RECOM_TimeResponseBuffer() {
+		delete bufferedValue;
 	}
 
 		

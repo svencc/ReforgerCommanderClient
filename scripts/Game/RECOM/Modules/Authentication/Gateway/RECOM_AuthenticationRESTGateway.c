@@ -3,7 +3,7 @@ class RECOM_AuthenticationRESTGateway {
 	ref RECOM_AuthenticationResponseRESTCallback authenticationResponseRESTCallback;
 
 	void RECOM_AuthenticationRESTGateway(RECOM_AuthenticationResponseBuffer authenticationResponseBuffer) {
-		this.authenticationResponseRESTCallback = new RECOM_AuthenticationResponseRESTCallback(authenticationResponseBuffer);
+		authenticationResponseRESTCallback = new RECOM_AuthenticationResponseRESTCallback(authenticationResponseBuffer);
 	}
 
 	void ~RECOM_AuthenticationRESTGateway() {

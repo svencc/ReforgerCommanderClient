@@ -6,6 +6,9 @@ class RECOM_MessageBus_Callback : RestCallback {
 		this.buffer = buffer
 	}
 	
+	void ~RECOM_MessageBus_Callback() {
+		delete buffer;
+	}
 	
 	override void OnSuccess(string data, int dataSize) {
 		if (dataSize > 0){
