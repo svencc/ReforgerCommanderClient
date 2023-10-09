@@ -1,4 +1,4 @@
-class RECOM_ClockModule {
+class RECOM_ClockModule : RECOM_BaseModule {
 
 	private static ref RECOM_ClockModule instance;
 	protected ref RECOM_TimeResponseBuffer buffer;
@@ -8,18 +8,21 @@ class RECOM_ClockModule {
         if (!RECOM_ClockModule.instance) {
             RECOM_ClockModule.instance = new RECOM_ClockModule();
         }
-    
 		return RECOM_ClockModule.instance;
     }
 	
-	void RECOM_ClockModule() {
-		buffer = new RECOM_TimeResponseBuffer();
-		restGateway = new RECOM_TimeRESTGateway(buffer);
-		init();
+	override void start() {
+		super.start();
+		GetGame().GetCallqueue().CallLater(restGateway.requestTime, 500, true);
 	}
 	
-	private void init() {
-		GetGame().GetCallqueue().CallLater(restGateway.requestTime, 500, true);
+	override void stop() {
+		super.stop();
+	}
+	
+	private void RECOM_ClockModule() {
+		buffer = new RECOM_TimeResponseBuffer();
+		restGateway = new RECOM_TimeRESTGateway(buffer);
 	}
 	
 	void ~RECOM_ClockModule()	{

@@ -12,6 +12,7 @@ class RECOM_MapScannerEntitiesShippingService {
 	
 
 	void ~RECOM_MapScannerEntitiesShippingService() {
+		delete entitiesPackage;
 	}
 	
 	protected void resetSendPackagesCounter() {

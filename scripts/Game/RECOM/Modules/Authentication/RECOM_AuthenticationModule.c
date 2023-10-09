@@ -1,7 +1,6 @@
-class RECOM_AuthenticationModule {
+class RECOM_AuthenticationModule : RECOM_BaseModule {
 	
 	private static ref RECOM_AuthenticationModule instance;
-	
 	protected ref RECOM_AuthenticationRESTGateway restGateway;
 	protected ref RECOM_AuthenticationResponseBuffer buffer;
 
@@ -9,11 +8,10 @@ class RECOM_AuthenticationModule {
         if (!RECOM_AuthenticationModule.instance) {
             RECOM_AuthenticationModule.instance = new RECOM_AuthenticationModule();
         }
-		
         return RECOM_AuthenticationModule.instance;
     }
 	
-	void RECOM_AuthenticationModule() {
+	private void RECOM_AuthenticationModule() {
 		buffer = new RECOM_AuthenticationResponseBuffer();
 		restGateway = new RECOM_AuthenticationRESTGateway(buffer);
 	}
@@ -21,9 +19,19 @@ class RECOM_AuthenticationModule {
 	void ~RECOM_AuthenticationModule() {
 		delete restGateway;
 		delete buffer;
+		delete RECOM_AuthenticationModule.instance;
 	}	
 	
-	void authenticate() {
+	override void start() {
+		super.start();
+		authenticate();
+	}
+	
+	override void stop() {
+		super.stop();
+	}
+	
+	protected void authenticate() {
 		if (RECOM.getContext().properties().getProperties().enableAuthentication) {
 			restGateway.authenticateWith(RECOM.getContext().properties().getProperties());
 		} else {

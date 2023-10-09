@@ -1,4 +1,4 @@
-class RECOM_MapRendererModule {
+class RECOM_MapRendererModule : RECOM_BaseModule {
 	
 	private static ref RECOM_MapRendererModule instance;
 	
@@ -14,20 +14,20 @@ class RECOM_MapRendererModule {
     }
 	
 	
-	void RECOM_MapRendererModule() {
-		this.buffer = new RECOM_BaseBuffer<RECOM_MapRendererResponseDto>();
-		this.rendererGateway = new RECOM_MapRendererRESTGateway(buffer);
-
-		this.mapModule = RECOM_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RECOM_MapModule));
+	private void RECOM_MapRendererModule() {
+		buffer = new RECOM_BaseBuffer<RECOM_MapRendererResponseDto>();
+		rendererGateway = new RECOM_MapRendererRESTGateway(buffer);
+		mapModule = RECOM_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RECOM_MapModule));
 	}
 	
 	void ~RECOM_MapRendererModule()	{
 		delete rendererGateway;
 		delete buffer;
 		delete mapModule;
+		delete RECOM_MapRendererModule.instance;
 	}
 	
-	void renderClusterList() {
+	protected void renderClusterList() {
 		if (mapModule) {
 			mapModule.clearDrawCommands();
 			rendererGateway.provideRenderData(GetGame().GetWorldFile());
@@ -53,8 +53,15 @@ class RECOM_MapRendererModule {
 			// Establish controller connection to mapModule as soon it is available!
 			mapModule = RECOM_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RECOM_MapModule));
 		}
-
 	}
 	
+	override void start() {
+		super.start();
+		GetGame().GetCallqueue().CallLater(renderClusterList, 1000, true);
+	}
+	
+	override void stop() {
+		super.stop();
+	}
 	
 }

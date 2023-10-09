@@ -1,8 +1,11 @@
-class RECOM_BaseModule<Class T> {
+class RECOM_BaseModule {
 	
+	void start() {
 
-	t getInstance() {
+	}
 	
+	void stop() {
+		
 	}
 	
 }

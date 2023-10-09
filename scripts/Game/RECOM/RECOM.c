@@ -7,7 +7,7 @@ class RECOM {
 	protected ref RECOM_AuthenticationModule authentication;
 	
 	protected ref RECOM_MessageBusModule messageBus;
-	protected ref RECOM_MapScanner mapScanner;
+	protected ref RECOM_MapScannerModule mapScanner;
 	protected ref RECOM_MapRendererModule mapRenderer;
 
 	
@@ -15,25 +15,49 @@ class RECOM {
         if (!RECOM.context) {
             RECOM.context = new RECOM();
         }
-		
         return RECOM.context;
     }
 	
-	void RECOM() {
+	private void RECOM() {
 		init();
 	}
 	
-	void ~RECOM() {}
+	void ~RECOM() {
+		delete properties;
+		delete clock;
+		delete authentication;
+		delete messageBus;
+		delete mapScanner;
+		delete mapRenderer;
+		delete context;
+	}
 	
 	void init() {
-		this.properties = RECOM_PropertiesModule.getModule();
+		properties = RECOM_PropertiesModule.getModule();
+		clock = RECOM_ClockModule.getModule();
+		authentication = RECOM_AuthenticationModule.getModule();
 		
-		this.clock = RECOM_ClockModule.getModule();
-		this.authentication = RECOM_AuthenticationModule.getModule();
-		
-		this.messageBus = new RECOM_MessageBusModule();
-		this.mapScanner = new RECOM_MapScanner(new RECOM_MapScannerEntitiesShippingService(500), 150);
-		this.mapRenderer = RECOM_MapRendererModule.getModule();
+		messageBus = RECOM_MessageBusModule.getModule();
+		mapScanner = RECOM_MapScannerModule.getModule();
+		mapRenderer = RECOM_MapRendererModule.getModule();
+	}
+	
+	void start() {
+		if (GetGame().InPlayMode()) {
+			properties.start();
+			clock.start();
+			authentication.start();
+			
+			messageBus.start();
+			mapRenderer.start();
+		} else if (false) {
+			mapScanner.start();
+		}
+	}
+	
+	void stop() {
+		messageBus.stop();
+		GetGame().GetCallqueue().Clear();
 	}
 	
 	RECOM_PropertiesModule properties() {
@@ -52,7 +76,7 @@ class RECOM {
 		return messageBus;
 	}
 	
-	RECOM_MapScanner mapScanner() {
+	RECOM_MapScannerModule mapScanner() {
 		return mapScanner;
 	}
 	

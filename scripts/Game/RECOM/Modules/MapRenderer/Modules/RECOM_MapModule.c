@@ -1,18 +1,20 @@
 [BaseContainerProps()]
 class RECOM_MapModule  : SCR_MapModuleBase {
 	
-	protected Widget layoutWidget;
-	protected CanvasWidget canvas;
+	protected ref Widget layoutWidget;
+	protected ref CanvasWidget canvas;
 	protected ref array<ref CanvasWidgetCommand> renderCommands;
 	protected ref array<ref RECOM_MapDrawCommandBase> drawCommands;
-	// protected ResourceName layout = "{5D8727C1F109D98D}UI/Layouts/Map/CanvasLayer.layout";
-	protected ResourceName layout = "{5D68C6A8E8235705}UI/Layouts/Map/CanvasLayer.layout";
-	// protected ResourceName layout = "{58D0FB3206B6F859}UI/Layouts/Map/CanvasLayer.layout";
+	protected ResourceName layout = "{D0752F502078FD9C}UI/layouts/Map/CanvasLayer.layout";
 	
 	void RECOM_MapModule() {
 	}
 	
 	void ~RECOM_MapModule()	{
+		delete renderCommands;
+		delete drawCommands;
+		delete layoutWidget;
+		delete canvas;
 	}
 	
 	override void Init() {

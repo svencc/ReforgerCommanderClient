@@ -1,5 +1,7 @@
-class RECOM_MapScanner {
+class RECOM_MapScannerModule : RECOM_BaseModule {
 
+	private static ref RECOM_MapScannerModule instance;
+	
 	protected bool startedProduction = false;
 	protected bool finishedProduction = false;
 	
@@ -19,17 +21,40 @@ class RECOM_MapScanner {
 	protected ref RECOM_MapScannerEntitiesShippingService shippingService;
 	protected ref RECOM_MapScannerEntitiesTransactionManager transactionManager
 
-	void RECOM_MapScanner(
-		RECOM_MapScannerEntitiesShippingService shippingService,
-		int boxScanSize
+	
+	static RECOM_MapScannerModule getModule() {
+        if (!RECOM_MapScannerModule.instance) {
+            RECOM_MapScannerModule.instance = new RECOM_MapScannerModule(new RECOM_MapScannerEntitiesShippingService(500), 150);
+        }
+		
+        return RECOM_MapScannerModule.instance;
+    }
+	
+	override void start() {
+		super.start();
+		GetGame().GetCallqueue().CallLater(produce, 0, true);
+		GetGame().GetCallqueue().CallLater(consume, 0, true);
+	}
+	
+	override void stop() {
+		super.stop();
+	}
+	
+	private void RECOM_MapScannerModule(
+		RECOM_MapScannerEntitiesShippingService service,
+		int scanSize
 	) {
-		this.shippingService = shippingService;
-		this.boxScanSize = boxScanSize;
+		shippingService = service;
+		boxScanSize = scanSize;
 		//init(boxScanSize);
 	}
 
-	void ~RECOM_MapScanner() {
-		producedEntitiesQueue.Clear()
+	void ~RECOM_MapScannerModule() {
+		producedEntitiesQueue.Clear();
+		delete producedEntitiesQueue;
+		delete shippingService;
+		delete transactionManager;
+		delete RECOM_MapScannerModule.instance;
 	}
 
 	protected void init(int boxScanSize) {

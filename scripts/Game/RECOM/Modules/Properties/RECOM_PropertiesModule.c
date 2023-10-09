@@ -1,4 +1,4 @@
-class RECOM_PropertiesModule {
+class RECOM_PropertiesModule : RECOM_BaseModule {
 
 	private static ref RECOM_PropertiesModule instance;
 	protected ref RECOM_PropertiesDto properties;
@@ -10,16 +10,25 @@ class RECOM_PropertiesModule {
         return RECOM_PropertiesModule.instance;
     }
 	
-	void RECOM_PropertiesModule() {
+	override void start() {
+		super.start();
 		init();
 		loadProperties();
 	}
-
-
+	
+	override void stop() {
+		super.stop();
+	}
+	
+	void ~RECOM_PropertiesModule()	{
+		delete properties;
+		delete RECOM_PropertiesModule.instance;
+	}
+	
 	protected void loadProperties() {
-        RECOM_PropertiesDto properties = new RECOM_PropertiesDto();
-    	properties.LoadFromFile(RECOMPaths.RECOM_AUTHENTICATION_PROPERTY);
-    	this.properties = properties; 
+        RECOM_PropertiesDto props = new RECOM_PropertiesDto();
+    	props.LoadFromFile(RECOMPaths.RECOM_AUTHENTICATION_PROPERTY);
+    	properties = props; 
     }
 
 	protected void init() {

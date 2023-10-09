@@ -8,6 +8,7 @@ class RECOM_MapScannerEntitiesTransactionManager {
 	}
 
 	void ~RECOM_MapScannerEntitiesTransactionManager() {
+		delete transactionIdentifier;
 	}
 
 	void openTransaction() {
