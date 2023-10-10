@@ -25,10 +25,7 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
 	
 	override void start() {
 		super.start();
-		// GetGame().GetWorldFile()
-		string mapName = "x";
-		// GetGame().GetCallqueue().CallLater(gateway.provideData, 1000, true, mapName);
-		GetGame().GetCallqueue().CallLater(gateway.provideData, 1000, true);
+		GetGame().GetCallqueue().CallLater(gateway.provideData);
 	}
 	
 	override void stop() {

@@ -1,7 +1,7 @@
 class RECOM {
 	
 	protected ref static RECOM context;
-	
+		
 	protected ref RECOM_PropertiesModule properties;
 	protected ref RECOM_ClockModule clock;
 	protected ref RECOM_AuthenticationModule authentication;
@@ -49,7 +49,7 @@ class RECOM {
 			authentication.start();
 			
 			messageBus.start();
-			mapRenderer.start();
+			//mapRenderer.start();
 		} else if (false) {
 			mapScanner.start();
 		}

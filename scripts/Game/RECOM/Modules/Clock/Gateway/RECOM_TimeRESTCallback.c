@@ -11,7 +11,7 @@ class RECOM_TimeRESTCallback : RestCallback {
 	}
 	
 	override void OnSuccess( string data, int dataSize ) {
-		PrintFormat("%1 OnSuccess called ", "RECOM_TimeRESTCallback");
+		PrintFormat("tick");
 
 		RECOM_EpochTimeDto response = new RECOM_EpochTimeDto();
 		response.ExpandFromRAW(data);
