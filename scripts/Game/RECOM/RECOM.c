@@ -49,7 +49,7 @@ class RECOM {
 			authentication.start();
 			
 			messageBus.start();
-			//mapRenderer.start();
+			mapRenderer.start();
 		} else if (false) {
 			mapScanner.start();
 		}

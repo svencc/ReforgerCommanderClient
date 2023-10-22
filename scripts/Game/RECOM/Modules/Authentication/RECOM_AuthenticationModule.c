@@ -85,7 +85,7 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
 		if (authentication == null) {
 			return true;
 		} else {
-			return RECOM_ClockModule.getModule().time().epochSeconds > (authentication.expiresAtEpoch - RECOM.getContext().properties().getProperties().preExpirationTimeInSeconds);
+			return RECOM_ClockModule.getModule().time() > (authentication.expiresAtEpoch - RECOM.getContext().properties().getProperties().preExpirationTimeInSeconds);
 		}
 	}
 	
@@ -93,7 +93,7 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
 	    if (authentication == null) {
             return true;
         } else {
-		    return RECOM_ClockModule.getModule().time().epochSeconds > authentication.expiresAtEpoch;
+		    return RECOM_ClockModule.getModule().time() > authentication.expiresAtEpoch;
         }
 	}
 

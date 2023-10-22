@@ -40,6 +40,7 @@ class RECOM_PropertiesModule : RECOM_BaseModule {
         	properties.host = "localhost:8080";
         	properties.accountUUID = "uuid";
         	properties.accessKey = "access-key";
+        	properties.synchronizeClockIntervalInSeconds = 600; // 10 Minutes;
 			
 	    	properties.PackToFile(RECOMPaths.RECOM_AUTHENTICATION_PROPERTY);
 		}

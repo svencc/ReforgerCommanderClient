@@ -13,7 +13,7 @@ class RECOM_ClockModule : RECOM_BaseModule {
 	
 	override void start() {
 		super.start();
-		GetGame().GetCallqueue().CallLater(restGateway.requestTime, 500, true);
+		//GetGame().GetCallqueue().CallLater(restGateway.requestTime, 500, true);
 	}
 	
 	override void stop() {
@@ -31,8 +31,16 @@ class RECOM_ClockModule : RECOM_BaseModule {
 		delete RECOM_ClockModule.instance;
 	}
 	
-	RECOM_EpochTimeDto time() {
+	int time() {
+		 return System.GetUnixTime();
+		/*
+		// in the past we fetched the time from server; but now I found out that I am able to get the unixTimestamp epco utc from Reforger API directly
+		// So no there is no need to fetch it from server.
+		// as server / unix timestamp is normed to UTC, I do not expect any timing issues or need to sync time (difference)
+		int localTime = System.GetUnixTime();
+		PrintFormat("Time local %1 - remote %2",localTime, buffer.read().epochSeconds, LogLevel.ERROR);
 		return buffer.read();
+		*/
 	}
 		
 }
