@@ -3,7 +3,6 @@ class RECOM {
 	protected ref static RECOM context;
 		
 	protected ref RECOM_PropertiesModule properties;
-	protected ref RECOM_ClockModule clock;
 	protected ref RECOM_AuthenticationModule authentication;
 	
 	protected ref RECOM_MessageBusModule messageBus;
@@ -24,7 +23,6 @@ class RECOM {
 	
 	void ~RECOM() {
 		delete properties;
-		delete clock;
 		delete authentication;
 		delete messageBus;
 		delete mapScanner;
@@ -34,7 +32,6 @@ class RECOM {
 	
 	void init() {
 		properties = RECOM_PropertiesModule.getModule();
-		clock = RECOM_ClockModule.getModule();
 		authentication = RECOM_AuthenticationModule.getModule();
 		
 		messageBus = RECOM_MessageBusModule.getModule();
@@ -45,7 +42,7 @@ class RECOM {
 	void start() {
 		if (GetGame().InPlayMode()) {
 			properties.start();
-			clock.start();
+			// clock.start();
 			authentication.start();
 			
 			messageBus.start();
@@ -64,9 +61,6 @@ class RECOM {
 		return properties;
 	}
 	
-	RECOM_ClockModule clock() {
-		return clock;
-	}
 	
 	RECOM_AuthenticationModule authentication() {
 		return authentication;
