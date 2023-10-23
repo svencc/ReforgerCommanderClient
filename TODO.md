@@ -1,7 +1,9 @@
 # TODO LIST
-* Optimize Timer + Diff
-* scan map if not scanned
+
+* Observer Framework
+* use : Managed
 * Command Framework
+* scan map if not scanned
 *
 * Implement MapHeightMapScanner
   * scan map for height data
