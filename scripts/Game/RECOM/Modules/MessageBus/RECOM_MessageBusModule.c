@@ -1,8 +1,8 @@
 class RECOM_MessageBusModule : RECOM_BaseModule {
 	
 	private static ref RECOM_MessageBusModule instance;
-	protected ref RECOM_BaseBuffer<RECOM_MessageBus_ResponseDto> buffer;
 	protected ref RECOM_MessageBus_Gateway gateway;
+	protected ref RECOM_MB_Subject subject;
 	
 	
 	static RECOM_MessageBusModule getModule() {
@@ -13,19 +13,19 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
     }
 	
 	private void RECOM_MessageBusModule() {
-		buffer = new RECOM_BaseBuffer<RECOM_MessageBus_ResponseDto>();
-		gateway = new RECOM_MessageBus_Gateway(buffer);
+		subject = new RECOM_MB_Subject();
+		gateway = new RECOM_MessageBus_Gateway(subject);
 	}
 	
 	void ~RECOM_MessageBusModule() {
 		delete gateway;
-		delete buffer;
+		delete subject;
 		delete RECOM_MessageBusModule.instance;
 	}
 	
 	override void start() {
 		super.start();
-		GetGame().GetCallqueue().CallLater(gateway.provideData);
+		GetGame().GetCallqueue().CallLater(gateway.provideData, 0);
 	}
 	
 	override void stop() {
