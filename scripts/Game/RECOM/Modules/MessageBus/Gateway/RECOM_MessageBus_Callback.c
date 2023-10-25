@@ -23,7 +23,7 @@ class RECOM_MessageBus_Callback : RestCallback {
 			response.ExpandFromRAW(data);
  			subject.notifyObserversWith(response);
 			if (response.epochMillisecondsLastMessage) {
-				latestMessage =  response.epochMillisecondsLastMessage;
+				latestMessage = response.epochMillisecondsLastMessage;
 			}
 		}
 		reschedule(5);

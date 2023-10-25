@@ -11,7 +11,7 @@ class RECOM_MessageBus_Gateway {
 		delete callback;
 	}
 	
-	void provideData(int epochMillisecondsLastMessage = 0) {
+	void provideData(int epochMillisecondsLastMessage) {
 		if (epochMillisecondsLastMessage > this.epochMillisecondsLastMessage) {
 			this.epochMillisecondsLastMessage = epochMillisecondsLastMessage;
 		}	
@@ -25,6 +25,9 @@ class RECOM_MessageBus_Gateway {
 			requestDto.Pack();
 		
 			GetGame().GetRestApi().GetContext(RECOM.getContext().properties().getProperties().host).POST(callback, RECOMAPIs.POST_MESSAGE_BUS, requestDto.AsString());
+		} else {
+			// try again until we are authenticated
+			GetGame().GetCallqueue().CallLater(provideData, 1000, false, this.epochMillisecondsLastMessage);
 		}
 	}
 	
