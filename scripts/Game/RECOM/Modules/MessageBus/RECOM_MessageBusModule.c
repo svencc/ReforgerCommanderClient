@@ -26,7 +26,7 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
 	override void start() {
 		super.start();
 		Print("RECOM_MessageBusModule start");
-		GetGame().GetCallqueue().CallLater(gateway.provideData, 1000, false, 0);
+		GetGame().GetCallqueue().CallLater(gateway.provideData, 1000, false, "");
 	}
 	
 	override void stop() {

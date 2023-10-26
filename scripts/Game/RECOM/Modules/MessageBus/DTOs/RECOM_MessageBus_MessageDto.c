@@ -1,9 +1,8 @@
 class RECOM_MessageBus_MessageDto : JsonApiStruct {
 	
 	string uuid;
-	RECOM_MessageBus_MessageType messageType;
-	int timestampEpochMilliseconds;
-	int timestampConfirmationEpochMilliseconds;
+	string messageType;
+	string timestampEpochMilliseconds;
 	string payload;
 	
 	
@@ -12,7 +11,6 @@ class RECOM_MessageBus_MessageDto : JsonApiStruct {
 		RegV("uuid");
 		RegV("messageType");
 		RegV("timestampEpochMilliseconds");
-		RegV("timestampConfirmationEpochMilliseconds");
 		RegV("payload");
 	}
 

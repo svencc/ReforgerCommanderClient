@@ -1,6 +1,6 @@
 class RECOM_MessageBus_Callback : RestCallback {
 
-	private int latestMessage = 0;
+	private string latestMessageEpoch;
 	private ref RECOM_MB_Subject subject;
 	private ref RECOM_MessageBus_Gateway gateway;
 	
@@ -23,7 +23,7 @@ class RECOM_MessageBus_Callback : RestCallback {
 			response.ExpandFromRAW(data);
  			subject.notifyObserversWith(response);
 			if (response.epochMillisecondsLastMessage) {
-				latestMessage = response.epochMillisecondsLastMessage;
+				latestMessageEpoch = response.epochMillisecondsLastMessage;
 			}
 		}
 		reschedule(5);
@@ -41,7 +41,7 @@ class RECOM_MessageBus_Callback : RestCallback {
 	}
 	
 	private void reschedule(int in) {
-		GetGame().GetCallqueue().CallLater(gateway.provideData, in, false, this.latestMessage);
+		GetGame().GetCallqueue().CallLater(gateway.provideData, in, false, this.latestMessageEpoch);
 	}
 	
 

@@ -1,7 +1,7 @@
 class RECOM_MessageBus_ResponseDto : JsonApiStruct {
 	
 	string mapName;
-	int epochMillisecondsLastMessage;
+	string epochMillisecondsLastMessage;
 	ref array<ref RECOM_MessageBus_MessageDto> messages = {};
 	
 	
