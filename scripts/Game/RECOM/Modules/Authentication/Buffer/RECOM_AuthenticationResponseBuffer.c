@@ -7,7 +7,7 @@ class RECOM_AuthenticationResponseBuffer {
 	}
 
 	void ~RECOM_AuthenticationResponseBuffer() {
-		delete bufferedValue;
+		bufferedValue = null;
 	}
 
 

@@ -22,7 +22,7 @@ class RECOM_PropertiesModule : RECOM_BaseModule {
 	}
 	
 	void ~RECOM_PropertiesModule()	{
-		delete properties;
+		properties = null;
 	}
 	
 	protected void loadProperties() {

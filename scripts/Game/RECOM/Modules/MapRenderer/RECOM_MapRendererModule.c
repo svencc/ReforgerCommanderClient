@@ -21,9 +21,9 @@ class RECOM_MapRendererModule : RECOM_BaseModule {
 	}
 	
 	void ~RECOM_MapRendererModule()	{
-		delete rendererGateway;
-		delete buffer;
-		delete mapModule;
+		rendererGateway = null;
+		buffer = null;
+		mapModule = null;
 	}
 	
 	protected void renderClusterList() {
@@ -61,7 +61,7 @@ class RECOM_MapRendererModule : RECOM_BaseModule {
 	
 	override void dispose() {
 		super.dispose();
-		delete RECOM_MapRendererModule.instance;
+		RECOM_MapRendererModule.instance = null;
 	}
 	
 }

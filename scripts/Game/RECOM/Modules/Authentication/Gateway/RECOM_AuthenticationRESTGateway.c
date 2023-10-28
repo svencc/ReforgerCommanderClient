@@ -7,7 +7,7 @@ class RECOM_AuthenticationRESTGateway {
 	}
 
 	void ~RECOM_AuthenticationRESTGateway() {
-		delete authenticationResponseRESTCallback;
+		authenticationResponseRESTCallback = null;
 	}
 	
 	

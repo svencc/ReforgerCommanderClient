@@ -24,16 +24,16 @@ class RECOM {
 	}
 	
 	void ~RECOM() {
-		delete properties;
-		delete authentication;
-		delete messageBus;
-		delete mapScanner;
-		delete mapRenderer;
-		delete context;
+		properties = null;
+		authentication = null;
+		messageBus = null;
+		mapScanner = null;
+		mapRenderer = null;
+		context = null;
 		
 		
 		
-		delete obs;
+		obs = null;
 	}
 	
 	void init() {
@@ -72,7 +72,7 @@ class RECOM {
 		
 		obs.dispose();
 		
-		delete RECOM.context;
+		RECOM.context = null;
 	}
 	
 	RECOM_PropertiesModule properties() {

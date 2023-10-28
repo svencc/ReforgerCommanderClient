@@ -13,8 +13,8 @@ class RECOM_MessageBus_Callback : RestCallback {
 	}
 	
 	void ~RECOM_MessageBus_Callback() {
-		delete subject;
-		delete gateway;
+		subject = null;
+		gateway = null;
 	}
 	
 	override void OnSuccess(string data, int dataSize) {

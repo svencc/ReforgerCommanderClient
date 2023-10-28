@@ -7,7 +7,7 @@ class RECOM_AuthenticationResponseRESTCallback : RestCallback {
 	}
 	
 	void ~RECOM_AuthenticationResponseRESTCallback() {
-		delete buffer;
+		buffer = null;
 	}
 	
 	override void OnSuccess( string data, int dataSize ) {

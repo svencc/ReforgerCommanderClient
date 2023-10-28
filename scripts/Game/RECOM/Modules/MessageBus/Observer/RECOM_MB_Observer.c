@@ -2,8 +2,10 @@ class RECOM_MB_Observer {
 	
 	protected ref array<RECOM_MB_Subject> subjects = {};
 	
+	
 	void ~RECOM_MB_Observer() {
-		delete subjects;
+		subjects.Clear();
+		subjects = null;
 	}
 
 	

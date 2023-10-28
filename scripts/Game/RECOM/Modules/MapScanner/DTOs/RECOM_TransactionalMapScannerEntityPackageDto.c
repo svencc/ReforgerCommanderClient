@@ -14,6 +14,7 @@ class RECOM_TransactionalMapScannerEntityPackageDto : JsonApiStruct {
 
 	void ~RECOM_TransactionalMapScannerEntityPackageDto() {
 		entities.Clear();
+		entities = null;
 	}
 
 }

@@ -11,10 +11,12 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 	}
 	
 	void ~RECOM_MapModule()	{
-		delete renderCommands;
-		delete drawCommands;
-		delete layoutWidget;
-		delete canvas;
+		renderCommands.Clear();
+		renderCommands = null;
+		drawCommands.Clear();
+		drawCommands = null;
+		layoutWidget = null;
+		canvas = null;
 	}
 	
 	override void Init() {

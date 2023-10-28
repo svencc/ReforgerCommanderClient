@@ -18,9 +18,9 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
 	}
 	
 	void ~RECOM_MessageBusModule() {
-		delete gateway;
-		delete subject;
-		delete RECOM_MessageBusModule.instance;
+		gateway = null;
+		subject = null;
+		RECOM_MessageBusModule.instance = null;
 	}
 	
 	override void start() {
@@ -31,7 +31,7 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
 	
 	override void dispose() {
 		super.dispose();
-		delete RECOM_MessageBusModule.instance;
+		RECOM_MessageBusModule.instance = null;
 	}
 	
 	RECOM_MB_Subject getSubject() {

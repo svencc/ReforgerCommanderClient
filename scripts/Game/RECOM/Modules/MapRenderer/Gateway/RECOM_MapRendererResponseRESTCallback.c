@@ -7,7 +7,7 @@ class RECOM_MapRendererResponseRESTCallback : RestCallback {
 	}
 	
 	void ~RECOM_MapRendererResponseRESTCallback() {
-		delete buffer;
+		buffer = null;
 	}
 	
 	override void OnSuccess( string data, int dataSize ) {

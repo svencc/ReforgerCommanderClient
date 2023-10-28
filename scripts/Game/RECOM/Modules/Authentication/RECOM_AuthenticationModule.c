@@ -17,9 +17,9 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
 	}
 
 	void ~RECOM_AuthenticationModule() {
-		delete restGateway;
-		delete buffer;
-		delete RECOM_AuthenticationModule.instance;
+		restGateway = null;
+		buffer = null;
+		RECOM_AuthenticationModule.instance = null;
 	}	
 	
 	override void start() {
@@ -29,7 +29,7 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
 	
 	override void dispose() {
 		super.dispose();
-		delete RECOM_AuthenticationModule.instance;
+		RECOM_AuthenticationModule.instance = null;
 	}
 	
 	protected void authenticate() {

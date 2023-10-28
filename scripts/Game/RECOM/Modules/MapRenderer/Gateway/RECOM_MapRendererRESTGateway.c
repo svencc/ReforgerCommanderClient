@@ -8,7 +8,7 @@ class RECOM_MapRendererRESTGateway {
 	}
 
 	void ~RECOM_MapRendererRESTGateway() {
-		delete mapRendererResponseRESTCallback;
+		mapRendererResponseRESTCallback = null;
 	}
 	
 	void provideRenderData(string mapName) {

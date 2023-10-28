@@ -38,7 +38,7 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 	
 	override void dispose() {
 		super.dispose();
-		delete RECOM_MapScannerModule.instance;
+		RECOM_MapScannerModule.instance = null;
 	}
 	
 	private void RECOM_MapScannerModule(
@@ -52,10 +52,10 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 
 	void ~RECOM_MapScannerModule() {
 		producedEntitiesQueue.Clear();
-		delete producedEntitiesQueue;
-		delete shippingService;
-		delete transactionManager;
-		delete RECOM_MapScannerModule.instance;
+		producedEntitiesQueue = null;
+		shippingService = null;
+		transactionManager = null;
+		RECOM_MapScannerModule.instance = null;
 	}
 
 	protected void init(int boxScanSize) {

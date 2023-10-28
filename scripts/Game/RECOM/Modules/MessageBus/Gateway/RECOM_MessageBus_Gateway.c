@@ -8,7 +8,7 @@ class RECOM_MessageBus_Gateway {
 	}
 
 	void ~RECOM_MessageBus_Gateway() {
-		delete callback;
+		callback = null;
 	}
 	
 	void provideData(string epochMillisecondsLastMessage) {
