@@ -9,6 +9,12 @@ class RECOM_MB_Observer {
     }
 
     void takeNotice(RECOM_MB_Subject subject, RECOM_MessageBus_ResponseDto notification) {
+		foreach(RECOM_MessageBus_MessageDto message: notification.messages) {
+			PrintFormat("uuid: %1", message.uuid);
+			PrintFormat("messageType: %1", message.messageType);
+			PrintFormat("timestampEpochMilliseconds: %1", message.timestampEpochMilliseconds);
+			PrintFormat("payload: %1", message.payload);
+		}
 
 	}
 

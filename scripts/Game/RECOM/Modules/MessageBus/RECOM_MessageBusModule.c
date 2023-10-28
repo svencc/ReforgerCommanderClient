@@ -33,4 +33,8 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
 		super.stop();
 	}
 	
+	RECOM_MB_Subject getSubject() {
+		return subject;
+	}
+	
 }

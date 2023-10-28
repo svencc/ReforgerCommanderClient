@@ -8,6 +8,8 @@ class RECOM {
 	protected ref RECOM_MessageBusModule messageBus;
 	protected ref RECOM_MapScannerModule mapScanner;
 	protected ref RECOM_MapRendererModule mapRenderer;
+	
+	protected ref RECOM_MB_Observer obs;
 
 	
 	static RECOM getContext() {
@@ -47,6 +49,10 @@ class RECOM {
 			
 			messageBus.start();
 			mapRenderer.start();
+			
+			obs = new RECOM_MB_Observer();
+			obs.observe(messageBus.getSubject());
+			
 		} else if (false) {
 			mapScanner.start();
 		}

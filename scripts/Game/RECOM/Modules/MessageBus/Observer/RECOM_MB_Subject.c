@@ -1,6 +1,6 @@
 class RECOM_MB_Subject {
 
-	protected ref array<RECOM_MB_Observer> observersWatchingMe = {};
+	protected ref array<ref RECOM_MB_Observer> observersWatchingMe = {};
 
 
 	void beObservedBy(RECOM_MB_Observer observer) {

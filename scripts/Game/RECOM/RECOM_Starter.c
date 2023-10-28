@@ -9,7 +9,7 @@ class RECOM_Starter: SCR_BaseTriggerEntity {
 
 	override void EOnInit(IEntity owner) {
 		super.EOnInit(owner);
-		RECOM.getContext().start();
+		GetGame().GetCallqueue().CallLater(RECOM.getContext().start, 1000, false);
 	}
 
 };
