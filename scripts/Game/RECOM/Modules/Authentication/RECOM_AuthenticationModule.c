@@ -27,8 +27,9 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
 		authenticate();
 	}
 	
-	override void stop() {
-		super.stop();
+	override void dispose() {
+		super.dispose();
+		delete RECOM_AuthenticationModule.instance;
 	}
 	
 	protected void authenticate() {

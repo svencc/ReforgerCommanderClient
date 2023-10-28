@@ -4,12 +4,17 @@ class RECOM_StarterClass: SCR_BaseTriggerEntityClass {};
 class RECOM_Starter: SCR_BaseTriggerEntity {
 
 	void ~RECOM_Starter() {
-		RECOM.getContext().stop();
+		if (GetGame().InPlayMode()) {
+			GetGame().GetCallqueue().Clear();
+			RECOM.getContext().dispose();
+		}
 	}
 
 	override void EOnInit(IEntity owner) {
 		super.EOnInit(owner);
-		GetGame().GetCallqueue().CallLater(RECOM.getContext().start, 1000, false);
+		if (GetGame().InPlayMode()) {
+			GetGame().GetCallqueue().CallLater(RECOM.getContext().start, 0, false);
+		}
 	}
 
 };

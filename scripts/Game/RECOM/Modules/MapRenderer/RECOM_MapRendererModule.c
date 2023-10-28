@@ -24,7 +24,6 @@ class RECOM_MapRendererModule : RECOM_BaseModule {
 		delete rendererGateway;
 		delete buffer;
 		delete mapModule;
-		delete RECOM_MapRendererModule.instance;
 	}
 	
 	protected void renderClusterList() {
@@ -60,8 +59,9 @@ class RECOM_MapRendererModule : RECOM_BaseModule {
 		GetGame().GetCallqueue().CallLater(renderClusterList, 1000, true);
 	}
 	
-	override void stop() {
-		super.stop();
+	override void dispose() {
+		super.dispose();
+		delete RECOM_MapRendererModule.instance;
 	}
 	
 }

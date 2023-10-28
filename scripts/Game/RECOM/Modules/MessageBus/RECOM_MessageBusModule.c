@@ -29,8 +29,9 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
 		GetGame().GetCallqueue().CallLater(gateway.provideData, 1000, false, "");
 	}
 	
-	override void stop() {
-		super.stop();
+	override void dispose() {
+		super.dispose();
+		delete RECOM_MessageBusModule.instance;
 	}
 	
 	RECOM_MB_Subject getSubject() {

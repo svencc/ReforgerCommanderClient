@@ -16,13 +16,13 @@ class RECOM_PropertiesModule : RECOM_BaseModule {
 		loadProperties();
 	}
 	
-	override void stop() {
-		super.stop();
+	override void dispose() {
+		super.dispose();
+		RECOM_PropertiesModule.instance = null;
 	}
 	
 	void ~RECOM_PropertiesModule()	{
 		delete properties;
-		delete RECOM_PropertiesModule.instance;
 	}
 	
 	protected void loadProperties() {

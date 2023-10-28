@@ -4,7 +4,7 @@ class RECOM_BaseModule {
 
 	}
 	
-	void stop() {
+	void dispose() {
 		
 	}
 	

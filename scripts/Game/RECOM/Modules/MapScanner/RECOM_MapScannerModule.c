@@ -36,8 +36,9 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		GetGame().GetCallqueue().CallLater(consume, 0, true);
 	}
 	
-	override void stop() {
-		super.stop();
+	override void dispose() {
+		super.dispose();
+		delete RECOM_MapScannerModule.instance;
 	}
 	
 	private void RECOM_MapScannerModule(

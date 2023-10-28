@@ -30,6 +30,10 @@ class RECOM {
 		delete mapScanner;
 		delete mapRenderer;
 		delete context;
+		
+		
+		
+		delete obs;
 	}
 	
 	void init() {
@@ -58,9 +62,17 @@ class RECOM {
 		}
 	}
 	
-	void stop() {
-		messageBus.stop();
-		GetGame().GetCallqueue().Clear();
+	void dispose() {
+		// GetGame().GetCallqueue().Clear();
+		properties.dispose();
+		authentication.dispose();
+		messageBus.dispose();
+		mapScanner.dispose();
+		mapRenderer.dispose();
+		
+		obs.dispose();
+		
+		delete RECOM.context;
 	}
 	
 	RECOM_PropertiesModule properties() {
