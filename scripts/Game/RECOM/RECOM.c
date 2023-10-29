@@ -6,10 +6,12 @@ class RECOM {
 	protected ref RECOM_AuthenticationModule authentication;
 	
 	protected ref RECOM_MessageBusModule messageBus;
+	
+	protected ref RECOM_MapExistanceModule mapExistance;
 	protected ref RECOM_MapScannerModule mapScanner;
 	protected ref RECOM_MapRendererModule mapRenderer;
 	
-	protected ref RECOM_MB_Observer obs;
+	protected ref RECOM_MB_Observer observer;
 
 	
 	static RECOM getContext() {
@@ -26,14 +28,17 @@ class RECOM {
 	void ~RECOM() {
 		properties = null;
 		authentication = null;
+		
 		messageBus = null;
+		
+		mapExistance = null;
 		mapScanner = null;
 		mapRenderer = null;
+		
 		context = null;
 		
-		
-		
-		obs = null;
+		// test
+		observer = null;
 	}
 	
 	void init() {
@@ -41,6 +46,8 @@ class RECOM {
 		authentication = RECOM_AuthenticationModule.getModule();
 		
 		messageBus = RECOM_MessageBusModule.getModule();
+		
+		mapExistance = RECOM_MapExistanceModule.getModule();
 		mapScanner = RECOM_MapScannerModule.getModule();
 		mapRenderer = RECOM_MapRendererModule.getModule();
 	}
@@ -48,50 +55,57 @@ class RECOM {
 	void start() {
 		if (GetGame().InPlayMode()) {
 			properties.start();
-			// clock.start();
 			authentication.start();
 			
 			messageBus.start();
+			
+			mapExistance.start();
+			// mapScanner.start();
 			mapRenderer.start();
 			
-			obs = new RECOM_MB_Observer();
-			obs.observe(messageBus.getSubject());
 			
+			// test
+			observer = new RECOM_MB_Observer();
+			observer.observe(messageBus.getSubject());
 		} else if (false) {
-			mapScanner.start();
 		}
 	}
 	
 	void dispose() {
-		// GetGame().GetCallqueue().Clear();
 		properties.dispose();
 		authentication.dispose();
+		
 		messageBus.dispose();
+		
+		mapExistance.dispose();
 		mapScanner.dispose();
 		mapRenderer.dispose();
 		
-		obs.dispose();
+		observer.dispose();
 		
 		RECOM.context = null;
 	}
 	
+	
 	RECOM_PropertiesModule properties() {
 		return properties;
 	}
-	
-	
 	RECOM_AuthenticationModule authentication() {
 		return authentication;
 	}
+	
 	
 	RECOM_MessageBusModule messageBus() {
 		return messageBus;
 	}
 	
+	
+	RECOM_MapExistanceModule mapExistance() {
+		return mapExistance;
+	}
 	RECOM_MapScannerModule mapScanner() {
 		return mapScanner;
 	}
-	
 	RECOM_MapRendererModule mapRenderer() {
 		return mapRenderer;
 	}

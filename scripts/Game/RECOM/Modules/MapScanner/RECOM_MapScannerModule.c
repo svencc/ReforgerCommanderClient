@@ -77,7 +77,7 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		if (!startedProduction) {
 			init(boxScanSize);
 			startedProduction = true;
-			PrintFormat("%1: start production of %2 ...", "MapScannerProducerConsumer", worldFileName);
+			PrintFormat("%1: start production of %2 ...", ClassName(), worldFileName);
 		}
 	
 		if (iterationZ < predictedScanIterations) {
@@ -92,7 +92,7 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 			}
 		} else {
 			finishedProduction = true;
-			PrintFormat("... %1: production completed.", "MapScannerProducerConsumer");
+			PrintFormat("... %1: production completed.", ClassName());
 		}
 
 	}
@@ -105,15 +105,15 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		if (!startedConsumption && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
 			startedConsumption = true;
 			transactionManager.openTransaction();
-			PrintFormat("%1: start consumtion ...", "MapScannerProducerConsumer");
+			PrintFormat("%1: start consumtion ...", ClassName());
 		}
 
 		if (producedEntitiesQueue.IsEmpty() && finishedProduction && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
 			finishedConsumption = true;
 			shippingService.flush();
-			PrintFormat("... %1: consumption completed.", "MapScannerProducerConsumer");
+			PrintFormat("... %1: consumption completed.", ClassName());
 			transactionManager.commitTransaction(shippingService.getPackagesSent());
-			PrintFormat("%1: committed transaction.", "MapScannerProducerConsumer");
+			PrintFormat("%1: committed transaction.", ClassName());
 		} else if(producedEntitiesQueue.IsEmpty() == false && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
 			
 			int elementsToConsume = Math.Min(

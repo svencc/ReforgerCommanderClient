@@ -11,7 +11,7 @@ class RECOM_AuthenticationResponseRESTCallback : RestCallback {
 	}
 	
 	override void OnSuccess( string data, int dataSize ) {
-		PrintFormat("%1 OnSuccess called ", "RECOM_AuthenticationResponseRESTCallback");
+		PrintFormat("%1 OnSuccess called ", ClassName());
 		PrintFormat("Re-Authenticate");
 
 		RECOM_AuthenticationResponseDto response = new RECOM_AuthenticationResponseDto;
@@ -20,7 +20,7 @@ class RECOM_AuthenticationResponseRESTCallback : RestCallback {
 	};
 
 	override void OnError( int errorCode ) {
-		PrintFormat(" ! ! ! %1 OnError called with errorCode %2", "RECOM_AuthenticationResponseRESTCallback", errorCode);
+		PrintFormat(" ! ! ! %1 OnError called with errorCode %2", ClassName(), errorCode);
 	};
 
 }

@@ -11,7 +11,7 @@ class RECOM_MapRendererResponseRESTCallback : RestCallback {
 	}
 	
 	override void OnSuccess( string data, int dataSize ) {
-		PrintFormat("%1 OnSuccess called ", "RECOM_MapRendererRestCallback");
+		PrintFormat("%1 OnSuccess called ", ClassName());
 
 		RECOM_MapRendererResponseDto response = new RECOM_MapRendererResponseDto;
 		response.ExpandFromRAW(data);
@@ -20,7 +20,7 @@ class RECOM_MapRendererResponseRESTCallback : RestCallback {
 	};
 
 	override void OnError( int errorCode ) {
-		PrintFormat(" ! ! ! %1 OnError called with errorCode %2", "RECOM_MapRendererRestCallback", errorCode);
+		PrintFormat(" ! ! ! %1 OnError called with errorCode %2", ClassName(), errorCode);
 	};
 
 }
