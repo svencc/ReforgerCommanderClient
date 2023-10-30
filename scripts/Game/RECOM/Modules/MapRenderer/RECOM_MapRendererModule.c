@@ -54,13 +54,13 @@ class RECOM_MapRendererModule : RECOM_BaseModule {
 		}
 	}
 	
-	override void start() {
-		super.start();
+	override void startModule() {
+		super.startModule();
 		GetGame().GetCallqueue().CallLater(renderClusterList, 1000, true);
 	}
 	
-	override void dispose() {
-		super.dispose();
+	override void disposeModule() {
+		super.disposeModule();
 		RECOM_MapRendererModule.instance = null;
 	}
 	

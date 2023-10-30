@@ -22,13 +22,13 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
 		RECOM_AuthenticationModule.instance = null;
 	}	
 	
-	override void start() {
-		super.start();
+	override void startModule() {
+		super.startModule();
 		authenticate();
 	}
 	
-	override void dispose() {
-		super.dispose();
+	override void disposeModule() {
+		super.disposeModule();
 		RECOM_AuthenticationModule.instance = null;
 	}
 	

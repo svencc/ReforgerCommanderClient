@@ -1,10 +1,10 @@
 class RECOM_BaseModule {
 	
-	void start() {
+	void startModule() {
 
 	}
 	
-	void dispose() {
+	void disposeModule() {
 		
 	}
 	

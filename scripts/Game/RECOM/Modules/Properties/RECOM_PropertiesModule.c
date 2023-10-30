@@ -10,14 +10,14 @@ class RECOM_PropertiesModule : RECOM_BaseModule {
         return RECOM_PropertiesModule.instance;
     }
 	
-	override void start() {
-		super.start();
+	override void startModule() {
+		super.startModule();
 		init();
 		loadProperties();
 	}
 	
-	override void dispose() {
-		super.dispose();
+	override void disposeModule() {
+		super.disposeModule();
 		RECOM_PropertiesModule.instance = null;
 	}
 	

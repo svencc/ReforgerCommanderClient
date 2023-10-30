@@ -23,13 +23,13 @@ class RECOM_MapExistanceModule : RECOM_BaseModule {
 		RECOM_MapExistanceModule.instance = null;
 	}
 	
-	override void start() {
-		super.start();
+	override void startModule() {
+		super.startModule();
 		GetGame().GetCallqueue().CallLater(gateway.provideData, 1000); // trigger the first run after x seconds (give authentication some time)
 	}
 	
-	override void dispose() {
-		super.dispose();
+	override void disposeModule() {
+		super.disposeModule();
 		RECOM_MapExistanceModule.instance = null;
 	}
 	
@@ -39,6 +39,7 @@ class RECOM_MapExistanceModule : RECOM_BaseModule {
 	
 	void triggerWhenMapNotExists() {
 		PrintFormat(" ! ! ! %1 triggerWhenMapNotExists called", ClassName());
+		RECOM_MapScannerModule.getModule().runScanner(); // TODO retrigger MapExistance when scanner is done
 	}
 	
 }

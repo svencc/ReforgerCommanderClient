@@ -23,14 +23,14 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
 		RECOM_MessageBusModule.instance = null;
 	}
 	
-	override void start() {
-		super.start();
+	override void startModule() {
+		super.startModule();
 		Print("RECOM_MessageBusModule start");
 		GetGame().GetCallqueue().CallLater(gateway.provideData, 1000, false, "");
 	}
 	
-	override void dispose() {
-		super.dispose();
+	override void disposeModule() {
+		super.disposeModule();
 		RECOM_MessageBusModule.instance = null;
 	}
 	

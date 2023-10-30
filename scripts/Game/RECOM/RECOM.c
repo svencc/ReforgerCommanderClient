@@ -7,9 +7,9 @@ class RECOM {
 	
 	protected ref RECOM_MessageBusModule messageBus;
 	
-	protected ref RECOM_MapExistanceModule mapExistance;
 	protected ref RECOM_MapScannerModule mapScanner;
 	protected ref RECOM_MapRendererModule mapRenderer;
+	protected ref RECOM_MapExistanceModule mapExistance;
 	
 	protected ref RECOM_MB_Observer observer;
 
@@ -42,44 +42,47 @@ class RECOM {
 	}
 	
 	void init() {
+		// DI here? would make sense here!
 		properties = RECOM_PropertiesModule.getModule();
 		authentication = RECOM_AuthenticationModule.getModule();
 		
 		messageBus = RECOM_MessageBusModule.getModule();
 		
-		mapExistance = RECOM_MapExistanceModule.getModule();
 		mapScanner = RECOM_MapScannerModule.getModule();
 		mapRenderer = RECOM_MapRendererModule.getModule();
+		mapExistance = RECOM_MapExistanceModule.getModule();
 	}
 	
 	void start() {
 		if (GetGame().InPlayMode()) {
-			properties.start();
-			authentication.start();
+			properties.startModule();
+			authentication.startModule();
 			
-			messageBus.start();
+			messageBus.startModule();
 			
-			mapExistance.start();
-			// mapScanner.start();
-			mapRenderer.start();
+			mapScanner.startModule();
+			mapRenderer.startModule();
+			mapExistance.startModule();
 			
 			
-			// test
+			// just here for test
 			observer = new RECOM_MB_Observer();
 			observer.observe(messageBus.getSubject());
+			
 		} else if (false) {
+			// ...
 		}
 	}
 	
 	void dispose() {
-		properties.dispose();
-		authentication.dispose();
+		properties.disposeModule();
+		authentication.disposeModule();
 		
-		messageBus.dispose();
+		messageBus.disposeModule();
 		
-		mapExistance.dispose();
-		mapScanner.dispose();
-		mapRenderer.dispose();
+		mapScanner.disposeModule();
+		mapRenderer.disposeModule();
+		mapExistance.disposeModule();
 		
 		observer.dispose();
 		

@@ -30,15 +30,20 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
         return RECOM_MapScannerModule.instance;
     }
 	
-	override void start() {
-		super.start();
-		GetGame().GetCallqueue().CallLater(produce, 0, true);
-		GetGame().GetCallqueue().CallLater(consume, 0, true);
+	override void startModule() {
+		super.startModule();
+		//GetGame().GetCallqueue().CallLater(produce, 0, true);
+		//GetGame().GetCallqueue().CallLater(consume, 0, true);
 	}
 	
-	override void dispose() {
-		super.dispose();
+	override void disposeModule() {
+		super.disposeModule();
 		RECOM_MapScannerModule.instance = null;
+	}
+	
+	void runScanner() {
+		GetGame().GetCallqueue().CallLater(produce, 0, true); 		// TODO: it runs endless; it has to reschedule itself!
+		GetGame().GetCallqueue().CallLater(consume, 0, true); 		// TODO: it runs endless; it has to reschedule itself!
 	}
 	
 	private void RECOM_MapScannerModule(
