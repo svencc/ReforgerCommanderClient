@@ -23,9 +23,9 @@ class RECOM_MapExistenceRESTCallback : RestCallback {
 			response.ExpandFromRAW(data);
 			
 			if (response.mapExists) {
-				RECOM_MapExistanceModule.getModule().triggerWhenMapExists();
+				RECOM_MapExistenceModule.getModule().triggerWhenMapExists();
 			} else {
-				RECOM_MapExistanceModule.getModule().triggerWhenMapNotExists();
+				RECOM_MapExistenceModule.getModule().triggerWhenMapNotExists();
 			}
 
 			buffer.update(response);

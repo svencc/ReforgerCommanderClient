@@ -1,18 +1,18 @@
-class RECOM_TransactionalMapScannerEntityPackageDto : JsonApiStruct {
+class RECOM_TransactionalMapEntityPackageDto : JsonApiStruct {
 
     string Authorization;
 	string sessionIdentifier;
 	float packageOrder;
 	ref array<ref RECOM_MapScannerEntityDto> entities = {};
 
-	void RECOM_TransactionalMapScannerEntityPackageDto() {
+	void RECOM_TransactionalMapEntityPackageDto() {
 		RegV("Authorization");
 		RegV("sessionIdentifier");
 		RegV("packageOrder");
 		RegV("entities");
 	}
 
-	void ~RECOM_TransactionalMapScannerEntityPackageDto() {
+	void ~RECOM_TransactionalMapEntityPackageDto() {
 		entities.Clear();
 		entities = null;
 	}

@@ -1,17 +1,17 @@
-class RECOM_MapScannerEntitiesShippingService {
+class RECOM_MapTopographypScannerEntitiesShippingService {
 
 	protected int packagesSent;
 	protected int maxPackageSizeBeforeFlush;
-	protected ref RECOM_TransactionalMapEntityPackageDto entitiesPackage;
+	protected ref RECOM_MapTopographyEntityPackageDto entitiesPackage;
 
-	void RECOM_MapScannerEntitiesShippingService(int maxPackageSize) {
+	void RECOM_MapTopographypScannerEntitiesShippingService(int maxPackageSize) {
 		resetSendPackagesCounter();
 		maxPackageSizeBeforeFlush = maxPackageSize;
-		entitiesPackage = new RECOM_TransactionalMapEntityPackageDto();
+		entitiesPackage = new RECOM_MapTopographyEntityPackageDto();
 	}
 	
 
-	void ~RECOM_MapScannerEntitiesShippingService() {
+	void ~RECOM_MapTopographypScannerEntitiesShippingService() {
 		entitiesPackage = null;
 	}
 	
@@ -37,7 +37,7 @@ class RECOM_MapScannerEntitiesShippingService {
 		entitiesPackage.sessionIdentifier = worldName;
 	}
 
-	void assemblePackage(RECOM_MapScannerEntityDto entity) {
+	void assemblePackage(RECOM_MapTopographyEntityDto entity) {
 		entitiesPackage.entities.Insert(entity);
 		if (entitiesPackage.entities.Count() > maxPackageSizeBeforeFlush) {
 			flush();

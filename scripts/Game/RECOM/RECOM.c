@@ -8,8 +8,9 @@ class RECOM {
 	protected ref RECOM_MessageBusModule messageBus;
 	
 	protected ref RECOM_MapScannerModule mapScanner;
+	protected ref RECOM_MapTopographyScannerModule mapTopographyScanner;
 	protected ref RECOM_MapRendererModule mapRenderer;
-	protected ref RECOM_MapExistanceModule mapExistance;
+	protected ref RECOM_MapExistenceModule mapExistence;
 	
 	protected ref RECOM_MB_Observer observer;
 
@@ -31,7 +32,8 @@ class RECOM {
 		
 		messageBus = null;
 		
-		mapExistance = null;
+		mapExistence = null;
+		mapTopographyScanner = null;
 		mapScanner = null;
 		mapRenderer = null;
 		
@@ -48,9 +50,10 @@ class RECOM {
 		
 		messageBus = RECOM_MessageBusModule.getModule();
 		
+		mapTopographyScanner = RECOM_MapTopographyScannerModule.getModule();
 		mapScanner = RECOM_MapScannerModule.getModule();
 		mapRenderer = RECOM_MapRendererModule.getModule();
-		mapExistance = RECOM_MapExistanceModule.getModule();
+		mapExistence = RECOM_MapExistenceModule.getModule();
 	}
 	
 	void start() {
@@ -60,9 +63,10 @@ class RECOM {
 			
 			messageBus.startModule();
 			
+			mapTopographyScanner.startModule();
 			mapScanner.startModule();
 			mapRenderer.startModule();
-			mapExistance.startModule();
+			mapExistence.startModule();
 			
 			
 			// just here for test
@@ -82,7 +86,7 @@ class RECOM {
 		
 		mapScanner.disposeModule();
 		mapRenderer.disposeModule();
-		mapExistance.disposeModule();
+		mapExistence.disposeModule();
 		
 		observer.dispose();
 		
@@ -103,11 +107,14 @@ class RECOM {
 	}
 	
 	
-	RECOM_MapExistanceModule mapExistance() {
-		return mapExistance;
+	RECOM_MapExistenceModule mapExistence() {
+		return mapExistence;
 	}
 	RECOM_MapScannerModule mapScanner() {
 		return mapScanner;
+	}
+	RECOM_MapTopographyScannerModule mapTopographyScanner() {
+		return mapTopographyScanner;
 	}
 	RECOM_MapRendererModule mapRenderer() {
 		return mapRenderer;

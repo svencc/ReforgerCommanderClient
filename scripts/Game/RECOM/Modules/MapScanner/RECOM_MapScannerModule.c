@@ -32,8 +32,6 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 	
 	override void startModule() {
 		super.startModule();
-		//GetGame().GetCallqueue().CallLater(produce, 0, true);
-		//GetGame().GetCallqueue().CallLater(consume, 0, true);
 	}
 	
 	override void disposeModule() {
@@ -42,8 +40,8 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 	}
 	
 	void runScanner() {
-		GetGame().GetCallqueue().CallLater(produce, 0, true); 		// TODO: it runs endless; it has to reschedule itself!
-		GetGame().GetCallqueue().CallLater(consume, 0, true); 		// TODO: it runs endless; it has to reschedule itself!
+		GetGame().GetCallqueue().CallLater(produce, 0, true); 		// TODO: it runs endless; it has to reschedule itself until finished!
+		GetGame().GetCallqueue().CallLater(consume, 0, true); 		// TODO: it runs endless; it has to reschedule itself until finished!
 	}
 	
 	private void RECOM_MapScannerModule(
@@ -52,7 +50,6 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 	) {
 		shippingService = service;
 		boxScanSize = scanSize;
-		//init(boxScanSize);
 	}
 
 	void ~RECOM_MapScannerModule() {
@@ -63,7 +60,7 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		RECOM_MapScannerModule.instance = null;
 	}
 
-	protected void init(int boxScanSize) {
+	protected void initProduction(int boxScanSize) {
 		worldSize = determineMapSize();
         worldFileName = GetGame().GetWorldFile();
 		predictedScanIterations = Math.Floor(worldSize/boxScanSize);
@@ -80,7 +77,7 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		}
 			
 		if (!startedProduction) {
-			init(boxScanSize);
+			initProduction(boxScanSize);
 			startedProduction = true;
 			PrintFormat("%1: start production of %2 ...", ClassName(), worldFileName);
 		}
