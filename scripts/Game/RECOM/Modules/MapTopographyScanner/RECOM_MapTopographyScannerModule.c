@@ -17,14 +17,14 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	
 	protected string worldFileName
 
-	protected ref array<RECOM_MapTopographyEntityDto> producedEntitiesQueue = {};
+	protected ref array<ref RECOM_MapTopographyEntityDto> producedEntitiesQueue = {};
 	protected ref RECOM_MapTopographypScannerEntitiesShippingService shippingService;
 	protected ref RECOM_MapTopographyScannerEntitiesTransactionManager transactionManager
 
 	
 	static RECOM_MapTopographyScannerModule getModule() {
         if (!RECOM_MapTopographyScannerModule.instance) {
-            RECOM_MapTopographyScannerModule.instance = new RECOM_MapTopographyScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(500), 1.0);
+            RECOM_MapTopographyScannerModule.instance = new RECOM_MapTopographyScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(500), 100.0);
         }
 		
         return RECOM_MapTopographyScannerModule.instance;
@@ -41,7 +41,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	
 	void runScanner() {
 		GetGame().GetCallqueue().CallLater(produce, 0, true); 		// TODO: it runs endless; it has to reschedule itself until finished!
-		GetGame().GetCallqueue().CallLater(consume, 0, true); 		// TODO: it runs endless; it has to reschedule itself until finished!
+		GetGame().GetCallqueue().CallLater(consume, 1000, true); 		// TODO: it runs endless; it has to reschedule itself until finished!
 	}
 	
 	private void RECOM_MapTopographyScannerModule(
@@ -105,7 +105,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 		if (!startedConsumption && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
 			startedConsumption = true;
 			transactionManager.openTransaction();
-			PrintFormat("%1: start consumtion ...", ClassName());
+			PrintFormat("%1: start consumption ...", ClassName());
 		}
 
 		if (producedEntitiesQueue.IsEmpty() && finishedProduction && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
@@ -115,7 +115,6 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 			transactionManager.commitTransaction(shippingService.getPackagesSent());
 			PrintFormat("%1: committed transaction.", ClassName());
 		} else if (producedEntitiesQueue.IsEmpty() == false && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
-			
 			int elementsToConsume = Math.Min(
 				producedEntitiesQueue.Count(), 
 				shippingService.getMaxPackageSizeBeforeFlush()
@@ -143,7 +142,6 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 		RECOM_MapTopographyEntityDto entityToSend = new RECOM_MapTopographyEntityDto();
 		entityToSend.surfaceHeight = GetGame().GetWorld().GetSurfaceY(centerX, centerZ);
 		entityToSend.oceanHeight = GetGame().GetWorld().GetOceanHeight(centerX, centerZ);
-		entityToSend.oceanHeightDisplacement = GetGame().GetWorld().GetOceanHeightAndDisplace(centerX, centerZ);
 		entityToSend.oceanBaseHeight = GetGame().GetWorld().GetOceanBaseHeight();
 		entityToSend.coordinates = {centerZ, centerX}; // 2d map coordinates
 		

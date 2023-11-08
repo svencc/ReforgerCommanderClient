@@ -107,7 +107,7 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		if (!startedConsumption && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
 			startedConsumption = true;
 			transactionManager.openTransaction();
-			PrintFormat("%1: start consumtion ...", ClassName());
+			PrintFormat("%1: start consumption ...", ClassName());
 		}
 
 		if (producedEntitiesQueue.IsEmpty() && finishedProduction && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
@@ -117,7 +117,6 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 			transactionManager.commitTransaction(shippingService.getPackagesSent());
 			PrintFormat("%1: committed transaction.", ClassName());
 		} else if(producedEntitiesQueue.IsEmpty() == false && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
-			
 			int elementsToConsume = Math.Min(
 				producedEntitiesQueue.Count(), 
 				shippingService.getMaxPackageSizeBeforeFlush()

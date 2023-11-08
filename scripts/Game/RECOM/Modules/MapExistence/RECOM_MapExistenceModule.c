@@ -35,12 +35,11 @@ class RECOM_MapExistenceModule : RECOM_BaseModule {
 	
 	void triggerWhenMapExists() {
 		PrintFormat(" ! ! ! %1 triggerWhenMapExists called", ClassName());
-		RECOM_MapTopographyScannerModule.getModule().runScanner(); // TODO retrigger MapExistance when scanner is done
 	}
 	
 	void triggerWhenMapNotExists() {
 		PrintFormat(" ! ! ! %1 triggerWhenMapNotExists called", ClassName());
-		// RECOM_MapScannerModule.getModule().runScanner(); // TODO retrigger MapExistance when scanner is done
+		RECOM_MapScannerModule.getModule().runScanner(); // TODO retrigger MapExistance when scanner is done
 		RECOM_MapTopographyScannerModule.getModule().runScanner(); // TODO retrigger MapExistance when scanner is done
 	}
 	

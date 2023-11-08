@@ -2,7 +2,6 @@ class RECOM_MapTopographyEntityDto : JsonApiStruct {
 
 	float surfaceHeight;
 	float oceanHeight;
-	vector oceanHeightDisplacement;
 	float oceanBaseHeight;
 	vector coordinates;
 
@@ -10,7 +9,6 @@ class RECOM_MapTopographyEntityDto : JsonApiStruct {
 	void RECOM_MapTopographyEntityDto() {
 		RegV("surfaceHeight");
 		RegV("oceanHeight");
-		RegV("oceanHeightDisplacement");
 		RegV("oceanBaseHeight");
 		RegV("coordinates");
 	}

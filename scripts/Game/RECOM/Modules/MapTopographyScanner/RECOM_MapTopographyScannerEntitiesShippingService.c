@@ -49,7 +49,7 @@ class RECOM_MapTopographypScannerEntitiesShippingService {
 			entitiesPackage.packageOrder = provideIncreasedPackageCount();
 			entitiesPackage.Authorization = RECOM_AuthenticationModule.getModule().getBearerToken();
 			entitiesPackage.Pack();
-			GetGame().GetRestApi().GetContext(RECOM.getContext().properties().getProperties().host).POST_now(RECOMAPIs.POST_MAP_SCANNER_TRANSACTION_ENTITIES, entitiesPackage.AsString());
+			GetGame().GetRestApi().GetContext(RECOM.getContext().properties().getProperties().host).POST_now(RECOMAPIs.POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_ENTITIES, entitiesPackage.AsString());
 			entitiesPackage.entities.Clear();
 		}
 	}

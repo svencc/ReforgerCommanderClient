@@ -27,17 +27,17 @@ class RECOM_MessageBus_Callback : RestCallback {
 			}
 		}
 		reschedule(5);
-		Print("OnSuccess()");
+		PrintFormat(" ! ! ! %1 OnSuccess called with errorCode %2", ClassName());
 	};
 
 	override void OnError(int errorCode) {
 		reschedule(1000);
-		Print("OnError()");
+		PrintFormat(" ! ! ! %1 OnError called with errorCode %2", ClassName(), errorCode);
 	}
 	
 	override void OnTimeout() {
 		reschedule(5);
-		Print("OnTimeout()");
+		PrintFormat(" ! ! ! %1 OnTimeout called with errorCode %2", ClassName());
 	}
 	
 	private void reschedule(int in) {
