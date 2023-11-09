@@ -25,7 +25,7 @@ class RECOM_MapExistenceModule : RECOM_BaseModule {
 	
 	override void startModule() {
 		super.startModule();
-		GetGame().GetCallqueue().CallLater(gateway.provideData, 1000); // trigger the first run after x seconds (give authentication some time)
+		GetGame().GetCallqueue().CallLater(gateway.provideData, 2000); // trigger the first run after x seconds (give authentication some time)
 	}
 	
 	override void disposeModule() {
@@ -35,12 +35,13 @@ class RECOM_MapExistenceModule : RECOM_BaseModule {
 	
 	void triggerWhenMapExists() {
 		PrintFormat(" ! ! ! %1 triggerWhenMapExists called", ClassName());
+		RECOM_MapTopographyScannerModule.getModule().runScanner(); // TODO retrigger MapExistance when scanner is done
 	}
 	
 	void triggerWhenMapNotExists() {
 		PrintFormat(" ! ! ! %1 triggerWhenMapNotExists called", ClassName());
-		RECOM_MapScannerModule.getModule().runScanner(); // TODO retrigger MapExistance when scanner is done
-		RECOM_MapTopographyScannerModule.getModule().runScanner(); // TODO retrigger MapExistance when scanner is done
+		//RECOM_MapScannerModule.getModule().runScanner(); // TODO retrigger MapExistance when scanner is done
+		//RECOM_MapTopographyScannerModule.getModule().runScanner(); // TODO retrigger MapExistance when scanner is done
 	}
 	
 }

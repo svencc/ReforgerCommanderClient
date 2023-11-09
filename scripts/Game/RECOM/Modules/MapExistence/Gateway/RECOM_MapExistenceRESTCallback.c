@@ -29,6 +29,8 @@ class RECOM_MapExistenceRESTCallback : RestCallback {
 			}
 
 			buffer.update(response);
+		} else {
+			reschedule();
 		}
 	};
 

@@ -40,8 +40,9 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 	}
 	
 	void runScanner() {
-		GetGame().GetCallqueue().CallLater(produce, 0, true); 		// TODO: it runs endless; it has to reschedule itself until finished!
-		GetGame().GetCallqueue().CallLater(consume, 0, true); 		// TODO: it runs endless; it has to reschedule itself until finished!
+		initProduction(boxScanSize);
+		GetGame().GetCallqueue().CallLater(produce, 0, false);
+		GetGame().GetCallqueue().CallLater(consume, 200, false);
 	}
 	
 	private void RECOM_MapScannerModule(
@@ -77,7 +78,7 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		}
 			
 		if (!startedProduction) {
-			initProduction(boxScanSize);
+			//initProduction(boxScanSize);
 			startedProduction = true;
 			PrintFormat("%1: start production of %2 ...", ClassName(), worldFileName);
 		}
@@ -92,6 +93,7 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 				iterationZ++;
 				iterationX = 0;
 			}
+			GetGame().GetCallqueue().CallLater(produce, 0, false);
 		} else {
 			finishedProduction = true;
 			PrintFormat("... %1: production completed.", ClassName());
@@ -128,11 +130,12 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 				IEntity entityToSend = producedEntitiesQueue.Get(0);
 				package(entityToSend);
 				producedEntitiesQueue.RemoveItemOrdered(entityToSend);
-				//producedEntitiesQueue.RemoveOrdered(0);
 			}
 			
 			PrintFormat("... %1: remaining entities to consume.", producedEntitiesQueue.Count());
 		}
+		
+		GetGame().GetCallqueue().CallLater(consume, 0, false);
 	}
 	
 	protected void scanPartitionSpherical(
@@ -207,6 +210,9 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 	}
 	
 	protected void package(IEntity ent) {
+		if(ent == null) {
+			return;
+		}
 		vector transformation[4];
 		ent.GetTransform(transformation);
 
