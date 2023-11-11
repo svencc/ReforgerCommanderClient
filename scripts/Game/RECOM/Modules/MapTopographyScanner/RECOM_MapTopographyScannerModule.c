@@ -25,7 +25,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	
 	static RECOM_MapTopographyScannerModule getModule() {
         if (!RECOM_MapTopographyScannerModule.instance) {
-            RECOM_MapTopographyScannerModule.instance = new RECOM_MapTopographyScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(500), 10.0);
+            RECOM_MapTopographyScannerModule.instance = new RECOM_MapTopographyScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(1000), 10.0);
         }
 		
         return RECOM_MapTopographyScannerModule.instance;
@@ -80,52 +80,32 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 			return;
 		}
 			
-		/*
+
 		if (!startedProduction) {
-			//initProduction(stepSize);
 			startedProduction = true;
-			for (int iterationZ = 0; iterationZ < predictedScanIterations; iterationZ++) {
-				//GetGame().GetCallqueue().CallLater(scanLine, iterationZ * predictedScanIterations/2, false, iterationZ); 
-			}
 			PrintFormat("%1: start production of %2 ...", ClassName(), worldFileName);
 		}
-		*/
 	
-	
+		int scanSize = 1000;
+		int maxIterationsX = iterationX + scanSize;
 		if (iterationZ < predictedScanIterations) {
-			/*
-			for (int iterationX = 0; iterationX < predictedScanIterations; iterationX++) {
-				PrintFormat("... x:%1 y:%2", iterationX, iterationZ);		
+			for (int localIterationX = iterationX; localIterationX <= maxIterationsX && localIterationX <= predictedScanIterations; localIterationX++) {
+				//PrintFormat("... x:%1 y:%2", iterationX, iterationZ);		
 				scanMapHeight(iterationX, iterationZ);
+				iterationX = localIterationX;
 			}
-			*/
-			if (iterationX < predictedScanIterations) {
-				PrintFormat("... x:%1 y:%2", iterationX, iterationZ);		
-				scanMapHeight(iterationX, iterationZ);
-				iterationX++;
-			} else {
+			if (iterationX == predictedScanIterations) {
+				PrintFormat("... x:%1 y:%2", iterationX, iterationZ);	
 				iterationZ++;
 				iterationX = 0;
 			}
-			iterationZ++;
-			iterationX = 0;
-			GetGame().GetCallqueue().CallLater(produce, 0, false);
+			GetGame().GetCallqueue().CallLater(produce, 5, false);
 		} else {
 			finishedProduction = true;
 			PrintFormat("... %1: production completed.", ClassName());
 		}
-		
 	}
 	
-	/*
-	void scanLine(int iterationZ) {
-		for (int iterationX = 0; iterationX < predictedScanIterations; iterationX++) {
-			scanMapHeight(iterationX, iterationZ);
-		}
-		finishedScanLines++;
-		finishedProduction = (finishedScanLines == (predictedScanIterations - 1));
-	}
-	*/
 	
 	void consume() {
 		if (finishedConsumption) {
@@ -150,7 +130,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 				shippingService.getMaxPackageSizeBeforeFlush()
 			);
 			
-			PrintFormat("... %1: entities to consume.", elementsToConsume);
+			//PrintFormat("... %1: entities to consume.", elementsToConsume);
 			
 			for (int i = 0; i < elementsToConsume; i++) {
 				RECOM_MapTopographyEntityDto entityToSend = producedEntitiesQueue.Get(0);
@@ -158,7 +138,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 				producedEntitiesQueue.RemoveItemOrdered(entityToSend);
 			}
 			
-			PrintFormat("... %1: remaining entities to consume.", producedEntitiesQueue.Count());
+			//PrintFormat("... %1: remaining entities to consume.", producedEntitiesQueue.Count());
 		}
 		
 		GetGame().GetCallqueue().CallLater(consume, 0, false);

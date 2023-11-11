@@ -78,7 +78,6 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		}
 			
 		if (!startedProduction) {
-			//initProduction(boxScanSize);
 			startedProduction = true;
 			PrintFormat("%1: start production of %2 ...", ClassName(), worldFileName);
 		}
