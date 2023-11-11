@@ -83,12 +83,12 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		}
 	
 		if (iterationZ < predictedScanIterations) {
-			if (iterationX < predictedScanIterations) {
-				PrintFormat("... x:%1 y:%2", iterationX, iterationZ);		
+			if (iterationX < predictedScanIterations) {	
 				// scanPartitionBoxical(iterationX, iterationZ);
 				scanPartitionSpherical(iterationX, iterationZ);
 				iterationX++;
 			} else {
+				PrintFormat("...%1 x:%2 z:%3", ClassName(), iterationX, iterationZ);	
 				iterationZ++;
 				iterationX = 0;
 			}
@@ -123,15 +123,13 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 				shippingService.getMaxPackageSizeBeforeFlush()
 			);
 			
-			PrintFormat("... %1: entities to consume.", elementsToConsume);
-			
+			//PrintFormat("... %1: entities to consume.", elementsToConsume);
 			for (int i = 0; i < elementsToConsume; i++) {
 				IEntity entityToSend = producedEntitiesQueue.Get(0);
 				package(entityToSend);
 				producedEntitiesQueue.RemoveItemOrdered(entityToSend);
 			}
-			
-			PrintFormat("... %1: remaining entities to consume.", producedEntitiesQueue.Count());
+			//PrintFormat("... %1: remaining entities to consume.", producedEntitiesQueue.Count());
 		}
 		
 		GetGame().GetCallqueue().CallLater(consume, 0, false);

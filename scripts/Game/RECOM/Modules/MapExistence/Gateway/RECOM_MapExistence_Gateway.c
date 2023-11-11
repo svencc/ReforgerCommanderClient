@@ -21,7 +21,7 @@ class RECOM_MapExistence_Gateway {
 			requestDto.mapName = GetGame().GetWorldFile();
 
 			requestDto.Pack();
-		
+			PrintFormat(" ! ! ! %1 provideData()", ClassName());
 			GetGame().GetRestApi().GetContext(RECOM.getContext().properties().getProperties().host).POST(callback, RECOMAPIs.POST_MAP_EXISTS, requestDto.AsString());
 		} else {
 			// try again until we are authenticated

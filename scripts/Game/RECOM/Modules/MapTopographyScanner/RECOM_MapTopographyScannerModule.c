@@ -90,12 +90,11 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 		int maxIterationsX = iterationX + scanSize;
 		if (iterationZ < predictedScanIterations) {
 			for (int localIterationX = iterationX; localIterationX <= maxIterationsX && localIterationX <= predictedScanIterations; localIterationX++) {
-				//PrintFormat("... x:%1 y:%2", iterationX, iterationZ);		
 				scanMapHeight(iterationX, iterationZ);
 				iterationX = localIterationX;
 			}
 			if (iterationX == predictedScanIterations) {
-				PrintFormat("... x:%1 y:%2", iterationX, iterationZ);	
+				PrintFormat("...%1 x:%2 z:%3", ClassName(), iterationX, iterationZ);	
 				iterationZ++;
 				iterationX = 0;
 			}
@@ -131,13 +130,11 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 			);
 			
 			//PrintFormat("... %1: entities to consume.", elementsToConsume);
-			
 			for (int i = 0; i < elementsToConsume; i++) {
 				RECOM_MapTopographyEntityDto entityToSend = producedEntitiesQueue.Get(0);
 				package(entityToSend);
 				producedEntitiesQueue.RemoveItemOrdered(entityToSend);
 			}
-			
 			//PrintFormat("... %1: remaining entities to consume.", producedEntitiesQueue.Count());
 		}
 		
@@ -147,8 +144,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	protected void scanMapHeight(
 		int iterationX, 
 		int iterationZ
-	) {
-		// PrintFormat("... x:%1 y:%2", iterationX, iterationZ);		
+	) {	
 		float centerX = (iterationX * stepSize) + (stepSize / 2);
 		float centerZ = (iterationZ * stepSize) + (stepSize / 2);
 		
