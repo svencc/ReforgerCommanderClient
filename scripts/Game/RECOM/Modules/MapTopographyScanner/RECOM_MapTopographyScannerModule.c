@@ -69,7 +69,6 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 		iterationX = 0;
 		iterationZ = 0;
 		finishedScanLines = 0;
-
 		
         transactionManager = new RECOM_MapTopographyScannerEntitiesTransactionManager(worldFileName);
         shippingService.setSessionIdentifier(worldFileName);
@@ -147,12 +146,12 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	) {	
 		float centerX = (iterationX * stepSize) + (stepSize / 2);
 		float centerZ = (iterationZ * stepSize) + (stepSize / 2);
+		float height = GetGame().GetWorld().GetSurfaceY(centerX, centerZ);
 		
 		RECOM_MapTopographyEntityDto entityToSend = new RECOM_MapTopographyEntityDto();
-		entityToSend.surfaceHeight = GetGame().GetWorld().GetSurfaceY(centerX, centerZ);
 		entityToSend.oceanHeight = GetGame().GetWorld().GetOceanHeight(centerX, centerZ);
 		entityToSend.oceanBaseHeight = GetGame().GetWorld().GetOceanBaseHeight();
-		entityToSend.coordinates = {centerZ, centerX}; // 2d map coordinates
+		entityToSend.coordinates = {centerX, height, centerZ}; // 2d map coordinates
 		
 		producedEntitiesQueue.Insert(entityToSend);
 	}

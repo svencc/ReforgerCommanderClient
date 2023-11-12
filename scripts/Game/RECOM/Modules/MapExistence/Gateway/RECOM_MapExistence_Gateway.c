@@ -25,6 +25,7 @@ class RECOM_MapExistence_Gateway {
 			GetGame().GetRestApi().GetContext(RECOM.getContext().properties().getProperties().host).POST(callback, RECOMAPIs.POST_MAP_EXISTS, requestDto.AsString());
 		} else {
 			// try again until we are authenticated
+			PrintFormat(" ! ! ! %1 reschedule", ClassName());
 			GetGame().GetCallqueue().CallLater(provideData, 1000, false);
 		}
 	}
