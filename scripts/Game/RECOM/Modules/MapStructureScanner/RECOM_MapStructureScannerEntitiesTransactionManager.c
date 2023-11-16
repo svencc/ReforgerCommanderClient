@@ -1,13 +1,13 @@
-class RECOM_MapScannerEntitiesTransactionManager {
+class RECOM_MapStructureScannerEntitiesTransactionManager {
 
 	protected ref RECOM_TransactionIdentifierDto transactionIdentifier;
 
-	void RECOM_MapScannerEntitiesTransactionManager(string sessionIdentifier) {
+	void RECOM_MapStructureScannerEntitiesTransactionManager(string sessionIdentifier) {
 		transactionIdentifier = new RECOM_TransactionIdentifierDto();
 		transactionIdentifier.sessionIdentifier = sessionIdentifier;
 	}
 
-	void ~RECOM_MapScannerEntitiesTransactionManager() {
+	void ~RECOM_MapStructureScannerEntitiesTransactionManager() {
 		transactionIdentifier = null;
 	}
 

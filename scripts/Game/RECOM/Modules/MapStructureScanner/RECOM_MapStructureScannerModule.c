@@ -1,6 +1,6 @@
-class RECOM_MapScannerModule : RECOM_BaseModule {
+class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 
-	private static ref RECOM_MapScannerModule instance;
+	private static ref RECOM_MapStructureScannerModule instance;
 	
 	protected bool startedProduction = false;
 	protected bool finishedProduction = false;
@@ -18,16 +18,16 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 	protected string worldFileName
 
 	protected ref array<IEntity> producedEntitiesQueue = {};
-	protected ref RECOM_MapScannerEntitiesShippingService shippingService;
-	protected ref RECOM_MapScannerEntitiesTransactionManager transactionManager
+	protected ref RECOM_MapStructureScannerEntitiesShippingService shippingService;
+	protected ref RECOM_MapStructureScannerEntitiesTransactionManager transactionManager
 
 	
-	static RECOM_MapScannerModule getModule() {
-        if (!RECOM_MapScannerModule.instance) {
-            RECOM_MapScannerModule.instance = new RECOM_MapScannerModule(new RECOM_MapScannerEntitiesShippingService(500), 150);
+	static RECOM_MapStructureScannerModule getModule() {
+        if (!RECOM_MapStructureScannerModule.instance) {
+            RECOM_MapStructureScannerModule.instance = new RECOM_MapStructureScannerModule(new RECOM_MapStructureScannerEntitiesShippingService(500), 150);
         }
 		
-        return RECOM_MapScannerModule.instance;
+        return RECOM_MapStructureScannerModule.instance;
     }
 	
 	override void startModule() {
@@ -36,7 +36,7 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 	
 	override void disposeModule() {
 		super.disposeModule();
-		RECOM_MapScannerModule.instance = null;
+		RECOM_MapStructureScannerModule.instance = null;
 	}
 	
 	void runScanner() {
@@ -45,20 +45,20 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		GetGame().GetCallqueue().CallLater(consume, 200, false);
 	}
 	
-	private void RECOM_MapScannerModule(
-		RECOM_MapScannerEntitiesShippingService service,
+	private void RECOM_MapStructureScannerModule(
+		RECOM_MapStructureScannerEntitiesShippingService service,
 		int scanSize
 	) {
 		shippingService = service;
 		boxScanSize = scanSize;
 	}
 
-	void ~RECOM_MapScannerModule() {
+	void ~RECOM_MapStructureScannerModule() {
 		producedEntitiesQueue.Clear();
 		producedEntitiesQueue = null;
 		shippingService = null;
 		transactionManager = null;
-		RECOM_MapScannerModule.instance = null;
+		RECOM_MapStructureScannerModule.instance = null;
 	}
 
 	protected void initProduction(int boxScanSize) {
@@ -68,7 +68,7 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		iterationX = 0;
 		iterationZ = 0;
 		
-        transactionManager = new RECOM_MapScannerEntitiesTransactionManager(worldFileName);
+        transactionManager = new RECOM_MapStructureScannerEntitiesTransactionManager(worldFileName);
         shippingService.setSessionIdentifier(worldFileName);
 	}
 
@@ -213,7 +213,7 @@ class RECOM_MapScannerModule : RECOM_BaseModule {
 		vector transformation[4];
 		ent.GetTransform(transformation);
 
-		RECOM_MapScannerEntityDto entityDto = new RECOM_MapScannerEntityDto;
+		RECOM_MapStructureEntityDto entityDto = new RECOM_MapStructureEntityDto;
 
 		entityDto.entityId =  ent.GetID().ToString();
 		entityDto.name =  ent.GetName();

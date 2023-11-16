@@ -40,7 +40,7 @@ class RECOM_MapExistenceModule : RECOM_BaseModule {
 	
 	void triggerWhenMapNotExists() {
 		PrintFormat(" ! ! ! %1 triggerWhenMapNotExists called", ClassName());
-		RECOM_MapScannerModule.getModule().runScanner();
+		RECOM_MapStructureScannerModule.getModule().runScanner();
 		RECOM_MapTopographyScannerModule.getModule().runScanner();
 	}
 	

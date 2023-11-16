@@ -7,7 +7,7 @@ class RECOM {
 	
 	protected ref RECOM_MessageBusModule messageBus;
 	
-	protected ref RECOM_MapScannerModule mapScanner;
+	protected ref RECOM_MapStructureScannerModule mapScanner;
 	protected ref RECOM_MapTopographyScannerModule mapTopographyScanner;
 	protected ref RECOM_MapRendererModule mapRenderer;
 	protected ref RECOM_MapExistenceModule mapExistence;
@@ -51,7 +51,7 @@ class RECOM {
 		messageBus = RECOM_MessageBusModule.getModule();
 		
 		mapTopographyScanner = RECOM_MapTopographyScannerModule.getModule();
-		mapScanner = RECOM_MapScannerModule.getModule();
+		mapScanner = RECOM_MapStructureScannerModule.getModule();
 		mapRenderer = RECOM_MapRendererModule.getModule();
 		mapExistence = RECOM_MapExistenceModule.getModule();
 	}
@@ -110,7 +110,7 @@ class RECOM {
 	RECOM_MapExistenceModule mapExistence() {
 		return mapExistence;
 	}
-	RECOM_MapScannerModule mapScanner() {
+	RECOM_MapStructureScannerModule mapScanner() {
 		return mapScanner;
 	}
 	RECOM_MapTopographyScannerModule mapTopographyScanner() {

@@ -15,13 +15,13 @@ class RECOMAPIs {
     // static string GET_MAP_META_MAPS = "/api/v1/map/meta/maps";
     static string POST_MAP_EXISTS = "/api/v1/map/exists/form";
 	
-	static string POST_MAP_SCANNER_TRANSACTION_OPEN = "/api/v1/map/scanner/transaction/open";
-	static string POST_MAP_SCANNER_TRANSACTION_ENTITIES = "/api/v1/map/scanner/transaction/entities";
-	static string POST_MAP_SCANNER_TRANSACTION_COMMIT = "/api/v1/map/scanner/transaction/commit";
+	static string POST_MAP_SCANNER_TRANSACTION_OPEN = "/api/v1/scanner/structure/transaction/open";
+	static string POST_MAP_SCANNER_TRANSACTION_ENTITIES = "/api/v1/scanner/structure/transaction/entities";
+	static string POST_MAP_SCANNER_TRANSACTION_COMMIT = "/api/v1/scanner/structure/transaction/commit";
 	
-	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_OPEN = "/api/v1/map/scanner/topography/transaction/open";
-	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_ENTITIES = "/api/v1/map/scanner/topography/transaction/entities";
-	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_COMMIT = "/api/v1/map/scanner/topography/transaction/commit";
+	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_OPEN = "/api/v1/scanner/topography/topography/transaction/open";
+	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_ENTITIES = "/api/v1/scanner/topography/topography/transaction/entities";
+	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_COMMIT = "/api/v1/scanner/topography/topography/transaction/commit";
 	
 	static string POST_MAP_CLUSTERS = "/api/v1/map/clusters/form";
 	
