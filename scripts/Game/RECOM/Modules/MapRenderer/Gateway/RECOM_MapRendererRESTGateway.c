@@ -9,6 +9,7 @@ class RECOM_MapRendererRESTGateway {
 
 	void ~RECOM_MapRendererRESTGateway() {
 		mapRendererResponseRESTCallback = null;
+		buffer = null;
 	}
 	
 	void provideRenderData(string mapName) {

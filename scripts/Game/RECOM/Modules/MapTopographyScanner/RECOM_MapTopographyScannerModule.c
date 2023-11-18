@@ -85,8 +85,8 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 			PrintFormat("%1: start production of %2 ...", ClassName(), worldFileName);
 		}
 	
-		int scanSize = 1000;
-		int maxIterationsX = iterationX + scanSize;
+		int scanRowSize = 1000;
+		int maxIterationsX = iterationX + scanRowSize;
 		if (iterationZ < predictedScanIterations) {
 			for (int localIterationX = iterationX; localIterationX <= maxIterationsX && localIterationX <= predictedScanIterations; localIterationX++) {
 				scanMapHeight(iterationX, iterationZ);
@@ -149,9 +149,18 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 		float height = GetGame().GetWorld().GetSurfaceY(centerX, centerZ);
 		
 		RECOM_MapTopographyEntityDto entityToSend = new RECOM_MapTopographyEntityDto();
+		
+		// META DATA; could be moved to open-transaction in future; as it is only needed to submit once
+		entityToSend.stepSize = stepSize;
+		entityToSend.scanIterationsX = predictedScanIterations;
+		entityToSend.scanIterationsZ = predictedScanIterations;
 		entityToSend.oceanHeight = GetGame().GetWorld().GetOceanHeight(centerX, centerZ);
 		entityToSend.oceanBaseHeight = GetGame().GetWorld().GetOceanBaseHeight();
-		entityToSend.coordinates = {centerX, height, centerZ}; // 2d map coordinates
+		
+		// PACKAGE SPECIFIC DATA
+		entityToSend.iterationX = iterationX;
+		entityToSend.iterationZ = iterationZ;
+		entityToSend.coordinates = {centerX, height, centerZ};
 		
 		producedEntitiesQueue.Insert(entityToSend);
 	}

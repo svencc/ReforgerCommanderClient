@@ -1,8 +1,12 @@
 class RECOM_MapExistenceModule : RECOM_BaseModule {
 	
 	private static ref RECOM_MapExistenceModule instance;
-	protected ref RECOM_MapExistence_Gateway gateway;
+	
+	protected ref RECOM_MapExistence_Gateway mapExistenceGateway;
 	protected ref RECOM_BaseBuffer<RECOM_MapExistenceResponseDto> buffer;
+	
+	protected ref RECOM_CreateMap_Gateway createMapGateway;
+	
 	
 	
 	static RECOM_MapExistenceModule getModule() {
@@ -14,19 +18,21 @@ class RECOM_MapExistenceModule : RECOM_BaseModule {
 	
 	private void RECOM_MapExistenceModule() {
 		buffer = new RECOM_BaseBuffer<RECOM_MapExistenceResponseDto>();
-		gateway = new RECOM_MapExistence_Gateway(buffer);
+		mapExistenceGateway = new RECOM_MapExistence_Gateway(buffer);
+		
+		createMapGateway = new RECOM_CreateMap_Gateway();
 	}
 	
 	void ~RECOM_MapExistenceModule() {
 		buffer = null;
-		gateway = null;
+		mapExistenceGateway = null;
 		RECOM_MapExistenceModule.instance = null;
 	}
 	
 	override void startModule() {
 		super.startModule();
 		PrintFormat(" ! ! ! %1 startModule()", ClassName());
-		GetGame().GetCallqueue().CallLater(gateway.provideData, 5000);
+		GetGame().GetCallqueue().CallLater(mapExistenceGateway.provideData, 5000);
 	}
 	
 	override void disposeModule() {
@@ -40,6 +46,12 @@ class RECOM_MapExistenceModule : RECOM_BaseModule {
 	
 	void triggerWhenMapNotExists() {
 		PrintFormat(" ! ! ! %1 triggerWhenMapNotExists called", ClassName());
+		createMapGateway.createMap();
+	}
+	
+	void triggerWhenMapCreated() {
+		PrintFormat(" ! ! ! %1 triggerWhenMapCreated called", ClassName());
+		GetGame().GetCallqueue().CallLater(mapExistenceGateway.provideData, 0); // update module state
 		RECOM_MapStructureScannerModule.getModule().runScanner();
 		RECOM_MapTopographyScannerModule.getModule().runScanner();
 	}

@@ -1,18 +1,12 @@
-class RECOM_MapExistenceRESTCallback : RestCallback {
+class RECOM_CreateMapRESTCallback : RestCallback {
 
-	ref RECOM_BaseBuffer<RECOM_MapExistenceResponseDto> buffer;
-	ref RECOM_MapExistence_Gateway gateway;
+	ref RECOM_CreateMap_Gateway gateway;
 	
-	void RECOM_MapExistenceRESTCallback(
-		RECOM_BaseBuffer<RECOM_MapExistenceResponseDto> buffer, 
-		RECOM_MapExistence_Gateway gateway
-	) {
-		this.buffer = buffer;
+	void RECOM_CreateMapRESTCallback(RECOM_CreateMap_Gateway gateway) {
 		this.gateway = gateway;
 	}
 	
-	void ~RECOM_MapExistenceRESTCallback() {
-		buffer = null;
+	void ~RECOM_CreateMapRESTCallback() {
 		gateway = null;
 	}
 	
@@ -26,10 +20,8 @@ class RECOM_MapExistenceRESTCallback : RestCallback {
 			if (response.mapExists) {
 				RECOM_MapExistenceModule.getModule().triggerWhenMapExists();
 			} else {
-				RECOM_MapExistenceModule.getModule().triggerWhenMapNotExists();
+				RECOM_MapExistenceModule.getModule().triggerWhenMapCreated();
 			}
-
-			buffer.update(response);
 		} else {
 			reschedule();
 		}
@@ -47,7 +39,7 @@ class RECOM_MapExistenceRESTCallback : RestCallback {
 	};
 	
 	private void reschedule() {
-		GetGame().GetCallqueue().CallLater(gateway.provideData, 1000);
+		GetGame().GetCallqueue().CallLater(gateway.createMap, 1000);
 	}
 
 }

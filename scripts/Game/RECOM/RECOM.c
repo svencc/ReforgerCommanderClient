@@ -39,7 +39,7 @@ class RECOM {
 		
 		context = null;
 		
-		// test
+		// test purpose
 		observer = null;
 	}
 	
@@ -65,7 +65,7 @@ class RECOM {
 			
 			mapTopographyScanner.startModule();
 			mapScanner.startModule();
-			mapRenderer.startModule();
+			//mapRenderer.startModule();
 			mapExistence.startModule();
 			
 			

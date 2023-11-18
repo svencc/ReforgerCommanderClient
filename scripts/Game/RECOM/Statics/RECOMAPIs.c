@@ -14,6 +14,7 @@ class RECOMAPIs {
 	// /map
     // static string GET_MAP_META_MAPS = "/api/v1/map/meta/maps";
     static string POST_MAP_EXISTS = "/api/v1/map/exists/form";
+    static string POST_CREATE_MAP= "/api/v1/map/create/form";
 	
 	static string POST_MAP_SCANNER_TRANSACTION_OPEN = "/api/v1/scanner/structure/transaction/open";
 	static string POST_MAP_SCANNER_TRANSACTION_ENTITIES = "/api/v1/scanner/structure/transaction/entities";
