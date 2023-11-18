@@ -18,9 +18,9 @@ class RECOM_CreateMapRESTCallback : RestCallback {
 			response.ExpandFromRAW(data);
 			
 			if (response.mapExists) {
-				RECOM_MapExistenceModule.getModule().triggerWhenMapExists();
-			} else {
 				RECOM_MapExistenceModule.getModule().triggerWhenMapCreated();
+			} else {
+				RECOM_MapExistenceModule.getModule().triggerWhenMapNotExists();
 			}
 		} else {
 			reschedule();

@@ -51,7 +51,7 @@ class RECOM_MapExistenceModule : RECOM_BaseModule {
 	
 	void triggerWhenMapCreated() {
 		PrintFormat(" ! ! ! %1 triggerWhenMapCreated called", ClassName());
-		GetGame().GetCallqueue().CallLater(mapExistenceGateway.provideData, 0); // update module state
+		GetGame().GetCallqueue().CallLater(mapExistenceGateway.provideData, 5); // update module state
 		RECOM_MapStructureScannerModule.getModule().runScanner();
 		RECOM_MapTopographyScannerModule.getModule().runScanner();
 	}

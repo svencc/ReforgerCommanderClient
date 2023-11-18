@@ -15,7 +15,7 @@ class RECOM_MapExistence_Gateway {
 	}
 	
 	void provideData() {
-		if (RECOM_AuthenticationModule.getModule().isAuthenticated() && !buffer.hasData()) {
+		if (RECOM_AuthenticationModule.getModule().isAuthenticated()) {
 			RECOM_MapExistenceRequestDto requestDto = new RECOM_MapExistenceRequestDto();
 			requestDto.Authorization = RECOM_AuthenticationModule.getModule().getBearerToken();
 			requestDto.mapName = GetGame().GetWorldFile();

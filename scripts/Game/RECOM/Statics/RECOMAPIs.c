@@ -20,9 +20,9 @@ class RECOMAPIs {
 	static string POST_MAP_SCANNER_TRANSACTION_ENTITIES = "/api/v1/scanner/structure/transaction/entities";
 	static string POST_MAP_SCANNER_TRANSACTION_COMMIT = "/api/v1/scanner/structure/transaction/commit";
 	
-	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_OPEN = "/api/v1/scanner/topography/topography/transaction/open";
-	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_ENTITIES = "/api/v1/scanner/topography/topography/transaction/entities";
-	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_COMMIT = "/api/v1/scanner/topography/topography/transaction/commit";
+	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_OPEN = "/api/v1/scanner/topography/transaction/open";
+	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_ENTITIES = "/api/v1/scanner/topography/transaction/entities";
+	static string POST_MAP_SCANNER_TOPOGRAPHY_TRANSACTION_COMMIT = "/api/v1/scanner/topography/transaction/commit";
 	
 	static string POST_MAP_CLUSTERS = "/api/v1/map/clusters/form";
 	

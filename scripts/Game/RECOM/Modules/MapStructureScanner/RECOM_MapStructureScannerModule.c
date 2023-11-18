@@ -40,8 +40,9 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 	}
 	
 	void runScanner() {
+		PrintFormat("%1: runScanner() ...", ClassName(), worldFileName);
 		initProduction(boxScanSize);
-		GetGame().GetCallqueue().CallLater(produce, 0, false);
+		GetGame().GetCallqueue().CallLater(produce, 5, false);
 		GetGame().GetCallqueue().CallLater(consume, 200, false);
 	}
 	
@@ -125,9 +126,15 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 			
 			//PrintFormat("... %1: entities to consume.", elementsToConsume);
 			for (int i = 0; i < elementsToConsume; i++) {
-				IEntity entityToSend = producedEntitiesQueue.Get(0);
-				package(entityToSend);
-				producedEntitiesQueue.RemoveItemOrdered(entityToSend);
+				if (producedEntitiesQueue.Count() == 0) {
+					break; // strange ARMA issue since 1.0 ...
+				}
+
+				IEntity entityToSend = producedEntitiesQueue.Get(0); // <<<< oho; SCRIPT    (E): Virtual Machine E SCRIPT    reason: Index out of bounds.
+				if (entityToSend) {
+					package(entityToSend);
+				 	producedEntitiesQueue.RemoveItemOrdered(entityToSend);
+				}
 			}
 			//PrintFormat("... %1: remaining entities to consume.", producedEntitiesQueue.Count());
 		}
