@@ -31,7 +31,7 @@ class RECOM_MapExistenceModule : RECOM_BaseModule {
 	
 	override void startModule() {
 		super.startModule();
-		PrintFormat(" ! ! ! %1 startModule()", ClassName());
+		SLF4R.debugging(string.Format(" ! ! ! %1 startModule()", ClassName()));
 		GetGame().GetCallqueue().CallLater(mapExistenceGateway.provideData, 5000);
 	}
 	
@@ -41,16 +41,16 @@ class RECOM_MapExistenceModule : RECOM_BaseModule {
 	}
 	
 	void triggerWhenMapExists() {
-		PrintFormat(" ! ! ! %1 triggerWhenMapExists called", ClassName());
+		SLF4R.normal(string.Format(" ! ! ! %1 triggerWhenMapExists called", ClassName()));
 	}
 	
 	void triggerWhenMapNotExists() {
-		PrintFormat(" ! ! ! %1 triggerWhenMapNotExists called", ClassName());
+		SLF4R.normal(string.Format(" ! ! ! %1 triggerWhenMapNotExists called", ClassName()));
 		createMapGateway.createMap();
 	}
 	
 	void triggerWhenMapCreated() {
-		PrintFormat(" ! ! ! %1 triggerWhenMapCreated called", ClassName());
+		SLF4R.normal(string.Format(" ! ! ! %1 triggerWhenMapCreated called", ClassName()));
 		GetGame().GetCallqueue().CallLater(mapExistenceGateway.provideData, 5); // update module state
 		RECOM_MapStructureScannerModule.getModule().runScanner();
 		RECOM_MapTopographyScannerModule.getModule().runScanner();

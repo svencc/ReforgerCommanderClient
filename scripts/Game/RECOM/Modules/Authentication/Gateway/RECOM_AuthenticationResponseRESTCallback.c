@@ -11,8 +11,8 @@ class RECOM_AuthenticationResponseRESTCallback : RestCallback {
 	}
 	
 	override void OnSuccess( string data, int dataSize ) {
-		PrintFormat("%1 OnSuccess called ", ClassName());
-		PrintFormat("Re-Authenticate");
+		SLF4R.debugging(string.Format("%1 OnSuccess called ", ClassName()));
+		SLF4R.debugging(string.Format("Re-Authenticate"));
 
 		RECOM_AuthenticationResponseDto response = new RECOM_AuthenticationResponseDto;
 		response.ExpandFromRAW(data);
@@ -20,7 +20,7 @@ class RECOM_AuthenticationResponseRESTCallback : RestCallback {
 	};
 
 	override void OnError( int errorCode ) {
-		PrintFormat(" ! ! ! %1 OnError called with errorCode %2", ClassName(), errorCode);
+		SLF4R.debugging(string.Format(" ! ! ! %1 OnError called with errorCode %2", ClassName(), errorCode));
 	};
 
 }

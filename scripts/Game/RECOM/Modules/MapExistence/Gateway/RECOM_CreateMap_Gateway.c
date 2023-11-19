@@ -18,11 +18,11 @@ class RECOM_CreateMap_Gateway {
 			requestDto.mapName = GetGame().GetWorldFile();
 
 			requestDto.Pack();
-			PrintFormat(" ! ! ! %1 provideData()", ClassName());
+			SLF4R.debugging(string.Format(" ! ! ! %1 provideData()", ClassName()));
 			GetGame().GetRestApi().GetContext(RECOM.getContext().properties().getProperties().host).POST(callback, RECOMAPIs.POST_CREATE_MAP, requestDto.AsString());
 		} else {
 			// try again until we are authenticated
-			PrintFormat(" ! ! ! %1 reschedule", ClassName());
+			SLF4R.debugging(string.Format(" ! ! ! %1 reschedule", ClassName()));
 			GetGame().GetCallqueue().CallLater(createMap, 1000, false);
 		}
 	}

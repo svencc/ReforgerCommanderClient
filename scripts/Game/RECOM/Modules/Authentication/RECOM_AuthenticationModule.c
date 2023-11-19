@@ -36,7 +36,7 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
 		if (RECOM.getContext().properties().getProperties().enableAuthentication) {
 			restGateway.authenticateWith(RECOM.getContext().properties().getProperties());
 		} else {
-			Print("AUTHENTICATION is disabled", LogLevel.ERROR);
+			SLF4R.error("AUTHENTICATION is disabled");
 		}
 	}
 
@@ -77,7 +77,7 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
 	void reauthenticate() {
 		RECOM_AuthenticationResponseDto authentication = buffer.read();
 		if (willExpireSoon(authentication)) {
-			PrintFormat(" ----- Trigger Re-Authentication ----- ");
+			SLF4R.debugging(string.Format(" ----- Trigger Re-Authentication ----- "));
 			authenticate();
 		}
 	}

@@ -13,6 +13,7 @@ class RECOM_AuthenticationRESTGateway {
 	
 	void authenticateWith(RECOM_PropertiesDto properties) {
 		if (properties.enableAuthentication) {
+			SLF4R.normal("AUTHENTICATE");
 			RECOM_AuthenticationRequestDto requestDto = new RECOM_AuthenticationRequestDto();
 			requestDto.accountUUID = properties.accountUUID;
 	        requestDto.accessKey = properties.accessKey;

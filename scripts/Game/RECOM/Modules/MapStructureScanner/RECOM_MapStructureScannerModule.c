@@ -40,7 +40,7 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 	}
 	
 	void runScanner() {
-		PrintFormat("%1: runScanner() ...", ClassName(), worldFileName);
+		SLF4R.normal(string.Format("%1: runScanner() ...", ClassName(), worldFileName));
 		initProduction(boxScanSize);
 		GetGame().GetCallqueue().CallLater(produce, 5, false);
 		GetGame().GetCallqueue().CallLater(consume, 200, false);
@@ -80,7 +80,7 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 			
 		if (!startedProduction) {
 			startedProduction = true;
-			PrintFormat("%1: start production of %2 ...", ClassName(), worldFileName);
+			SLF4R.normal(string.Format("%1: start production of %2 ...", ClassName(), worldFileName));
 		}
 	
 		if (iterationZ < predictedScanIterations) {
@@ -89,14 +89,14 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 				scanPartitionSpherical(iterationX, iterationZ);
 				iterationX++;
 			} else {
-				PrintFormat("...%1 x:%2 z:%3", ClassName(), iterationX, iterationZ);	
+				SLF4R.normal(string.Format("...%1 x:%2 z:%3", ClassName(), iterationX, iterationZ));
 				iterationZ++;
 				iterationX = 0;
 			}
 			GetGame().GetCallqueue().CallLater(produce, 0, false);
 		} else {
 			finishedProduction = true;
-			PrintFormat("... %1: production completed.", ClassName());
+			SLF4R.normal(string.Format("... %1: production completed.", ClassName()));
 		}
 
 	}
@@ -109,22 +109,22 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 		if (!startedConsumption && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
 			startedConsumption = true;
 			transactionManager.openTransaction();
-			PrintFormat("%1: start consumption ...", ClassName());
+			SLF4R.normal(string.Format("%1: start consumption ...", ClassName()));
 		}
 
 		if (producedEntitiesQueue.IsEmpty() && finishedProduction && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
 			finishedConsumption = true;
 			shippingService.flush();
-			PrintFormat("... %1: consumption completed.", ClassName());
+			SLF4R.normal(string.Format("... %1: consumption completed.", ClassName()));
 			transactionManager.commitTransaction(shippingService.getPackagesSent());
-			PrintFormat("%1: committed transaction.", ClassName());
+			SLF4R.normal(string.Format("%1: committed transaction.", ClassName()));
 		} else if(producedEntitiesQueue.IsEmpty() == false && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
 			int elementsToConsume = Math.Min(
 				producedEntitiesQueue.Count(), 
 				shippingService.getMaxPackageSizeBeforeFlush()
 			);
 			
-			//PrintFormat("... %1: entities to consume.", elementsToConsume);
+			SLF4R.debugging(string.Format("... %1: entities to consume.", elementsToConsume));
 			for (int i = 0; i < elementsToConsume; i++) {
 				if (producedEntitiesQueue.Count() == 0) {
 					break; // strange ARMA issue since 1.0 ...
@@ -136,7 +136,7 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 				 	producedEntitiesQueue.RemoveItemOrdered(entityToSend);
 				}
 			}
-			//PrintFormat("... %1: remaining entities to consume.", producedEntitiesQueue.Count());
+			SLF4R.debugging(string.Format("... %1: remaining entities to consume.", producedEntitiesQueue.Count()));
 		}
 		
 		GetGame().GetCallqueue().CallLater(consume, 0, false);
