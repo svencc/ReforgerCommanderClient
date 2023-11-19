@@ -25,7 +25,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	
 	static RECOM_MapTopographyScannerModule getModule() {
         if (!RECOM_MapTopographyScannerModule.instance) {
-            RECOM_MapTopographyScannerModule.instance = new RECOM_MapTopographyScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(500), 1.0);
+            RECOM_MapTopographyScannerModule.instance = new RECOM_MapTopographyScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(1000), 10.0);
         }
 		
         return RECOM_MapTopographyScannerModule.instance;
@@ -86,7 +86,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 			PrintFormat("%1: start production of %2 ...", ClassName(), worldFileName);
 		}
 	
-		int scanRowSize = 2000;
+		int scanRowSize = 1000;
 		int maxIterationsX = iterationX + scanRowSize;
 		if (iterationZ < predictedScanIterations) {
 			for (int localIterationX = iterationX; localIterationX <= maxIterationsX && localIterationX <= predictedScanIterations; localIterationX++) {
@@ -98,7 +98,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 				iterationZ++;
 				iterationX = 0;
 			}
-			GetGame().GetCallqueue().CallLater(produce, 5, false);
+			GetGame().GetCallqueue().CallLater(produce, 0, false);
 		} else {
 			finishedProduction = true;
 			PrintFormat("... %1: production completed.", ClassName());

@@ -132,7 +132,7 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 
 				IEntity entityToSend = producedEntitiesQueue.Get(0); // <<<< oho; SCRIPT    (E): Virtual Machine E SCRIPT    reason: Index out of bounds.
 				if (entityToSend) {
-					package(entityToSend);
+					packageEntity(entityToSend);
 				 	producedEntitiesQueue.RemoveItemOrdered(entityToSend);
 				}
 			}
@@ -213,7 +213,7 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 		return true;
 	}
 	
-	protected void package(IEntity ent) {
+	protected void packageEntity(IEntity ent) {
 		if(ent == null) {
 			return;
 		}
