@@ -1,4 +1,6 @@
 # TODO LIST
 
-* refactoring related stuff for topography scanner
-* test everything after refactoring
+* Map Existence Module:
+    * check and distinguish between different map types and trigger map specific scanner:
+      * structure entities
+      * topography
