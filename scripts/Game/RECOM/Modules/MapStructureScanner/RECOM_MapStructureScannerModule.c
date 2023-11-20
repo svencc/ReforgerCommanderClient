@@ -37,6 +37,12 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 	override void disposeModule() {
 		super.disposeModule();
 		RECOM_MapStructureScannerModule.instance = null;
+		
+		startedProduction = false;
+		finishedProduction = false;
+	
+		startedConsumption = false;
+		finishedConsumption = false;
 	}
 	
 	void runScanner() {

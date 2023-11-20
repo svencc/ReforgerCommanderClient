@@ -38,6 +38,12 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	override void disposeModule() {
 		super.disposeModule();
 		RECOM_MapTopographyScannerModule.instance = null;
+		
+		startedProduction = false;
+		finishedProduction = false;
+	
+		startedConsumption = false;
+		finishedConsumption = false;
 	}
 	
 	void runScanner() {
