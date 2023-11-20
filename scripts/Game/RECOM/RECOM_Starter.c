@@ -7,6 +7,7 @@ class RECOM_Starter: SCR_BaseTriggerEntity {
 		if (GetGame().InPlayMode()) {
 			GetGame().GetCallqueue().Clear();
 			RECOM.getContext().dispose();
+			GetGame().GetCallqueue().Clear();
 		}
 	}
 
