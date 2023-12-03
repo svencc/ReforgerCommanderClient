@@ -1,6 +1,7 @@
 class RECOM {
 	
 	protected ref static RECOM context;
+	protected bool contextStarted = false;
 		
 	protected ref RECOM_PropertiesModule properties;
 	protected ref SLF4R slf4r;
@@ -43,6 +44,10 @@ class RECOM {
 
 		context = null;
 	}
+	
+	bool isContextStarted() {
+		return contextStarted;
+	}
 
 	void init() {
 		// DI here? would make sense here!
@@ -76,6 +81,8 @@ class RECOM {
 			observer = new RECOM_MB_Observer();
 			observer.observe(messageBus.getSubject());
 			
+			
+			contextStarted = true;
 		} else if (false) {
 			// ...
 		}
@@ -101,6 +108,7 @@ class RECOM {
 		
 		observer.dispose();
 		
+		contextStarted = false;
 		RECOM.context = null;
 	}
 	

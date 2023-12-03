@@ -24,6 +24,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 
 	
 	static RECOM_MapTopographyScannerModule getModule() {
+		SLF4R.normal(string.Format("RECOM_MapTopographyScannerModule: getModule() ..."));
         if (!RECOM_MapTopographyScannerModule.instance) {
             RECOM_MapTopographyScannerModule.instance = new RECOM_MapTopographyScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(1000), 10.0);
         }
@@ -47,7 +48,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	}
 	
 	void runScanner() {
-		SLF4R.normal(string.Format("%1: runScanner() ...", ClassName(), worldFileName));
+		SLF4R.normal(string.Format("%1: runScanner() ...", ClassName()));
 		initProduction(stepSize);
 		GetGame().GetCallqueue().CallLater(produce, 5, false);
 		GetGame().GetCallqueue().CallLater(consume, 200, false);
@@ -83,6 +84,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 
 	void produce() {
 		if (finishedProduction) {
+			SLF4R.normal(string.Format("%1: end production!", ClassName()));
 			return;
 		}
 			
@@ -114,6 +116,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	
 	void consume() {
 		if (finishedConsumption) {
+			SLF4R.normal(string.Format("%1: end consumption!", ClassName()));
 			return;
 		}
 		

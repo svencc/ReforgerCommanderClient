@@ -4,10 +4,9 @@ class RECOM_StarterClass: SCR_BaseTriggerEntityClass {};
 class RECOM_Starter: SCR_BaseTriggerEntity {
 
 	void ~RECOM_Starter() {
-		if (GetGame().InPlayMode()) {
+		if (RECOM.getContext().isContextStarted()) {
 			GetGame().GetCallqueue().Clear();
 			RECOM.getContext().dispose();
-			GetGame().GetCallqueue().Clear();
 		}
 	}
 
