@@ -11,7 +11,7 @@ class RECOM {
 
 	protected ref RECOM_MapStructureScannerModule mapScanner;
 	protected ref RECOM_MapTopographyScannerModule mapTopographyScanner;
-	protected ref RECOM_MapRendererModule mapRenderer;
+	//protected ref RECOM_MapRendererModule mapRenderer;
 	protected ref RECOM_MapExistenceModule mapExistence;
 
 	protected ref RECOM_MB_Observer observer;
@@ -21,6 +21,7 @@ class RECOM {
         if (!RECOM.context) {
             RECOM.context = new RECOM();
         }
+		
         return RECOM.context;
     }
 
@@ -30,7 +31,7 @@ class RECOM {
 
 	void ~RECOM() {
 		mapExistence = null;
-		mapRenderer = null;
+		//mapRenderer = null;
 		mapScanner = null;
 		mapTopographyScanner = null;
 
@@ -59,7 +60,7 @@ class RECOM {
 
 		mapTopographyScanner = RECOM_MapTopographyScannerModule.getModule();
 		mapScanner = RECOM_MapStructureScannerModule.getModule();
-		mapRenderer = RECOM_MapRendererModule.getModule();
+		//mapRenderer = RECOM_MapRendererModule.getModule();
 		mapExistence = RECOM_MapExistenceModule.getModule();
 	}
 	
@@ -103,7 +104,7 @@ class RECOM {
 		messageBus.disposeModule();
 		
 		mapScanner.disposeModule();
-		mapRenderer.disposeModule();
+		//mapRenderer.disposeModule();
 		mapExistence.disposeModule();
 		
 		observer.dispose();
@@ -135,8 +136,8 @@ class RECOM {
 	RECOM_MapTopographyScannerModule mapTopographyScanner() {
 		return mapTopographyScanner;
 	}
-	RECOM_MapRendererModule mapRenderer() {
+	/*RECOM_MapRendererModule mapRenderer() {
 		return mapRenderer;
-	}
+	}*/
 
 }

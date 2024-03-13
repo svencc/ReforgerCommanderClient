@@ -9,6 +9,7 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
         if (!RECOM_MessageBusModule.instance) {
             RECOM_MessageBusModule.instance = new RECOM_MessageBusModule();
         }
+		
         return RECOM_MessageBusModule.instance;
     }
 	

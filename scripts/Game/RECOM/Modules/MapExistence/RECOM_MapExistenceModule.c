@@ -13,6 +13,7 @@ class RECOM_MapExistenceModule : RECOM_BaseModule {
         if (!RECOM_MapExistenceModule.instance) {
             RECOM_MapExistenceModule.instance = new RECOM_MapExistenceModule();
         }
+		
         return RECOM_MapExistenceModule.instance;
     }
 	

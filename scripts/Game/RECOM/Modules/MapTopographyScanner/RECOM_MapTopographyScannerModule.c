@@ -9,7 +9,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	protected bool finishedConsumption = false;
 	
 	protected int worldSize;
-	protected float stepSize;
+	protected int stepSize;
 	protected int iterationX;
 	protected int iterationZ;
 	
@@ -26,7 +26,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	static RECOM_MapTopographyScannerModule getModule() {
 		SLF4R.normal(string.Format("RECOM_MapTopographyScannerModule: getModule() ..."));
         if (!RECOM_MapTopographyScannerModule.instance) {
-            RECOM_MapTopographyScannerModule.instance = new RECOM_MapTopographyScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(1000), 10.0);
+            RECOM_MapTopographyScannerModule.instance = new RECOM_MapTopographyScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(500), 1);
         }
 		
         return RECOM_MapTopographyScannerModule.instance;
@@ -94,7 +94,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 			SLF4R.normal(string.Format("%1: start production of %2 ...", ClassName(), worldFileName));
 		}
 	
-		int scanRowSize = 1000;
+		int scanRowSize = 500;
 		int maxIterationsX = iterationX + scanRowSize;
 		if (iterationZ < predictedScanIterations) {
 			for (int localIterationX = iterationX; localIterationX <= maxIterationsX && localIterationX <= predictedScanIterations; localIterationX++) {

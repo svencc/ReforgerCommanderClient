@@ -8,6 +8,7 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
         if (!RECOM_AuthenticationModule.instance) {
             RECOM_AuthenticationModule.instance = new RECOM_AuthenticationModule();
         }
+		
         return RECOM_AuthenticationModule.instance;
     }
 	

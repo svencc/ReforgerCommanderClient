@@ -7,6 +7,7 @@ class RECOM_PropertiesModule : RECOM_BaseModule {
         if (!RECOM_PropertiesModule.instance) {
             RECOM_PropertiesModule.instance = new RECOM_PropertiesModule();
         }
+		
         return RECOM_PropertiesModule.instance;
     }
 	

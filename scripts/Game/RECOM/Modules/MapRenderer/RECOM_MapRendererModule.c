@@ -13,11 +13,11 @@ class RECOM_MapRendererModule : RECOM_BaseModule {
         return RECOM_MapRendererModule.instance;
     }
 	
-	
+
 	private void RECOM_MapRendererModule() {
 		buffer = new RECOM_BaseBuffer<RECOM_MapRendererResponseDto>();
 		rendererGateway = new RECOM_MapRendererRESTGateway(buffer);
-		mapModule = RECOM_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RECOM_MapModule));
+		//mapModule = RECOM_MapModule.Cast(SCR_MapEntity.GetMapInstance().GetMapModule(RECOM_MapModule));
 	}
 	
 	void ~RECOM_MapRendererModule()	{
