@@ -68,9 +68,6 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
     }
 	
     string getBearerToken() {
-        // @TODO:   implement timer on basis of System.GetUnixTime(),
-        //          fetch servertime only once, calculate diff and then use timer (+diff) to check if token is expired
-        //	int epochTime = System.GetUnixTime();
 		reauthenticate();
         return buffer.read().getBearerToken();
     }

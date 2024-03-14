@@ -1,7 +1,7 @@
 class RECOM_MapTopographyEntityDto : JsonApiStruct {
 
 	// META DATA
-	float stepSize;
+	int stepSize;
 	int scanIterationsX;
 	int scanIterationsZ;
 	float oceanHeight;

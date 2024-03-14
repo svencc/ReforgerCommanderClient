@@ -20,7 +20,7 @@ class RECOM_AuthenticationResponseRESTCallback : RestCallback {
 	};
 
 	override void OnError( int errorCode ) {
-		SLF4R.debugging(string.Format(" ! ! ! %1 OnError called with errorCode %2", ClassName(), errorCode));
+		SLF4R.error(string.Format(" ! ! ! %1 OnError called with errorCode %2", ClassName(), errorCode));
 	};
 
 }
