@@ -151,26 +151,13 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	}
 	
 	protected void scanMapHeight(
-		int iterationX, 
-		int iterationZ
+		int coordinateX, 
+		int coordinateZ
 	) {	
-		float centerX = (iterationX * stepSize) + (stepSize / 2);
-		float centerZ = (iterationZ * stepSize) + (stepSize / 2);
-		float height = GetGame().GetWorld().GetSurfaceY(centerX, centerZ);
+		float heightY = GetGame().GetWorld().GetSurfaceY(coordinateX, coordinateZ);
 		
 		RECOM_MapTopographyEntityDto entityToSend = new RECOM_MapTopographyEntityDto();
-		
-		// META DATA; could be moved to open-transaction in future; as it is only needed to submit once
-		entityToSend.stepSize = stepSize;
-		entityToSend.scanIterationsX = predictedScanIterations;
-		entityToSend.scanIterationsZ = predictedScanIterations;
-		entityToSend.oceanHeight = GetGame().GetWorld().GetOceanHeight(centerX, centerZ);
-		entityToSend.oceanBaseHeight = GetGame().GetWorld().GetOceanBaseHeight();
-		
-		// PACKAGE SPECIFIC DATA
-		entityToSend.iterationX = iterationX;
-		entityToSend.iterationZ = iterationZ;
-		entityToSend.coordinates = {centerX, height, centerZ};
+		entityToSend.coordinates = {coordinateX, heightY, coordinateZ};
 		
 		producedEntitiesQueue.Insert(entityToSend);
 	}

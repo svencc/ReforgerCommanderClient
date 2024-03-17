@@ -66,6 +66,7 @@ class RECOM {
 	
 	void start() {
 		if (GetGame().InPlayMode()) {
+			SLF4R.normal("RECOM is in PlayMode.");
 			properties.startModule();
 			slf4r.startModule();
 			authentication.startModule();
@@ -82,12 +83,13 @@ class RECOM {
 			observer = new RECOM_MB_Observer();
 			observer.observe(messageBus.getSubject());
 			
-			
 			contextStarted = true;
 		} else if (false) {
+			SLF4R.normal("RECOM in NOT in PlayMode.");
 			// ...
 		}
 		
+		SLF4R.normal("Test SLF4R Logger");
 		SLF4R.spam(string.Format("spam %1", ClassName()));
 		SLF4R.debugging(string.Format("debbuging %1", ClassName()));
 		SLF4R.error(string.Format("error %1", ClassName()));

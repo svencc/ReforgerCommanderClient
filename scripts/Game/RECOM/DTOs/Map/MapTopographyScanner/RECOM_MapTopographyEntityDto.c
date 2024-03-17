@@ -1,27 +1,17 @@
 class RECOM_MapTopographyEntityDto : JsonApiStruct {
 
-	// META DATA
-	int stepSize;
-	int scanIterationsX;
-	int scanIterationsZ;
-	float oceanHeight;
-	float oceanBaseHeight;
-		
-	// PACKAGE SPECIFIC DATA
-	int iterationX;
-	int iterationZ;
+	int chunkSizeX;
+	int chunkSizeZ;
+	int chunkCoordinateX;
+	int chunkCoordinateZ;
 	vector coordinates;
 
 
 	void RECOM_MapTopographyEntityDto() {
-		RegV("stepSize");
-		RegV("scanIterationsX");
-		RegV("scanIterationsZ");
-		RegV("oceanHeight");
-		RegV("oceanBaseHeight");
-		
-		RegV("iterationX");
-		RegV("iterationZ");
+		RegV("chunkSizeX");
+		RegV("chunkSizeZ");
+		RegV("chunkCoordinateX");
+		RegV("chunkCoordinateZ");
 		RegV("coordinates");
 	}
 
