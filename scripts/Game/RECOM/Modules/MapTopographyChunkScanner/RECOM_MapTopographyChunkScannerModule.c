@@ -1,6 +1,6 @@
-class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
+class RECOM_MapTopographyChunkScanner {
 
-	private static ref RECOM_MapTopographyScannerModule instance;
+	//private static ref RECOM_MapTopographyChunkScannerModule instance;
 	
 	protected bool startedProduction = false;
 	protected bool finishedProduction = false;
@@ -8,11 +8,11 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	protected bool startedConsumption = false;
 	protected bool finishedConsumption = false;
 	
-	protected int worldSize;
-	protected int stepSize;
 	protected int iterationX;
 	protected int iterationZ;
 	
+	protected int chunkX; 
+	protected int chunkZ;
 	protected int predictedScanIterations;
 	protected int finishedScanLines;
 	
@@ -23,23 +23,19 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	protected ref RECOM_MapTopographyScannerEntitiesTransactionManager transactionManager
 
 	
-	static RECOM_MapTopographyScannerModule getModule() {
-		SLF4R.normal(string.Format("RECOM_MapTopographyScannerModule: getModule() ..."));
-        if (!RECOM_MapTopographyScannerModule.instance) {
-            RECOM_MapTopographyScannerModule.instance = new RECOM_MapTopographyScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(500), 1);
+	/*
+	static RECOM_MapTopographyChunkScannerModule getModule() {
+		SLF4R.normal(string.Format("RECOM_MapTopographyChunkScannerModule: getModule() ..."));
+        if (!RECOM_MapTopographyChunkScannerModule.instance) {
+            RECOM_MapTopographyChunkScannerModule.instance = new RECOM_MapTopographyChunkScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(500));
         }
 		
-        return RECOM_MapTopographyScannerModule.instance;
+        return RECOM_MapTopographyChunkScannerModule.instance;
     }
+	*/
 	
-	override void startModule() {
-		super.startModule();
-	}
 	
-	override void disposeModule() {
-		super.disposeModule();
-		RECOM_MapTopographyScannerModule.instance = null;
-		
+	override void dispose() {
 		startedProduction = false;
 		finishedProduction = false;
 	
@@ -49,37 +45,35 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	
 	void runScanner() {
 		SLF4R.normal(string.Format("%1: runScanner() ...", ClassName()));
-		initProduction(stepSize);
+		initProduction(chunkX, chunkZ);
 		GetGame().GetCallqueue().CallLater(produce, 5, false);
 		GetGame().GetCallqueue().CallLater(consume, 200, false);
 	}
 	
-	private void RECOM_MapTopographyScannerModule(
-		RECOM_MapTopographypScannerEntitiesShippingService service,
-		int stepSize
-	) {
-		shippingService = service;
-		this.stepSize = stepSize;
+	private void RECOM_MapTopographyChunkScanner(int chunkX, int chunkZ) {
+		shippingService = new RECOM_MapTopographypScannerEntitiesShippingService(500);
+		this.chunkX = chunkX;
+		this.chunkZ = chunkZ;
 	}
 
-	void ~RECOM_MapTopographyScannerModule() {
+	void ~RECOM_MapTopographyChunkScanner() {
 		producedEntitiesQueue.Clear();
 		producedEntitiesQueue = null;
 		shippingService = null;
 		transactionManager = null;
-		RECOM_MapTopographyScannerModule.instance = null;
+		RECOM_MapTopographyChunkScannerModule.instance = null;
 	}
 
-	protected void initProduction(float stepSize) {
-		worldSize = determineMapSize();
-        worldFileName = GetGame().GetWorldFile();
-		predictedScanIterations = Math.Floor(worldSize/stepSize);
+	protected void initProduction() {
+        worldFileName = GetGame().GetWorldFile();  	// <<<<< das muss man noch prüfen
+		predictedScanIterations = 1000; // das ist die feste Chunk Size
 		iterationX = 0;
 		iterationZ = 0;
 		finishedScanLines = 0;
 		
-        transactionManager = new RECOM_MapTopographyScannerEntitiesTransactionManager(worldFileName);
-        shippingService.setSessionIdentifier(worldFileName);
+		string sessionIdentifier = worldFileName + "#####" + chunkX + "," + ChunkY;
+        transactionManager = new RECOM_MapTopographyScannerEntitiesTransactionManager(sessionIdentifier);
+        shippingService.setSessionIdentifier(sessionIdentifier);
 	}
 
 	void produce() {

@@ -2,7 +2,7 @@ class RECOM_AuthenticationRESTGateway {
 	
 	ref RECOM_AuthenticationResponseRESTCallback authenticationResponseRESTCallback;
 
-	void RECOM_AuthenticationRESTGateway(RECOM_AuthenticationResponseBuffer authenticationResponseBuffer) {
+	void RECOM_AuthenticationRESTGateway(notnull RECOM_AuthenticationResponseBuffer authenticationResponseBuffer) {
 		authenticationResponseRESTCallback = new RECOM_AuthenticationResponseRESTCallback(authenticationResponseBuffer);
 	}
 
@@ -11,7 +11,7 @@ class RECOM_AuthenticationRESTGateway {
 	}
 	
 	
-	void authenticateWith(RECOM_PropertiesDto properties) {
+	void authenticateWith(notnull RECOM_PropertiesDto properties) {
 		if (properties.enableAuthentication) {
 			SLF4R.normal("AUTHENTICATE");
 			RECOM_AuthenticationRequestDto requestDto = new RECOM_AuthenticationRequestDto();

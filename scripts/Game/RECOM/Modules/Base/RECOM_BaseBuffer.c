@@ -14,7 +14,7 @@ class RECOM_BaseBuffer<Class t> {
 		return bufferedValue;
 	}
 	
-	void update(t value) {
+	void update(notnull t value) {
 		bufferedValue = value;
 	}
 

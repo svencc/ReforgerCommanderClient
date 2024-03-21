@@ -37,7 +37,7 @@ class RECOM_MapStructureScannerEntitiesShippingService {
 		entitiesPackage.sessionIdentifier = worldName;
 	}
 
-	void assemblePackage(RECOM_MapStructureEntityDto entity) {
+	void assemblePackage(notnull RECOM_MapStructureEntityDto entity) {
 		entitiesPackage.entities.Insert(entity);
 		if (entitiesPackage.entities.Count() > maxPackageSizeBeforeFlush) {
 			flush();

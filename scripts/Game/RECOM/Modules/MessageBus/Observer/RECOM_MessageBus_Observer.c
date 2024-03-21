@@ -1,20 +1,21 @@
-class RECOM_MB_Observer {
+class RECOM_MessageBus_Observer {
 	
-	protected ref array<RECOM_MB_Subject> subjects = {};
+	protected ref array<RECOM_MessageBus_Subject> subjects = {};
 	
 	
-	void ~RECOM_MB_Observer() {
+	void ~RECOM_MessageBus_Observer() {
+		dispose();
 		subjects.Clear();
 		subjects = null;
 	}
 
 	
-	void observe(RECOM_MB_Subject subject) {
+	void observe(notnull RECOM_MessageBus_Subject subject) {
         subject.beObservedBy(this);
         subjects.Insert(subject);
     }
 
-    void takeNotice(RECOM_MB_Subject subject, RECOM_MessageBus_ResponseDto notification) {
+    void takeNotice(notnull RECOM_MessageBus_Subject subject, notnull RECOM_MessageBus_ResponseDto notification) {
 		foreach(RECOM_MessageBus_MessageDto message: notification.messages) {
 			SLF4R.debugging(string.Format("uuid: %1", message.uuid));
 			SLF4R.debugging(string.Format("messageType: %1", message.messageType));
@@ -23,12 +24,12 @@ class RECOM_MB_Observer {
 		}
 	}
 
-	void takeDeathNoticeFrom(RECOM_MB_Subject subject) {
+	void takeDeathNoticeFrom(notnull RECOM_MessageBus_Subject subject) {
         subjects.RemoveItem(subject);
     }
 
 	void dispose() {
-		foreach(RECOM_MB_Subject subject : subjects) {
+		foreach(RECOM_MessageBus_Subject subject : subjects) {
 			subject.observationStoppedThrough(this)
 		}
     }

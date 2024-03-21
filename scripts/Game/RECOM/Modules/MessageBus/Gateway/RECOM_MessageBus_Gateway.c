@@ -3,7 +3,7 @@ class RECOM_MessageBus_Gateway {
 	string epochMillisecondsLastMessage;
 	protected ref RECOM_MessageBus_Callback callback;
 
-	void RECOM_MessageBus_Gateway(RECOM_MB_Subject subject) {
+	void RECOM_MessageBus_Gateway(RECOM_MessageBus_Subject subject) {
 		callback = new RECOM_MessageBus_Callback(subject, this);
 	}
 

@@ -3,7 +3,7 @@ class RECOM_MapRendererRESTGateway {
 	protected ref RECOM_MapRendererResponseRESTCallback mapRendererResponseRESTCallback;
 	protected ref RECOM_BaseBuffer<RECOM_MapRendererResponseDto> buffer;
 
-	void RECOM_MapRendererRESTGateway(RECOM_BaseBuffer<RECOM_MapRendererResponseDto> buffer) {
+	void RECOM_MapRendererRESTGateway(notnull RECOM_BaseBuffer<RECOM_MapRendererResponseDto> buffer) {
 		mapRendererResponseRESTCallback = new RECOM_MapRendererResponseRESTCallback(buffer);
 	}
 

@@ -24,7 +24,7 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 		drawCommands = new array<ref RECOM_MapDrawCommandBase>();
 	}
 	
-	void addDrawCommand(RECOM_MapDrawCommandBase drawCommand) {
+	void addDrawCommand(notnull RECOM_MapDrawCommandBase drawCommand) {
 		drawCommands.Insert(drawCommand);
 	}
 	

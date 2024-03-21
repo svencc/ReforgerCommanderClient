@@ -80,7 +80,7 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
 		}
 	}
 	
-	private bool willExpireSoon(RECOM_AuthenticationResponseDto authentication) {
+	private bool willExpireSoon(notnull RECOM_AuthenticationResponseDto authentication) {
 		if (authentication == null) {
 			return true;
 		} else {
@@ -88,7 +88,7 @@ class RECOM_AuthenticationModule : RECOM_BaseModule {
 		}
 	}
 	
-	private bool isExpired(RECOM_AuthenticationResponseDto authentication) {
+	private bool isExpired(notnull RECOM_AuthenticationResponseDto authentication) {
 	    if (authentication == null) {
             return true;
         } else {

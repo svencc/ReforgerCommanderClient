@@ -1,11 +1,11 @@
 class RECOM_MessageBus_Callback : RestCallback {
 
 	private string latestMessageEpoch;
-	private ref RECOM_MB_Subject subject;
+	private ref RECOM_MessageBus_Subject subject;
 	private ref RECOM_MessageBus_Gateway gateway;
 	
 	void RECOM_MessageBus_Callback(
-		RECOM_MB_Subject subject,
+		RECOM_MessageBus_Subject subject,
 		RECOM_MessageBus_Gateway gateway
 	) {
 		this.subject = subject;

@@ -2,7 +2,7 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
 	
 	private static ref RECOM_MessageBusModule instance;
 	protected ref RECOM_MessageBus_Gateway gateway;
-	protected ref RECOM_MB_Subject subject;
+	protected ref RECOM_MessageBus_Subject subject;
 	
 	
 	static RECOM_MessageBusModule getModule() {
@@ -14,7 +14,7 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
     }
 	
 	private void RECOM_MessageBusModule() {
-		subject = new RECOM_MB_Subject();
+		subject = new RECOM_MessageBus_Subject();
 		gateway = new RECOM_MessageBus_Gateway(subject);
 	}
 	
@@ -35,7 +35,7 @@ class RECOM_MessageBusModule : RECOM_BaseModule {
 		RECOM_MessageBusModule.instance = null;
 	}
 	
-	RECOM_MB_Subject getSubject() {
+	RECOM_MessageBus_Subject getSubject() {
 		return subject;
 	}
 	

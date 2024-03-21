@@ -4,7 +4,7 @@ class RECOM_MapExistence_Gateway {
 	protected ref RECOM_BaseBuffer<RECOM_MapExistenceResponseDto> buffer;
 
 
-	void RECOM_MapExistence_Gateway(RECOM_BaseBuffer<RECOM_MapExistenceResponseDto> buffer) {
+	void RECOM_MapExistence_Gateway(notnull RECOM_BaseBuffer<RECOM_MapExistenceResponseDto> buffer) {
 		this.buffer = buffer;
 		callback = new RECOM_MapExistenceRESTCallback(buffer, this);
 	}

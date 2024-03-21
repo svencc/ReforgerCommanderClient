@@ -14,7 +14,7 @@ class RECOM {
 	//protected ref RECOM_MapRendererModule mapRenderer;
 	protected ref RECOM_MapExistenceModule mapExistence;
 
-	protected ref RECOM_MB_Observer observer;
+	protected ref RECOM_MessageBus_Observer observer;
 
 
 	static RECOM getContext() {
@@ -80,7 +80,7 @@ class RECOM {
 			
 			
 			// just here for test
-			observer = new RECOM_MB_Observer();
+			observer = new RECOM_MessageBus_Observer();
 			observer.observe(messageBus.getSubject());
 			
 			contextStarted = true;

@@ -10,7 +10,7 @@ class RECOM_MapRendererResponseRESTCallback : RestCallback {
 		buffer = null;
 	}
 	
-	override void OnSuccess( string data, int dataSize ) {
+	override void OnSuccess(string data, int dataSize) {
 		SLF4R.debugging(string.Format("%1 OnSuccess called ", ClassName()));
 
 		RECOM_MapRendererResponseDto response = new RECOM_MapRendererResponseDto;
@@ -19,7 +19,7 @@ class RECOM_MapRendererResponseRESTCallback : RestCallback {
 		buffer.update(response);
 	};
 
-	override void OnError( int errorCode ) {
+	override void OnError(int errorCode) {
 		SLF4R.debugging(string.Format(" ! ! ! %1 OnError called with errorCode %2", ClassName(), errorCode));
 	};
 

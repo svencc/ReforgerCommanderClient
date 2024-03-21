@@ -37,7 +37,7 @@ class RECOM_MapTopographypScannerEntitiesShippingService {
 		entitiesPackage.sessionIdentifier = worldName;
 	}
 
-	void assemblePackage(RECOM_MapTopographyEntityDto entity) {
+	void assemblePackage(notnull RECOM_MapTopographyEntityDto entity) {
 		entitiesPackage.entities.Insert(entity);
 		if (entitiesPackage.entities.Count() > maxPackageSizeBeforeFlush) {
 			flush();
