@@ -15,7 +15,10 @@ class RECOM_MessageBus_Observer {
         subjects.Insert(subject);
     }
 
-    void takeNotice(notnull RECOM_MessageBus_Subject subject, notnull RECOM_MessageBus_ResponseDto notification) {
+    void takeNotice(
+		notnull RECOM_MessageBus_Subject subject, 
+		notnull RECOM_MessageBus_ResponseDto notification
+	) {
 		foreach(RECOM_MessageBus_MessageDto message: notification.messages) {
 			SLF4R.debugging(string.Format("uuid: %1", message.uuid));
 			SLF4R.debugging(string.Format("messageType: %1", message.messageType));

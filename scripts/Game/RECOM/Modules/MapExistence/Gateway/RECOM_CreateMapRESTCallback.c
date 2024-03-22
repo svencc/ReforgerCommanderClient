@@ -2,7 +2,7 @@ class RECOM_CreateMapRESTCallback : RestCallback {
 
 	ref RECOM_CreateMap_Gateway gateway;
 	
-	void RECOM_CreateMapRESTCallback(RECOM_CreateMap_Gateway gateway) {
+	void RECOM_CreateMapRESTCallback(notnull RECOM_CreateMap_Gateway gateway) {
 		this.gateway = gateway;
 	}
 	
@@ -10,7 +10,10 @@ class RECOM_CreateMapRESTCallback : RestCallback {
 		gateway = null;
 	}
 	
-	override void OnSuccess(string data, int dataSize) {
+	override void OnSuccess(
+		string data, 
+		int dataSize
+	) {
 		SLF4R.debugging(string.Format("%1 OnSuccess called ", ClassName()));
 
 		if (dataSize > 0) {

@@ -19,7 +19,7 @@ class RECOM_AuthenticationResponseBuffer {
 		return bufferedValue;
 	}
 	
-	void update(RECOM_AuthenticationResponseDto authentication) {
+	void update(notnull RECOM_AuthenticationResponseDto authentication) {
 		bufferedValue = authentication;
 	}
 

@@ -10,7 +10,10 @@ class RECOM_AuthenticationResponseRESTCallback : RestCallback {
 		buffer = null;
 	}
 	
-	override void OnSuccess(string data, int dataSize ) {
+	override void OnSuccess(
+		string data, 
+		int dataSize
+	) {
 		SLF4R.debugging(string.Format("%1 OnSuccess called ", ClassName()));
 		SLF4R.debugging(string.Format("Re-Authenticate"));
 

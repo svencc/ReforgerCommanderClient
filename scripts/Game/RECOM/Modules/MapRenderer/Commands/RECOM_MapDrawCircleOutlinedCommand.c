@@ -8,7 +8,7 @@ class RECOM_MapDrawCircleOutlinedCommand : RECOM_MapDrawCommandBase {
 	int outlineColor;
 	int resolution;
 	
-	override void drawTo(RECOM_MapModule mapModule) {
+	override void drawTo(notnull RECOM_MapModule mapModule) {
 		mapModule.renderLineCircledOutlined(center, radius, width, color, outlineWidth, outlineColor, resolution);
 	}
 	

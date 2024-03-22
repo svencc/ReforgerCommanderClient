@@ -4,8 +4,8 @@ class RECOM_MapExistenceRESTCallback : RestCallback {
 	ref RECOM_MapExistence_Gateway gateway;
 	
 	void RECOM_MapExistenceRESTCallback(
-		RECOM_BaseBuffer<RECOM_MapExistenceResponseDto> buffer, 
-		RECOM_MapExistence_Gateway gateway
+		notnull RECOM_BaseBuffer<RECOM_MapExistenceResponseDto> buffer, 
+		notnull RECOM_MapExistence_Gateway gateway
 	) {
 		this.buffer = buffer;
 		this.gateway = gateway;
@@ -16,7 +16,10 @@ class RECOM_MapExistenceRESTCallback : RestCallback {
 		gateway = null;
 	}
 	
-	override void OnSuccess(string data, int dataSize) {
+	override void OnSuccess(
+		string data, 
+		int dataSize
+	) {
 		SLF4R.debugging(string.Format("%1 OnSuccess called ", ClassName()));
 
 		if (dataSize > 0) {

@@ -5,8 +5,8 @@ class RECOM_MessageBus_Callback : RestCallback {
 	private ref RECOM_MessageBus_Gateway gateway;
 	
 	void RECOM_MessageBus_Callback(
-		RECOM_MessageBus_Subject subject,
-		RECOM_MessageBus_Gateway gateway
+		notnull RECOM_MessageBus_Subject subject,
+		notnull RECOM_MessageBus_Gateway gateway
 	) {
 		this.subject = subject;
 		this.gateway = gateway;
@@ -17,7 +17,10 @@ class RECOM_MessageBus_Callback : RestCallback {
 		gateway = null;
 	}
 	
-	override void OnSuccess(string data, int dataSize) {
+	override void OnSuccess(
+		string data, 
+		int dataSize
+	) {
 		if (dataSize > 0){
 			RECOM_MessageBus_ResponseDto response = new RECOM_MessageBus_ResponseDto;
 			response.ExpandFromRAW(data);

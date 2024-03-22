@@ -5,7 +5,10 @@ class RECOM_MapCommands {
 	
 	
 	// POLYGON
-	static RECOM_MapDrawPolygonCommand drawPolygon(array<vector> points, int color) {
+	static RECOM_MapDrawPolygonCommand drawPolygon(
+		array<vector> points, 
+		int color
+	) {
 		RECOM_MapDrawPolygonCommand rectangleCommand = new RECOM_MapDrawPolygonCommand();
 		rectangleCommand.points = points;
 		rectangleCommand.color = color;
@@ -13,7 +16,12 @@ class RECOM_MapCommands {
 		return rectangleCommand;
 
 	}
-	static RECOM_MapDrawPolygonOutlinedCommand drawPolygonOutlined(array<vector> points, int color, float outlineWidth, int outlineColor) {
+	static RECOM_MapDrawPolygonOutlinedCommand drawPolygonOutlined(
+		array<vector> points, 
+		int color, 
+		float outlineWidth, 
+		int outlineColor
+	) {
 		RECOM_MapDrawPolygonOutlinedCommand rectangleCommand = new RECOM_MapDrawPolygonOutlinedCommand();
 		rectangleCommand.points = points;
 		rectangleCommand.color = color;
@@ -29,7 +37,11 @@ class RECOM_MapCommands {
 
 	
 	// RECTANGLE
-	static RECOM_MapDrawRectangleCommand drawRectangle(vector start, vector end, int color) {
+	static RECOM_MapDrawRectangleCommand drawRectangle(
+		vector start, 
+		vector end, 
+		int color
+	) {
 		RECOM_MapDrawRectangleCommand rectangleCommand = new RECOM_MapDrawRectangleCommand();
 		rectangleCommand.start = start;
 		rectangleCommand.end = end;
@@ -38,7 +50,13 @@ class RECOM_MapCommands {
 		return rectangleCommand;
 
 	}
-	static RECOM_MapDrawRectangleOutlinedCommand drawRectangleOutlined(vector start, vector end, int color, float outlineWidth, int outlineColor) {
+	static RECOM_MapDrawRectangleOutlinedCommand drawRectangleOutlined(
+		vector start, 
+		vector end, 
+		int color, 
+		float outlineWidth, 
+		int outlineColor
+	) {
 		RECOM_MapDrawRectangleOutlinedCommand rectangleCommand = new RECOM_MapDrawRectangleOutlinedCommand();
 		rectangleCommand.start = start;
 		rectangleCommand.end = end;
@@ -54,7 +72,12 @@ class RECOM_MapCommands {
 	
 	
 	// CIRCLE
-	static RECOM_MapDrawCircleCommand drawCircle(vector center, float radius, int color, int resolution = 36) {
+	static RECOM_MapDrawCircleCommand drawCircle(
+		vector center, 
+		float radius, 
+		int color, 
+		int resolution = 36
+	) {
 		RECOM_MapDrawCircleCommand circleCommand = new RECOM_MapDrawCircleCommand();
 		circleCommand.center = center;
 		circleCommand.radius = radius;
@@ -63,7 +86,14 @@ class RECOM_MapCommands {
 		
 		return circleCommand;
 	}
-	static RECOM_MapDrawCircleOutlinedCommand drawCircleOutlined(vector center, float radius, int color, float outlineWidth, int outlineColor, int resolution = 36) {
+	static RECOM_MapDrawCircleOutlinedCommand drawCircleOutlined(
+		vector center, 
+		float radius, 
+		int color, 
+		float outlineWidth, 
+		int outlineColor, 
+		int resolution = 36
+	) {
 		RECOM_MapDrawCircleOutlinedCommand circleCommand = new RECOM_MapDrawCircleOutlinedCommand();
 		circleCommand.center = center;
 		circleCommand.radius = radius;
@@ -90,7 +120,13 @@ class RECOM_MapCommands {
     //...
     //...
 	// CIRCULAR LINE
-	static RECOM_MapDrawLineCircledCommand drawLineCircled(vector center, float radius, float width, int color,  int resolution = 36) {
+	static RECOM_MapDrawLineCircledCommand drawLineCircled(
+		vector center, 
+		float radius, 
+		float width, 
+		int color,  
+		int resolution = 36
+	) {
 		RECOM_MapDrawLineCircledCommand lineCommand = new RECOM_MapDrawLineCircledCommand();
 		lineCommand.center = center;
 		lineCommand.radius = radius;
@@ -100,7 +136,15 @@ class RECOM_MapCommands {
 		
 		return lineCommand;
 	}
-	static RECOM_MapDrawCircleOutlinedCommand drawLineCircledOutlined(vector center, float radius, float width, int color, float outlineWidth, int outlineColor, int resolution = 36) {
+	static RECOM_MapDrawCircleOutlinedCommand drawLineCircledOutlined(
+		vector center, 
+		float radius, 
+		float width, 
+		int color, 
+		float outlineWidth, 
+		int outlineColor, 
+		int resolution = 36
+	) {
 		RECOM_MapDrawCircleOutlinedCommand lineCommand = new RECOM_MapDrawCircleOutlinedCommand();
 		lineCommand.center = center;
 		lineCommand.radius = radius;

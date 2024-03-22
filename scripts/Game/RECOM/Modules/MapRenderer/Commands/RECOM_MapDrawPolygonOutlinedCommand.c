@@ -5,7 +5,7 @@ class RECOM_MapDrawPolygonOutlinedCommand : RECOM_MapDrawCommandBase {
 	float outlineWidth; 
 	int outlineColor;
 	
-	override void drawTo(RECOM_MapModule mapModule) {
+	override void drawTo(notnull RECOM_MapModule mapModule) {
 		mapModule.renderPolygonOutlined(points, color, outlineWidth, outlineColor);
 	}
 		

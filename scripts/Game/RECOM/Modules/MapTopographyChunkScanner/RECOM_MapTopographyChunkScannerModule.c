@@ -35,7 +35,7 @@ class RECOM_MapTopographyChunkScanner {
 	*/
 	
 	
-	override void dispose() {
+	protected void dispose() {
 		startedProduction = false;
 		finishedProduction = false;
 	
@@ -45,23 +45,27 @@ class RECOM_MapTopographyChunkScanner {
 	
 	void runScanner() {
 		SLF4R.normal(string.Format("%1: runScanner() ...", ClassName()));
-		initProduction(chunkX, chunkZ);
+		initProduction();
 		GetGame().GetCallqueue().CallLater(produce, 5, false);
 		GetGame().GetCallqueue().CallLater(consume, 200, false);
 	}
 	
-	private void RECOM_MapTopographyChunkScanner(int chunkX, int chunkZ) {
+	void RECOM_MapTopographyChunkScanner(
+		int chunkX, 
+		int chunkZ
+	) {
 		shippingService = new RECOM_MapTopographypScannerEntitiesShippingService(500);
 		this.chunkX = chunkX;
 		this.chunkZ = chunkZ;
 	}
 
 	void ~RECOM_MapTopographyChunkScanner() {
+		dispose();
 		producedEntitiesQueue.Clear();
 		producedEntitiesQueue = null;
 		shippingService = null;
 		transactionManager = null;
-		RECOM_MapTopographyChunkScannerModule.instance = null;
+		//RECOM_MapTopographyChunkScannerModule.instance = null;
 	}
 
 	protected void initProduction() {
@@ -71,7 +75,7 @@ class RECOM_MapTopographyChunkScanner {
 		iterationZ = 0;
 		finishedScanLines = 0;
 		
-		string sessionIdentifier = worldFileName + "#####" + chunkX + "," + ChunkY;
+		string sessionIdentifier = worldFileName + "#####" + chunkX + "," + chunkZ;
         transactionManager = new RECOM_MapTopographyScannerEntitiesTransactionManager(sessionIdentifier);
         shippingService.setSessionIdentifier(sessionIdentifier);
 	}

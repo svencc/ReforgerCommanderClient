@@ -3,7 +3,7 @@ class RECOM_MapDrawPolygonCommand : RECOM_MapDrawCommandBase {
 	ref array<vector> points; 
 	int color;
 	
-	override void drawTo(RECOM_MapModule mapModule) {
+	override void drawTo(notnull RECOM_MapModule mapModule) {
 		mapModule.renderPolygon(points, color);
 	}
 		

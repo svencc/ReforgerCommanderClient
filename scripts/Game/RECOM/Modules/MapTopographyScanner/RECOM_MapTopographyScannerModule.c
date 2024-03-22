@@ -55,7 +55,7 @@ class RECOM_MapTopographyScannerModule : RECOM_BaseModule {
 	}
 	
 	private void RECOM_MapTopographyScannerModule(
-		RECOM_MapTopographypScannerEntitiesShippingService service,
+		notnull RECOM_MapTopographypScannerEntitiesShippingService service,
 		int stepSize
 	) {
 		shippingService = service;

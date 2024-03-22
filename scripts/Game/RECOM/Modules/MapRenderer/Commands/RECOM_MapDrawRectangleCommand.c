@@ -4,7 +4,7 @@ class RECOM_MapDrawRectangleCommand : RECOM_MapDrawCommandBase {
 	vector end;
 	int color;
 	
-	override void drawTo(RECOM_MapModule mapModule) {
+	override void drawTo(notnull RECOM_MapModule mapModule) {
 		mapModule.renderRectangle(start, end, color);
 	}
 		

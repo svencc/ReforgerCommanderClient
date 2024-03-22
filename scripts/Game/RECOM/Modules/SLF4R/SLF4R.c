@@ -37,7 +37,10 @@ class SLF4R : RECOM_BaseModule {
 	}
 	
 	
-	static void log(string message, LogLevel level) {
+	static void log(
+		string message, 
+		LogLevel level
+	) {
 		if (level >= SLF4R.loggingLevel) {
 			Print(message, level);
 		}

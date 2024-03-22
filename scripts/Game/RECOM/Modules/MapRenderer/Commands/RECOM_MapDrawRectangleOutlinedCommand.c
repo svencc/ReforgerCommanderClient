@@ -6,7 +6,7 @@ class RECOM_MapDrawRectangleOutlinedCommand : RECOM_MapDrawCommandBase {
 	float outlineWidth;
 	int outlineColor;
 	
-	override void drawTo(RECOM_MapModule mapModule) {
+	override void drawTo(notnull RECOM_MapModule mapModule) {
 		mapModule.renderRectangleOutlined(start, end, color, outlineWidth, outlineColor);
 	}
 		

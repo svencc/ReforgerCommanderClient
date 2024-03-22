@@ -198,7 +198,10 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 		return Math.Max(max[0] - min[0], max[2] - min[2]);
 	}
 	
-	protected vector scanBoxMaxForThisIteration(int iterationX, int iterationZ ) {
+	protected vector scanBoxMaxForThisIteration(
+		int iterationX, 
+		int iterationZ
+	) {
 		return {
 			boxScanSize + (iterationX * boxScanSize),
 			0,
@@ -206,7 +209,10 @@ class RECOM_MapStructureScannerModule : RECOM_BaseModule {
 		};
 	}	
 	
-	protected vector scanBoxMinForThisIteration(int iterationX, int iterationZ ) {
+	protected vector scanBoxMinForThisIteration(
+		int iterationX, 
+		int iterationZ
+	) {
 		return {
 			(iterationX * boxScanSize),
 			0,

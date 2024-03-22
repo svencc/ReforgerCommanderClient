@@ -5,7 +5,7 @@ class RECOM_MapDrawCircleCommand : RECOM_MapDrawCommandBase {
 	int color;
 	int resolution;
 	
-	override void drawTo(RECOM_MapModule mapModule) {
+	override void drawTo(notnull RECOM_MapModule mapModule) {
 		mapModule.renderCircle(center, radius, color, resolution);
 	}
 	

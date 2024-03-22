@@ -86,14 +86,26 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 	
 
 	// LINE
-	void renderLine(vector start, vector end, float width, int color) {
+	void renderLine(
+		vector start, 
+		vector end, 
+		float width, 
+		int color
+	) {
 		array<vector> points = new array<vector>;
 		points.Insert(start);
 		points.Insert(end);
 		array<vector> translatedPoints = translatePoints(points);
 		renderRawLine(translatedPoints[0], translatedPoints[1], width, color);
 	}
-	void renderLineOutlined(vector start, vector end, float width, int color, float outlineWidth, int outlineColor) {
+	void renderLineOutlined(
+		vector start, 
+		vector end, 
+		float width, 
+		int color, 
+		float outlineWidth, 
+		int outlineColor
+	) {
 		array<vector> points = new array<vector>;
 		points.Insert(start);
 		points.Insert(end);
@@ -104,11 +116,19 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 	
 	
 	// POLYGON
-	void renderPolygon(array<vector> points, int color) {
+	void renderPolygon(
+		array<vector> points, 
+		int color
+	) {
 		array<vector> translatedPoints = translatePoints(points);
 		renderGenericPolygon(translatedPoints, color);
 	}
-	void renderPolygonOutlined(array<vector> points, int color, float outlineWidth, int outlineColor) {
+	void renderPolygonOutlined(
+		array<vector> points, 
+		int color, 
+		float outlineWidth, 
+		int outlineColor
+	) {
 		array<vector> translatedPoints = translatePoints(points);
 		renderGenericPolygon(translatedPoints, color);
 		renderGenericPolygonToLines(translatedPoints, outlineWidth, outlineColor);
@@ -117,18 +137,31 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 	
 	
 	// RECTANGLE
-	void renderRectangle(vector start, vector end, int color) {
+	void renderRectangle(
+		vector start, 
+		vector end, 
+		int color
+	) {
 		array<vector> points = generateRectangularPolygon(start, end);
 		array<vector> translatedPoints = translatePoints(points);
 		renderGenericPolygon(translatedPoints, color);
 	}
-	void renderRectangleOutlined(vector start, vector end, int color, float outlineWidth, int outlineColor) {
+	void renderRectangleOutlined(
+		vector start, 
+		vector end, 
+		int color, 
+		float outlineWidth, 
+		int outlineColor
+	) {
 		array<vector> points = generateRectangularPolygon(start, end);
 		array<vector> translatedPoints = translatePoints(points);
 		renderGenericPolygon(translatedPoints, color);
 		renderGenericPolygonToLines(translatedPoints, outlineWidth, outlineColor);
 	}
-	array<vector> generateRectangularPolygon(vector start, vector end) {
+	array<vector> generateRectangularPolygon(
+		vector start, 
+		vector end
+	) {
 		array<vector> rectangularPoints = new array<vector>;
 		rectangularPoints.Insert(start);
 		
@@ -146,18 +179,34 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 	
 	
 	// CIRCLE
-	void renderCircleOutlined(vector center, float radius, int color, float outlineWidth, int outlineColor, int resolution = 36) {
+	void renderCircleOutlined(
+		vector center, 
+		float radius, 
+		int color, 
+		float outlineWidth, 
+		int outlineColor, 
+		int resolution = 36
+	) {
 		array<vector> points = generateCircularPolygon(center, radius, resolution);
 		array<vector> translatedPoints = translatePoints(points);
 		renderGenericPolygon(translatedPoints, color);
 		renderGenericPolygonToLines(translatedPoints, outlineWidth, outlineColor);
 	}
-	void renderCircle(vector center, float radius, int color, int resolution = 36) {
+	void renderCircle(
+		vector center, 
+		float radius, 
+		int color, 
+		int resolution = 36
+	) {
 		array<vector> points = generateCircularPolygon(center, radius, resolution);
 		array<vector> translatedPoints = translatePoints(points);
 		renderGenericPolygon(translatedPoints, color);
 	}
-	array<vector> generateCircularPolygon(vector center, float radius, int resolution = 36) {
+	array<vector> generateCircularPolygon(
+		vector center, 
+		float radius, 
+		int resolution = 36
+	) {
 		array<vector> circularPolygon = new array<vector>;
 		for (int i = 0; i < resolution; i++) {
 			float theta = i * (2 * Math.PI / resolution);
@@ -173,12 +222,26 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 	
 
 	// CIRCULAR LINE
-	void renderLineCircled(vector center, float radius, float width, int color, int resolution = 36) {
+	void renderLineCircled(
+		vector center, 
+		float radius, 
+		float width, 
+		int color, 
+		int resolution = 36
+	) {
 		array<vector> points = generateCircularPolygon(center, radius, resolution);
 		array<vector> translatedPoints = translatePoints(points);
 		renderGenericPolygonToLines(translatedPoints, width, color);
 	}
-	void renderLineCircledOutlined(vector center, float radius, float width, int color, float outlineWidth, int outlineColor, int resolution = 36) {
+	void renderLineCircledOutlined(
+		vector center, 
+		float radius, 
+		float width, 
+		int color, 
+		float outlineWidth, 
+		int outlineColor, 
+		int resolution = 36
+	) {
 		array<vector> points = generateCircularPolygon(center, radius, resolution);
 		array<vector> translatedPoints = translatePoints(points);
 		renderGenericPolygonToLinesOutlined(translatedPoints, width, color, outlineWidth, outlineColor);
@@ -188,12 +251,24 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 	
 
 	// RECTANGULAR LINE 
-	void renderLineRectangled(vector start, vector end, float width, int color) {
+	void renderLineRectangled(
+		vector start, 
+		vector end, 
+		float width, 
+		int color
+	) {
 		array<vector> points = generateRectangularPolygon(start, end);
 		array<vector> translatedPoints = translatePoints(points);
 		renderGenericPolygonToLines(translatedPoints, width, color);
 	}
-	void renderLineRectangledOutlined(vector start, vector end, float width, int color, float outlineWidth, int outlineColor) {
+	void renderLineRectangledOutlined(
+		vector start,
+		vector end, 
+		float width, 
+		int color, 
+		float outlineWidth, 
+		int outlineColor
+	) {
 		array<vector> points = generateRectangularPolygon(start, end);
 		array<vector> translatedPoints = translatePoints(points);
 		renderGenericPolygonToLinesOutlined(translatedPoints, width, color, outlineWidth, outlineColor);
@@ -220,7 +295,10 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 	
 	
 	// RENDER GENERIC POLYGON
-	protected void renderGenericPolygon(array<vector> translatedPoints, int color) {
+	protected void renderGenericPolygon(
+		array<vector> translatedPoints, 
+		int color
+	) {
 		PolygonDrawCommand drawCommand = new PolygonDrawCommand();		
 		drawCommand.m_iColor = color;
 		drawCommand.m_Vertices = new array<float>;
@@ -235,7 +313,11 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 	
 	
 	// RENDER GENERIC POLYGON -> LINE
-	protected void renderGenericPolygonToLines(array<vector> translatedPoints, float width, int color) {
+	protected void renderGenericPolygonToLines(
+		array<vector> translatedPoints, 
+		float width, 
+		int color
+	) {
 		vector firstPoint;
 		vector lastPoint;
 		foreach (int currentIndex, vector currentPoint : translatedPoints) {
@@ -251,7 +333,13 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 		// close line
 		renderRawLine(firstPoint, lastPoint, width, color);
 	}
-	protected void renderGenericPolygonToLinesOutlined(array<vector> translatedPoints, float width, int color, float widthOutline, int colorOutline) {
+	protected void renderGenericPolygonToLinesOutlined(
+		array<vector> translatedPoints, 
+		float width, 
+		int color, 
+		float widthOutline, 
+		int colorOutline
+	) {
 		vector firstPoint;
 		vector lastPoint;
 		foreach (int currentIndex, vector currentPoint : translatedPoints) {
@@ -271,10 +359,22 @@ class RECOM_MapModule  : SCR_MapModuleBase {
 	
 	
 	// RAW LINES WITH TRANSLATED COORDINATES
-	protected void renderRawLine(vector start, vector end, float width, int color) {
+	protected void renderRawLine(
+		vector start, 
+		vector end, 
+		float width, 
+		int color
+	) {
 		renderRawLineOutlined(start, end , width, color, 0, 0.0);
 	}
-	protected void renderRawLineOutlined(vector start, vector end, float width, int color, float outlineWidth, int outlineColor) {
+	protected void renderRawLineOutlined(
+		vector start, 
+		vector end, 
+		float width, 
+		int color, 
+		float outlineWidth, 
+		int outlineColor
+	) {
 		LineDrawCommand drawCommand = new LineDrawCommand();		
 		drawCommand.m_fWidth = width;
 		drawCommand.m_iColor = color;
