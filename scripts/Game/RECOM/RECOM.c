@@ -10,11 +10,12 @@ class RECOM {
 	protected ref RECOM_MessageBusModule messageBus;
 
 	protected ref RECOM_MapStructureScannerModule mapScanner;
-	protected ref RECOM_MapTopographyScannerModule mapTopographyScanner;
+	//protected ref RECOM_MapTopographyScannerModule mapTopographyScanner;
 	//protected ref RECOM_MapRendererModule mapRenderer;
 	protected ref RECOM_MapExistenceModule mapExistence;
 
 	protected ref RECOM_MessageBus_Observer observer;
+	protected ref RECOM_MessageBus_ChunkScanner_Observer chunkScannerObserver;
 
 
 	static RECOM getContext() {
@@ -33,7 +34,7 @@ class RECOM {
 		mapExistence = null;
 		//mapRenderer = null;
 		mapScanner = null;
-		mapTopographyScanner = null;
+		//mapTopographyScanner = null;
 
 		// test purpose
 		observer = null;
@@ -58,7 +59,7 @@ class RECOM {
 
 		messageBus = RECOM_MessageBusModule.getModule();
 
-		mapTopographyScanner = RECOM_MapTopographyScannerModule.getModule();
+		//mapTopographyScanner = RECOM_MapTopographyScannerModule.getModule();
 		mapScanner = RECOM_MapStructureScannerModule.getModule();
 		//mapRenderer = RECOM_MapRendererModule.getModule();
 		mapExistence = RECOM_MapExistenceModule.getModule();
@@ -73,7 +74,7 @@ class RECOM {
 			
 			messageBus.startModule();
 			
-			mapTopographyScanner.startModule();
+			//mapTopographyScanner.startModule();
 			mapScanner.startModule();
 			//mapRenderer.startModule();
 			mapExistence.startModule();
@@ -81,7 +82,9 @@ class RECOM {
 			
 			// just here for test
 			observer = new RECOM_MessageBus_Observer();
+			chunkScannerObserver = new RECOM_MessageBus_ChunkScanner_Observer();
 			observer.observe(messageBus.getSubject());
+			chunkScannerObserver.observe(messageBus.getSubject());
 			
 			contextStarted = true;
 		} else if (false) {
@@ -110,6 +113,7 @@ class RECOM {
 		mapExistence.disposeModule();
 		
 		observer.dispose();
+		chunkScannerObserver.dispose();
 		
 		contextStarted = false;
 		RECOM.context = null;
@@ -135,9 +139,9 @@ class RECOM {
 	RECOM_MapStructureScannerModule mapScanner() {
 		return mapScanner;
 	}
-	RECOM_MapTopographyScannerModule mapTopographyScanner() {
+	/*RECOM_MapTopographyScannerModule mapTopographyScanner() {
 		return mapTopographyScanner;
-	}
+	}*/
 	/*RECOM_MapRendererModule mapRenderer() {
 		return mapRenderer;
 	}*/

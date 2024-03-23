@@ -53,8 +53,8 @@ class RECOM_MapExistenceModule : RECOM_BaseModule {
 	void triggerWhenMapCreated() {
 		SLF4R.normal(string.Format(" ! ! ! %1 triggerWhenMapCreated called", ClassName()));
 		GetGame().GetCallqueue().CallLater(mapExistenceGateway.provideData, 5); // update module state
-		RECOM_MapStructureScannerModule.getModule().runScanner();
-		RECOM_MapTopographyScannerModule.getModule().runScanner();
+		//RECOM_MapStructureScannerModule.getModule().runScanner();
+		//RECOM_MapTopographyScannerModule.getModule().runScanner();
 	}
 	
 }
