@@ -1,6 +1,4 @@
 class RECOM_MapTopographyChunkScanner {
-
-	//private static ref RECOM_MapTopographyChunkScannerModule instance;
 	
 	protected bool startedProduction = false;
 	protected bool finishedProduction = false;
@@ -8,47 +6,24 @@ class RECOM_MapTopographyChunkScanner {
 	protected bool startedConsumption = false;
 	protected bool finishedConsumption = false;
 	
-	protected int iterationX;
-	protected int iterationZ;
+	protected int iterationX = 0;
+	protected int iterationZ = 0;
+	protected int finishedScanLines = 0;
+	
+	protected int predictedScanIterations = 1000;
 	
 	protected int chunkX; 
 	protected int chunkZ;
-	protected int predictedScanIterations;
-	protected int finishedScanLines;
-	
-	protected string worldFileName
+	protected int baseOffsetX;
+	protected int baseOffsetZ;
+	RECOM_MapMeta mapMeta;
+	string sessionIdentifier;
 
 	protected ref array<ref RECOM_MapTopographyEntityDto> producedEntitiesQueue = {};
 	protected ref RECOM_MapTopographypScannerEntitiesShippingService shippingService;
 	protected ref RECOM_MapTopographyScannerEntitiesTransactionManager transactionManager
-
-	
-	/*
-	static RECOM_MapTopographyChunkScannerModule getModule() {
-		SLF4R.normal(string.Format("RECOM_MapTopographyChunkScannerModule: getModule() ..."));
-        if (!RECOM_MapTopographyChunkScannerModule.instance) {
-            RECOM_MapTopographyChunkScannerModule.instance = new RECOM_MapTopographyChunkScannerModule(new RECOM_MapTopographypScannerEntitiesShippingService(500));
-        }
-		
-        return RECOM_MapTopographyChunkScannerModule.instance;
-    }
-	*/
 	
 	
-	protected void dispose() {
-		startedProduction = false;
-		finishedProduction = false;
-	
-		startedConsumption = false;
-		finishedConsumption = false;
-	}
-	
-	void runScanner() {
-		SLF4R.normal(string.Format("%1: runScanner() ...", ClassName()));
-		initProduction();
-		GetGame().GetCallqueue().CallLater(produce, 5, false);
-		GetGame().GetCallqueue().CallLater(consume, 200, false);
-	}
 	
 	void RECOM_MapTopographyChunkScanner(
 		int chunkX, 
@@ -60,43 +35,46 @@ class RECOM_MapTopographyChunkScanner {
 	}
 
 	void ~RECOM_MapTopographyChunkScanner() {
-		dispose();
 		producedEntitiesQueue.Clear();
 		producedEntitiesQueue = null;
 		shippingService = null;
 		transactionManager = null;
-		//RECOM_MapTopographyChunkScannerModule.instance = null;
+	}
+	
+	void runScanner() {
+		SLF4R.normal(string.Format("%1: runScanner() ...", ClassName()));
+		initProduction();
+		GetGame().GetCallqueue().CallLater(produce, 5, false);
+		GetGame().GetCallqueue().CallLater(consume, 200, false);
 	}
 
 	protected void initProduction() {
-        worldFileName = GetGame().GetWorldFile();  	// <<<<< das muss man noch prüfen
-		predictedScanIterations = 1000; // das ist die feste Chunk Size
-		iterationX = 0;
-		iterationZ = 0;
-		finishedScanLines = 0;
+		baseOffsetX = chunkX * 1000;
+		baseOffsetZ = chunkZ * 1000;
 		
-		string sessionIdentifier = worldFileName + "#####" + chunkX + "," + chunkZ;
+		RECOM_MapMeta mapMeta = RECOM_MapMetaProvider.provide();
+		sessionIdentifier = string.Format("%1#####%2,%3", mapMeta.mapName, chunkX, chunkZ);
+		
         transactionManager = new RECOM_MapTopographyScannerEntitiesTransactionManager(sessionIdentifier);
         shippingService.setSessionIdentifier(sessionIdentifier);
 	}
 
 	void produce() {
 		if (finishedProduction) {
-			SLF4R.normal(string.Format("%1: end production!", ClassName()));
+			SLF4R.normal(string.Format("%1: end production of %2", ClassName(), sessionIdentifier));
 			return;
 		}
-			
 
 		if (!startedProduction) {
 			startedProduction = true;
-			SLF4R.normal(string.Format("%1: start production of %2 ...", ClassName(), worldFileName));
+			SLF4R.normal(string.Format("%1: start production of %2 ...", ClassName(), sessionIdentifier));
 		}
 	
 		int scanRowSize = 500;
 		int maxIterationsX = iterationX + scanRowSize;
 		if (iterationZ < predictedScanIterations) {
 			for (int localIterationX = iterationX; localIterationX <= maxIterationsX && localIterationX <= predictedScanIterations; localIterationX++) {
-				scanMapHeight(iterationX, iterationZ);
+				scanHeightY(baseOffsetX + iterationX, baseOffsetZ + iterationZ);
 				iterationX = localIterationX;
 			}
 			if (iterationX == predictedScanIterations) {
@@ -135,7 +113,7 @@ class RECOM_MapTopographyChunkScanner {
 				producedEntitiesQueue.Count(), 
 				shippingService.getMaxPackageSizeBeforeFlush()
 			);
-			
+
 			SLF4R.debugging(string.Format("... %1: entities to consume.", elementsToConsume));
 			for (int i = 0; i < elementsToConsume; i++) {
 				RECOM_MapTopographyEntityDto entityToSend = producedEntitiesQueue.Get(0);
@@ -148,7 +126,7 @@ class RECOM_MapTopographyChunkScanner {
 		GetGame().GetCallqueue().CallLater(consume, 0, false);
 	}
 	
-	protected void scanMapHeight(
+	protected void scanHeightY(
 		int coordinateX, 
 		int coordinateZ
 	) {	
@@ -158,12 +136,6 @@ class RECOM_MapTopographyChunkScanner {
 		entityToSend.coordinates = {coordinateX, heightY, coordinateZ};
 		
 		producedEntitiesQueue.Insert(entityToSend);
-	}
-	
-	protected int determineMapSize() {
-		vector min, max;
-		GetGame().GetWorldEntity().GetWorldBounds(min, max);
-		return Math.Max(max[0] - min[0], max[2] - min[2]);
 	}
 	
 	protected void package(notnull RECOM_MapTopographyEntityDto entityDto) {

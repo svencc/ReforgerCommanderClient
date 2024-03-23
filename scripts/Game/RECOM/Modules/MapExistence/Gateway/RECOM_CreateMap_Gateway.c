@@ -15,15 +15,13 @@ class RECOM_CreateMap_Gateway {
 		if (RECOM_AuthenticationModule.getModule().isAuthenticated()) {
 			RECOM_MapExistenceRequestDto requestDto = new RECOM_MapExistenceRequestDto();
 			
-			vector mins, maxs;
-			GetGame().GetWorldEntity().GetWorldBounds(mins, maxs);
-			
+			RECOM_MapMeta mapMeta = RECOM_MapMetaProvider.provide();
 			requestDto.Authorization = RECOM_AuthenticationModule.getModule().getBearerToken();
-			requestDto.mapName = GetGame().GetWorldFile();
-			requestDto.dimensionXInMeter = maxs[0] - mins[0];
-			requestDto.dimensionYInMeter = maxs[1] - mins[1];
-			requestDto.dimensionZInMeter = maxs[2] - mins[2];
-			requestDto.oceanBaseHeight = GetGame().GetWorld().GetOceanBaseHeight();			
+			requestDto.mapName = mapMeta.mapName;
+			requestDto.dimensionXInMeter = mapMeta.dimensionXInMeter;
+			requestDto.dimensionYInMeter = mapMeta.dimensionYInMeter;
+			requestDto.dimensionZInMeter = mapMeta.dimensionZInMeter;
+			requestDto.oceanBaseHeight = mapMeta.oceanBaseHeight;
 
 			requestDto.Pack();
 			SLF4R.debugging(string.Format(" ! ! ! %1 provideData()", ClassName()));
