@@ -22,6 +22,7 @@ class RECOM_MapTopographyChunkScanner {
 	protected ref array<ref RECOM_MapTopographyEntityDto> producedEntitiesQueue = {};
 	protected ref RECOM_MapTopographypScannerEntitiesShippingService shippingService;
 	protected ref RECOM_MapTopographyScannerEntitiesTransactionManager transactionManager
+	protected ref RECOM_BaseDeregisterDelegate<RECOM_MapTopographyChunkScanner> deregisterDelegate;
 	
 	
 	
@@ -39,9 +40,11 @@ class RECOM_MapTopographyChunkScanner {
 		producedEntitiesQueue = null;
 		shippingService = null;
 		transactionManager = null;
+		deregisterDelegate = null;
 	}
 	
-	void runScanner() {
+	void runScanner(notnull RECOM_BaseDeregisterDelegate<RECOM_MapTopographyChunkScanner> deregisterDelegate) {
+		this.deregisterDelegate = deregisterDelegate;
 		SLF4R.normal(string.Format("%1: runScanner() ...", ClassName()));
 		initProduction();
 		GetGame().GetCallqueue().CallLater(produce, 5, false);
@@ -78,7 +81,7 @@ class RECOM_MapTopographyChunkScanner {
 				iterationX = localIterationX;
 			}
 			if (iterationX == predictedScanIterations) {
-				SLF4R.normal(string.Format("...%1 x:%2 z:%3", ClassName(), iterationX, iterationZ));
+				SLF4R.debugging(string.Format("...%1 x:%2 z:%3", ClassName(), iterationX, iterationZ));
 				iterationZ++;
 				iterationX = 0;
 			}
@@ -108,6 +111,9 @@ class RECOM_MapTopographyChunkScanner {
 			SLF4R.normal(string.Format("... %1: consumption completed.", ClassName()));
 			transactionManager.commitTransaction(shippingService.getPackagesSent());
 			SLF4R.normal(string.Format("%1: committed transaction.", ClassName()));
+			
+			SLF4R.normal(string.Format("%1: call deregisterDelegate().", ClassName()));
+			deregisterDelegate.deregister(this);
 		} else if (producedEntitiesQueue.IsEmpty() == false && RECOM_AuthenticationModule.getModule().isAuthenticated()) {
 			int elementsToConsume = Math.Min(
 				producedEntitiesQueue.Count(), 

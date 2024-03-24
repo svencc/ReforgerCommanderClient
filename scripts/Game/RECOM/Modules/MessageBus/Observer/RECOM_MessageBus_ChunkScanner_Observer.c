@@ -1,6 +1,6 @@
 class RECOM_MessageBus_ChunkScanner_Observer : RECOM_MessageBus_Observer {
 	
-	protected ref array<ref RECOM_MapTopographyChunkScanner> scanners =  {};
+	protected ref array<ref RECOM_MapTopographyChunkScanner> scanners =  {}; // deregister
 	
 	override void takeNotice(
 		notnull RECOM_MessageBus_Subject subject, 
@@ -13,9 +13,9 @@ class RECOM_MessageBus_ChunkScanner_Observer : RECOM_MessageBus_Observer {
 				
 				ref RECOM_MapTopographyChunkScanner scanner = new RECOM_MapTopographyChunkScanner(chunkRequest.chunkCoordinateX, chunkRequest.chunkCoordinateY);
 				scanners.Insert(scanner);
-				scanner.runScanner();
 				
-				// todo; der muss sich nach Abschluss wieder abmelden aus dem array!
+				RECOM_BaseDeregisterDelegate<RECOM_MapTopographyChunkScanner> deregisterDelegate = new RECOM_BaseDeregisterDelegate<RECOM_MapTopographyChunkScanner>(scanners);
+				scanner.runScanner(deregisterDelegate);
 			}
 		}
 	}
